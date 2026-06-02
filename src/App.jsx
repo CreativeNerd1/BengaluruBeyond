@@ -37,6 +37,11 @@ const AdminDrivers = lazy(() => import("./admin/Drivers/Drivers"));
 const AdminNavigation = lazy(() => import("./admin/Navigation/Navigation"));
 const AdminSettings = lazy(() => import("./admin/Settings/Settings"));
 
+// Driver portal lazy imports
+const DriverLogin = lazy(() => import("./driver/DriverLogin/DriverLogin"));
+const DriverRegister = lazy(() => import("./driver/DriverRegister/DriverRegister"));
+const DriverDashboard = lazy(() => import("./driver/DriverDashboard/DriverDashboard"));
+
 // Protected Route for Admin
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAdmin();
@@ -65,7 +70,23 @@ const HomePage = () => (
 const AppLayout = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const isDriverRoute = location.pathname.startsWith('/driver');
 
+  // Driver Portal Routes (no header/footer)
+  if (isDriverRoute) {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/driver/login" element={<DriverLogin />} />
+          <Route path="/driver/register" element={<DriverRegister />} />
+          <Route path="/driver/dashboard" element={<DriverDashboard />} />
+          <Route path="/driver/*" element={<Navigate to="/driver/login" replace />} />
+        </Routes>
+      </Suspense>
+    );
+  }
+
+  // Admin Routes
   if (isAdminRoute) {
     return (
       <Suspense fallback={<PageLoader />}>
