@@ -124,9 +124,9 @@ const Cars = () => {
       key: 'name',
       render: (text, record) => (
         <Space>
-          {record.image ? (
+          {record.imageUrl ? (
             <Image
-              src={record.image}
+              src={record.imageUrl}
               alt={text}
               width={60}
               height={40}
@@ -161,12 +161,12 @@ const Cars = () => {
     },
     {
       title: 'Status',
-      dataIndex: 'available',
-      key: 'available',
+      dataIndex: 'isAvailable',
+      key: 'isAvailable',
       width: 100,
-      render: (available) => (
-        <Tag color={available ? 'green' : 'red'}>
-          {available ? 'Available' : 'Unavailable'}
+      render: (isAvailable) => (
+        <Tag color={isAvailable ? 'green' : 'red'}>
+          {isAvailable ? 'Available' : 'Unavailable'}
         </Tag>
       ),
     },

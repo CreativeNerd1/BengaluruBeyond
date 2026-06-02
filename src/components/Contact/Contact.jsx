@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { siteInfo } from "../../data/siteData";
+import { useSiteData } from "../../context/SiteDataContext";
+import { inquiriesApi } from "../../services/api";
 import "./Contact.css";
 
 const Contact = () => {
+  const { siteInfo } = useSiteData();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -11,6 +13,7 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,29 +21,42 @@ const Contact = () => {
       ...prev,
       [name]: value,
     }));
+    setError(""); // Clear error on change
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError("");
 
-    // Simulate form submission - replace with actual API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const result = await inquiriesApi.create({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email || null,
+        message: formData.message || null,
+        source: "Contact",
+      });
 
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
-    setIsSubmitting(false);
-
-    // Reset form after submission
-    setFormData({
-      name: "",
-      phone: "",
-      email: "",
-      message: "",
-    });
-
-    // Reset success message after 5 seconds
-    setTimeout(() => setSubmitted(false), 5000);
+      if (result.success) {
+        setSubmitted(true);
+        // Reset form after submission
+        setFormData({
+          name: "",
+          phone: "",
+          email: "",
+          message: "",
+        });
+        // Reset success message after 5 seconds
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setError(result.error || "Failed to submit. Please try again.");
+      }
+    } catch (err) {
+      setError("Network error. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -85,11 +101,11 @@ const Contact = () => {
             <div className="info-section">
               <h3>📍 Address</h3>
               <address>
-                {siteInfo.address.line1}
+                {siteInfo.address?.line1}
                 <br />
-                {siteInfo.address.line2}
+                {siteInfo.address?.line2}
                 <br />
-                {siteInfo.address.city}
+                {siteInfo.address?.city}
                 <br />
                 <span className="landmark">
                   Landmark: Reva Independent PU College (Ganganagar)
@@ -104,7 +120,13 @@ const Contact = () => {
 
             {submitted && (
               <div className="success-message">
-                ✅ Thank you! Your message has been sent successfully.
+                ✅ Thank you! Your message has been sent successfully. We will contact you shortly.
+              </div>
+            )}
+
+            {error && (
+              <div className="error-message">
+                ❌ {error}
               </div>
             )}
 

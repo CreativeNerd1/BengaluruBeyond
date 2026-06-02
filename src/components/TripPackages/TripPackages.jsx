@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { tripDestinations } from "../../data/tripData";
+import { useSiteData } from "../../context/SiteDataContext";
 import "./TripPackages.css";
 
 // Image Carousel Component
@@ -79,23 +79,35 @@ const ImageCarousel = ({ images, name }) => {
 
 // Trip Card Component
 const TripCard = ({ trip }) => {
-  const lowestPrice = Math.min(...trip.packages.map((pkg) => pkg.price));
+  // Handle both old format (trip.packages) and new API format (trip.price)
+  const price = trip.packages 
+    ? Math.min(...trip.packages.map((pkg) => pkg.price))
+    : trip.price;
+  
+  // Handle both formats: images array or single imageUrl
+  const images = trip.images || (trip.imageUrl ? [trip.imageUrl] : ['/placeholder-trip.jpg']);
+  
+  // Handle title/name field
+  const name = trip.name || trip.title;
+  
+  // Generate slug from title if not present
+  const slug = trip.slug || name?.toLowerCase().replace(/\s+/g, '-');
 
   return (
     <div className="trip-card">
-      <ImageCarousel images={trip.images} name={trip.name} />
+      <ImageCarousel images={images} name={name} />
       <div className="trip-card-content">
-        <span className="trip-tagline">{trip.tagline}</span>
-        <h3 className="trip-name">{trip.name}</h3>
+        <span className="trip-tagline">{trip.tagline || trip.destination}</span>
+        <h3 className="trip-name">{name}</h3>
         <p className="trip-description">{trip.description}</p>
         <div className="trip-meta">
           <span className="trip-packages-count">
-            {trip.packages.length} Package{trip.packages.length > 1 ? "s" : ""}
+            {trip.duration}
           </span>
-          <span className="trip-price">From ₹{lowestPrice.toLocaleString()}</span>
+          <span className="trip-price">₹{price?.toLocaleString()}</span>
         </div>
-        <Link to={`/packages/${trip.slug}`} className="trip-explore-btn">
-          Explore Packages →
+        <Link to={`/packages/${trip.id}`} className="trip-explore-btn">
+          View Details →
         </Link>
       </div>
     </div>
@@ -103,6 +115,19 @@ const TripCard = ({ trip }) => {
 };
 
 const TripPackages = () => {
+  const { tripPackages, loading } = useSiteData();
+
+  if (loading.tripPackages && tripPackages.length === 0) {
+    return (
+      <section className="trip-packages-page">
+        <div className="trip-packages-hero">
+          <h1>Trip Packages</h1>
+          <p>Loading packages...</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="trip-packages-page">
       {/* Hero Banner */}
@@ -114,7 +139,7 @@ const TripPackages = () => {
       {/* Trip Grid */}
       <div className="trip-packages-content">
         <div className="trip-grid">
-          {tripDestinations.map((trip) => (
+          {tripPackages.map((trip) => (
             <TripCard key={trip.id} trip={trip} />
           ))}
         </div>

@@ -126,11 +126,11 @@ const Drivers = () => {
       key: 'name',
       render: (text, record) => (
         <Space>
-          <Avatar src={record.photo} icon={<UserOutlined />} size={40} />
+          <Avatar src={record.imageUrl} icon={<UserOutlined />} size={40} />
           <div>
             <Text strong>{text}</Text>
             <br />
-            <Text type="secondary" style={{ fontSize: 12 }}>{record.experience || 0} years exp</Text>
+            <Text type="secondary" style={{ fontSize: 12 }}>{record.experienceYears || 0} years exp</Text>
           </div>
         </Space>
       ),
@@ -144,19 +144,19 @@ const Drivers = () => {
     },
     {
       title: 'Trips',
-      dataIndex: 'trips',
-      key: 'trips',
+      dataIndex: 'totalTrips',
+      key: 'totalTrips',
       width: 100,
       render: (trips) => `${trips || 0}+`,
     },
     {
       title: 'Status',
-      dataIndex: 'available',
-      key: 'available',
+      dataIndex: 'status',
+      key: 'status',
       width: 100,
-      render: (available) => (
-        <Tag color={available ? 'green' : 'red'}>
-          {available ? 'Available' : 'Unavailable'}
+      render: (status) => (
+        <Tag color={status === 'Available' ? 'green' : 'red'}>
+          {status || 'Unknown'}
         </Tag>
       ),
     },

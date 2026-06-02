@@ -111,17 +111,62 @@ After deploying the frontend, update the backend's allowed origins:
    - Username: `admin`
    - Password: `admin123`
 
-## Custom Domain (Optional)
+## Custom Domain Setup (IMPORTANT)
 
-### Frontend (Vercel)
-1. Go to Project Settings → Domains
-2. Add your custom domain
-3. Update DNS records as instructed
+### Step 1: Purchase a Domain
 
-### Backend (Railway)
-1. Go to Service Settings → Networking
-2. Add custom domain
-3. Update DNS records as instructed
+Choose a domain registrar:
+- **[GoDaddy](https://godaddy.com)** - Most popular, ~₹599/year for .com
+- **[Namecheap](https://namecheap.com)** - Better pricing, ~₹699/year for .com
+- **[Google Domains](https://domains.google)** - Clean interface, ~₹1,200/year
+- **[Hostinger](https://hostinger.in)** - Cheapest, ~₹499/year for .in domains
+
+**Recommended**: Search for `bengalurubeyond.com` or `bengalurubeyond.in`
+
+### Step 2: Configure DNS for Frontend (Vercel)
+
+1. Go to Vercel Dashboard → Your Project → Settings → Domains
+2. Click "Add Domain" and enter your domain (e.g., `bengalurubeyond.com`)
+3. Vercel will show required DNS records. In your domain registrar, add:
+
+| Type | Name | Value |
+|------|------|-------|
+| A | @ | 76.76.19.19 |
+| CNAME | www | cname.vercel-dns.com |
+
+4. Wait 5-10 minutes for DNS propagation
+5. Vercel automatically provides **FREE SSL certificate** (HTTPS)
+
+### Step 3: Configure DNS for Backend (Railway)
+
+1. Go to Railway Dashboard → Your API Service → Settings → Networking
+2. Click "Generate Domain" or "Custom Domain"
+3. Add a subdomain (e.g., `api.bengalurubeyond.com`)
+4. Add DNS record at your registrar:
+
+| Type | Name | Value |
+|------|------|-------|
+| CNAME | api | your-service.railway.app |
+
+### Step 4: Update Environment Variables
+
+After setting up domains, update:
+
+**Frontend (Vercel):**
+```
+VITE_API_URL=https://api.bengalurubeyond.com/api
+VITE_SITE_URL=https://bengalurubeyond.com
+```
+
+**Backend (Railway):**
+```
+AllowedOrigins__0=https://bengalurubeyond.com
+AllowedOrigins__1=https://www.bengalurubeyond.com
+```
+
+### SSL/HTTPS (Automatic)
+- **Vercel**: Automatic SSL via Let's Encrypt (FREE)
+- **Railway**: Automatic SSL (FREE)
 
 ## Environment Variables Reference
 
@@ -162,13 +207,38 @@ After deploying the frontend, update the backend's allowed origins:
 - Check build logs in Railway/Vercel dashboard
 - Ensure all dependencies are in package.json/csproj
 
-## Security Checklist
+## Security Checklist (CRITICAL for Production)
 
-- [ ] Change default admin password after first login
-- [ ] Use strong JWT secret (64+ characters)
-- [ ] Enable HTTPS only (Railway does this by default)
-- [ ] Keep dependencies updated
-- [ ] Review CORS settings (only allow your frontend URL)
+### ✅ Immediately After Deployment
+- [ ] **CHANGE DEFAULT PASSWORD** - Login to admin panel and change from `admin123`
+- [ ] Use strong JWT secret (64+ characters, randomly generated)
+- [ ] Verify CORS only allows your specific frontend domain
+
+### ✅ Security Headers (Already Configured)
+The following security headers are automatically applied:
+- `X-Content-Type-Options: nosniff` - Prevents MIME sniffing
+- `X-Frame-Options: DENY` - Prevents clickjacking
+- `X-XSS-Protection: 1; mode=block` - XSS protection
+- `Strict-Transport-Security` - Forces HTTPS
+- `Referrer-Policy: strict-origin-when-cross-origin` - Controls referrer info
+- `Permissions-Policy` - Restricts browser features
+
+### ✅ Backend Security
+- [ ] Keep .NET and packages updated (`dotnet outdated`)
+- [ ] Never expose database connection strings in code
+- [ ] Rate limiting is enabled on API
+- [ ] All admin endpoints require JWT authentication
+
+### ✅ Password Policy
+- [ ] Change admin password immediately after first login
+- [ ] Use passwords with 12+ characters, mixed case, numbers, symbols
+- [ ] Consider implementing password rotation every 90 days
+
+### ✅ Ongoing Security
+- [ ] Monitor Railway/Vercel logs for suspicious activity
+- [ ] Set up alerts for failed login attempts
+- [ ] Regularly backup database
+- [ ] Keep dependencies updated monthly
 
 ## Estimated Costs
 

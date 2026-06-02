@@ -1,7 +1,9 @@
-import { siteInfo } from "../../data/siteData";
+import { useSiteData } from "../../context/SiteDataContext";
 import "./About.css";
 
 const About = () => {
+  const { siteInfo } = useSiteData();
+  
   const whyChooseUs = [
     {
       id: 1,
@@ -117,8 +119,8 @@ const About = () => {
             </div>
           </div>
           <p className="founder-address">
-            {siteInfo.address.line1}, {siteInfo.address.line2},{" "}
-            {siteInfo.address.city}
+            {siteInfo.address?.line1}, {siteInfo.address?.line2},{" "}
+            {siteInfo.address?.city}
           </p>
         </div>
       </div>

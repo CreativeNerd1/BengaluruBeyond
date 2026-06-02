@@ -147,7 +147,8 @@ const parseDurationString = (durationStr) => {
 const parseMultilineField = (value) => {
   if (!value) return [];
   if (Array.isArray(value)) return value;
-  return value.split('\n').filter(line => line.trim());
+  // Split by newline or comma
+  return value.split(/[\n,]/).map(item => item.trim()).filter(item => item);
 };
 
 const stringifyArray = (arr) => {

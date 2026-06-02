@@ -112,11 +112,11 @@ const Testimonials = () => {
   const columns = [
     {
       title: 'Customer',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'customerName',
+      key: 'customerName',
       render: (text, record) => (
         <Space>
-          <Avatar src={record.avatar} icon={<UserOutlined />} />
+          <Avatar src={record.customerImage} icon={<UserOutlined />} />
           <div>
             <Text strong>{text}</Text>
             <br />
@@ -134,17 +134,17 @@ const Testimonials = () => {
     },
     {
       title: 'Review',
-      dataIndex: 'text',
-      key: 'text',
+      dataIndex: 'content',
+      key: 'content',
       ellipsis: true,
       width: 300,
     },
     {
-      title: 'Featured',
-      dataIndex: 'featured',
-      key: 'featured',
+      title: 'Verified',
+      dataIndex: 'isVerified',
+      key: 'isVerified',
       width: 100,
-      render: (featured) => featured ? <StarFilled style={{ color: '#fadb14' }} /> : '-',
+      render: (isVerified) => isVerified ? <StarFilled style={{ color: '#fadb14' }} /> : '-',
     },
     {
       title: 'Actions',

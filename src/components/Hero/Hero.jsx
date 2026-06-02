@@ -1,8 +1,9 @@
-import { siteInfo } from "../../data/siteData";
+import { useSiteData } from "../../context/SiteDataContext";
 import "./Hero.css";
 
 const Hero = () => {
-  const whatsappBooking = `${siteInfo.socialLinks.whatsapp}?text=I%20would%20like%20to%20book%20a%20cab`;
+  const { siteInfo } = useSiteData();
+  const whatsappBooking = `${siteInfo.socialLinks?.whatsapp || '#'}?text=I%20would%20like%20to%20book%20a%20cab`;
 
   return (
     <section className="hero">

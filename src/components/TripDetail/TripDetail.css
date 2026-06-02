@@ -402,6 +402,31 @@
   background: linear-gradient(135deg, #4fd1c5 0%, #38b2ac 100%);
 }
 
+.detail-contact-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-success {
+  background: #c6f6d5;
+  color: #276749;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.form-error {
+  background: #fed7d7;
+  color: #c53030;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 /* Not Found */
 .not-found {
   text-align: center;
@@ -437,12 +462,17 @@
 /* Responsive */
 @media (max-width: 1024px) {
   .content-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
   }
 
   .sidebar {
     order: -1;
+  }
+  
+  .packages-section {
+    order: 0;
   }
 }
 
@@ -480,5 +510,385 @@
 
   .thumb img {
     height: 50px;
+  }
+}
+
+/* Trip Description */
+.trip-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #4a5568;
+  margin-bottom: 2rem;
+}
+
+/* Trip Info Grid */
+.trip-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 16px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.info-label {
+  font-size: 0.85rem;
+  color: #718096;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+/* Book This Trip Button */
+.book-trip-btn {
+  width: 100%;
+  padding: 1.25rem 2rem;
+  margin: 1.5rem 0;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
+}
+
+.book-trip-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
+}
+
+.book-trip-btn span {
+  font-size: 1.5rem;
+}
+
+/* Trip Sections */
+.trip-section {
+  margin-bottom: 2rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.trip-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin: 0 0 1rem 0;
+}
+
+.highlight-list,
+.inclusion-list,
+.exclusion-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.highlight-list li,
+.inclusion-list li,
+.exclusion-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #f7fafc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #2d3748;
+}
+
+.highlight-list li::before {
+  content: "⭐";
+  font-size: 0.9rem;
+}
+
+.inclusion-list li::before {
+  content: "✓";
+  color: #38a169;
+  font-weight: bold;
+}
+
+.exclusion-list li::before {
+  content: "✗";
+  color: #e53e3e;
+  font-weight: bold;
+}
+
+/* Places to Visit Carousel */
+.places-carousel-section {
+  margin: 2.5rem 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.places-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.places-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 0.5rem 0;
+}
+
+.places-header p {
+  font-size: 0.95rem;
+  color: #718096;
+  margin: 0;
+}
+
+.places-carousel-container {
+  position: relative;
+}
+
+.places-carousel {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 0.5rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar but keep functionality */
+.places-carousel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.places-carousel::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 3px;
+}
+
+.places-carousel::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4fd1c5, #38b2ac);
+  border-radius: 3px;
+}
+
+.place-card {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+  text-decoration: none;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.place-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border-color: #4fd1c5;
+}
+
+.place-image {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.place-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.place-card:hover .place-image img {
+  transform: scale(1.1);
+}
+
+.place-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(44, 83, 100, 0.9) 0%,
+    rgba(44, 83, 100, 0.4) 50%,
+    transparent 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.place-card:hover .place-overlay {
+  opacity: 1;
+}
+
+.maps-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  animation: bounce 0.6s ease infinite alternate;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+.view-text {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.place-info {
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.place-info h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin: 0 0 0.5rem 0;
+}
+
+.place-destination {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: #718096;
+  background: #edf2f7;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+}
+
+.place-destination::before {
+  content: "📍";
+  font-size: 0.75rem;
+}
+
+/* Carousel Navigation */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  color: #2c5364;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.carousel-nav:hover {
+  background: linear-gradient(135deg, #4fd1c5, #38b2ac);
+  color: white;
+  border-color: transparent;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-prev {
+  left: -20px;
+}
+
+.carousel-next {
+  right: -20px;
+}
+
+/* Places Carousel Responsive */
+@media (max-width: 768px) {
+  .places-carousel-section {
+    margin: 1.5rem -1rem;
+    padding: 1.5rem 1rem;
+    border-radius: 0;
+  }
+  
+  .place-card {
+    flex: 0 0 250px;
+  }
+  
+  .place-image {
+    height: 150px;
+  }
+  
+  .carousel-nav {
+    display: none;
+  }
+  
+  .places-header h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Sidebar Styling - only sticky on desktop */
+@media (min-width: 1025px) {
+  .sidebar {
+    position: sticky;
+    top: 90px;
+    height: fit-content;
+  }
+}
+
+@media (max-width: 768px) {
+  .trip-info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .highlight-list,
+  .inclusion-list,
+  .exclusion-list {
+    grid-template-columns: 1fr;
   }
 }

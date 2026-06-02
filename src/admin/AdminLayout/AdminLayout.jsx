@@ -25,7 +25,8 @@ import {
   TeamOutlined,
   LinkOutlined,
   LockOutlined,
-  CustomerServiceOutlined
+  CustomerServiceOutlined,
+  MessageOutlined
 } from '@ant-design/icons';
 import { useAdmin } from '../../context/AdminContext';
 
@@ -76,6 +77,11 @@ const AdminLayout = () => {
           label: 'Testimonials',
         },
       ],
+    },
+    {
+      key: '/admin/inquiries',
+      icon: <MessageOutlined />,
+      label: 'Inquiries',
     },
     {
       key: 'fleet',

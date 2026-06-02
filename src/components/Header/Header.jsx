@@ -1,13 +1,26 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { siteInfo, navLinks } from "../../data/siteData";
+import { useSiteData } from "../../context/SiteDataContext";
 import "./Header.css";
 
 const Header = () => {
+  const { siteInfo, navLinks: apiNavLinks, loading } = useSiteData();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
+
+  // Transform API nav links to component format
+  const navLinks = apiNavLinks.map(link => ({
+    name: link.label || link.name,
+    path: link.path || link.link,
+    icon: link.icon,
+    dropdown: link.children?.length > 0 ? link.children.map(child => ({
+      name: child.label || child.name,
+      path: child.path || child.link,
+      icon: child.icon || '📍',
+    })) : null,
+  }));
 
   useEffect(() => {
     const handleScroll = () => {

@@ -116,33 +116,33 @@ const Services = () => {
   const columns = [
     {
       title: 'Service',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'title',
+      key: 'title',
       render: (text, record) => (
         <Space>
           <span style={{ fontSize: 24 }}>{record.icon}</span>
           <div>
             <Text strong>{text}</Text>
             <br />
-            <Text type="secondary" style={{ fontSize: 12 }}>{record.slug}</Text>
+            <Text type="secondary" style={{ fontSize: 12 }}>{record.description?.substring(0, 50)}...</Text>
           </div>
         </Space>
       ),
     },
     {
-      title: 'Link',
-      dataIndex: 'link',
-      key: 'link',
-      width: 150,
+      title: 'Order',
+      dataIndex: 'displayOrder',
+      key: 'displayOrder',
+      width: 80,
     },
     {
       title: 'Status',
-      dataIndex: 'active',
-      key: 'active',
+      dataIndex: 'isActive',
+      key: 'isActive',
       width: 100,
-      render: (active) => (
-        <Tag color={active ? 'green' : 'red'}>
-          {active ? 'Active' : 'Inactive'}
+      render: (isActive) => (
+        <Tag color={isActive ? 'green' : 'red'}>
+          {isActive ? 'Active' : 'Inactive'}
         </Tag>
       ),
     },

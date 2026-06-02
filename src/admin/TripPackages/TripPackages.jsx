@@ -126,13 +126,13 @@ const TripPackages = () => {
   const columns = [
     {
       title: 'Package',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'title',
+      key: 'title',
       render: (text, record) => (
         <Space>
-          {record.images?.[0] && (
+          {record.imageUrl && (
             <Image
-              src={record.images[0]}
+              src={record.imageUrl}
               alt={text}
               width={60}
               height={40}
@@ -143,7 +143,7 @@ const TripPackages = () => {
           <div>
             <Text strong>{text}</Text>
             <br />
-            <Text type="secondary" style={{ fontSize: 12 }}>{record.slug}</Text>
+            <Text type="secondary" style={{ fontSize: 12 }}>{record.destination}</Text>
           </div>
         </Space>
       ),
@@ -153,11 +153,14 @@ const TripPackages = () => {
       dataIndex: 'duration',
       key: 'duration',
       width: 150,
+      render: (_, record) => (
+        <Text>{record.duration} {record.durationType}</Text>
+      ),
     },
     {
       title: 'Price',
-      dataIndex: 'basePrice',
-      key: 'basePrice',
+      dataIndex: 'price',
+      key: 'price',
       width: 120,
       render: (price) => (
         <Text strong style={{ color: '#52c41a' }}>₹{price?.toLocaleString() || 0}</Text>

@@ -1,16 +1,44 @@
 import { useState } from "react";
-import { siteInfo } from "../../data/siteData";
-import { serviceTypes } from "../../data/cabData";
 import "./CarDetailModal.css";
 
-const CarDetailModal = ({ car, driver, serviceType, onClose }) => {
+// Service types configuration
+const serviceTypes = {
+  local: {
+    title: "Local Cabs",
+    pricingNote: "Base fare includes first 40 km. Extra km charged as per rate.",
+  },
+  airport: {
+    title: "Airport Cabs",
+    pricingNote: "Toll and parking charges extra. Night charges (11PM-5AM) +20%.",
+  },
+  outstation: {
+    title: "Outstation Cabs",
+    pricingNote: "Toll, parking, state permit extra. Driver allowance included for overnight trips.",
+  },
+};
+
+const CarDetailModal = ({ car, driver, serviceType, onClose, siteInfo }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("gallery");
 
-  const pricing = car.pricing[serviceType];
-  const service = serviceTypes[serviceType];
+  const pricing = car.pricing?.[serviceType] || {
+    baseFare: car.pricePerDay || 800,
+    baseKm: 40,
+    extraKmRate: car.pricePerKm || 14,
+    oneway: 1200,
+    roundTrip: 2000,
+    perKm: car.pricePerKm || 12,
+    minKmPerDay: 300,
+    driverAllowance: 400,
+  };
+  const service = serviceTypes[serviceType] || serviceTypes.local;
 
-  const whatsappLink = `${siteInfo.socialLinks.whatsapp}?text=I%20want%20to%20book%20${encodeURIComponent(car.name)}%20for%20${encodeURIComponent(service.title)}`;
+  const whatsappLink = `${siteInfo?.socialLinks?.whatsapp || '#'}?text=I%20want%20to%20book%20${encodeURIComponent(car.name)}%20for%20${encodeURIComponent(service.title)}`;
+
+  const carImages = car.images?.length > 0 ? car.images : 
+    (car.imageUrl ? [car.imageUrl] : ['https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800']);
+  
+  const carFeatures = car.features || [];
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -57,12 +85,12 @@ const CarDetailModal = ({ car, driver, serviceType, onClose }) => {
           {/* Left Side - Image Gallery */}
           <div className="modal-gallery">
             <div className="gallery-main-image">
-              <img src={car.images[currentImageIndex]} alt={car.name} />
+              <img src={carImages[currentImageIndex]} alt={car.name} />
               <button
                 className="gallery-nav prev"
                 onClick={() =>
                   setCurrentImageIndex(
-                    (prev) => (prev - 1 + car.images.length) % car.images.length
+                    (prev) => (prev - 1 + carImages.length) % carImages.length
                   )
                 }
               >
@@ -71,17 +99,17 @@ const CarDetailModal = ({ car, driver, serviceType, onClose }) => {
               <button
                 className="gallery-nav next"
                 onClick={() =>
-                  setCurrentImageIndex((prev) => (prev + 1) % car.images.length)
+                  setCurrentImageIndex((prev) => (prev + 1) % carImages.length)
                 }
               >
                 ›
               </button>
               <div className="image-counter">
-                {currentImageIndex + 1} / {car.images.length}
+                {currentImageIndex + 1} / {carImages.length}
               </div>
             </div>
             <div className="gallery-thumbnails">
-              {car.images.map((img, idx) => (
+              {carImages.map((img, idx) => (
                 <button
                   key={idx}
                   className={`thumbnail ${idx === currentImageIndex ? "active" : ""}`}
@@ -125,7 +153,7 @@ const CarDetailModal = ({ car, driver, serviceType, onClose }) => {
                     <span className="car-type-badge">{car.type}</span>
                     <h2>{car.name}</h2>
                     <div className="car-rating-modal">
-                      ⭐ {car.rating} • {car.totalTrips} trips completed
+                      ⭐ {car.rating || 4.8} • {car.totalTrips || 0} trips completed
                     </div>
                   </div>
 
@@ -136,28 +164,28 @@ const CarDetailModal = ({ car, driver, serviceType, onClose }) => {
                       <span className="spec-icon">👥</span>
                       <div>
                         <span className="spec-label">Capacity</span>
-                        <span className="spec-value">{car.capacity}</span>
+                        <span className="spec-value">{car.capacity || car.seatingCapacity || '4+1'}</span>
                       </div>
                     </div>
                     <div className="spec-item">
                       <span className="spec-icon">🧳</span>
                       <div>
                         <span className="spec-label">Luggage</span>
-                        <span className="spec-value">{car.luggage}</span>
+                        <span className="spec-value">{car.luggage || '2 Bags'}</span>
                       </div>
                     </div>
                     <div className="spec-item">
                       <span className="spec-icon">⛽</span>
                       <div>
                         <span className="spec-label">Fuel</span>
-                        <span className="spec-value">{car.fuel}</span>
+                        <span className="spec-value">{car.fuel || car.fuelType || 'Diesel'}</span>
                       </div>
                     </div>
                     <div className="spec-item">
                       <span className="spec-icon">⚙️</span>
                       <div>
                         <span className="spec-label">Transmission</span>
-                        <span className="spec-value">{car.transmission}</span>
+                        <span className="spec-value">{car.transmission || 'Manual'}</span>
                       </div>
                     </div>
                   </div>
@@ -165,7 +193,7 @@ const CarDetailModal = ({ car, driver, serviceType, onClose }) => {
                   <div className="features-list">
                     <h4>Features & Amenities</h4>
                     <div className="features-tags">
-                      {car.features.map((feature, idx) => (
+                      {carFeatures.map((feature, idx) => (
                         <span key={idx} className="feature-tag-modal">
                           ✓ {feature}
                         </span>
@@ -175,58 +203,62 @@ const CarDetailModal = ({ car, driver, serviceType, onClose }) => {
                 </div>
               )}
 
-              {activeTab === "driver" && (
+              {activeTab === "driver" && driver && (
                 <div className="driver-details-tab">
                   <div className="driver-profile">
                     <img
-                      src={driver.photo}
+                      src={driver.photo || driver.imageUrl || driver.image || 'https://randomuser.me/api/portraits/men/32.jpg'}
                       alt={driver.name}
                       className="driver-photo-large"
                     />
                     <div className="driver-header-info">
                       <h3>
                         {driver.name}
-                        {driver.verified && (
+                        {(driver.verified || driver.isVerified) && (
                           <span className="verified-icon">✓ Verified</span>
                         )}
                       </h3>
                       <div className="driver-stats">
                         <span className="stat">
-                          ⭐ {driver.rating} Rating
+                          ⭐ {driver.rating || 4.8} Rating
                         </span>
                         <span className="stat">
-                          🚗 {driver.totalTrips} Trips
+                          🚗 {driver.totalTrips || 0} Trips
                         </span>
                         <span className="stat">
-                          📅 {driver.experience}
+                          📅 {driver.experience || `${driver.experienceYears || 0}+ Years`}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="driver-badges">
-                    {driver.badges.map((badge, idx) => (
-                      <span key={idx} className="badge">
-                        🏆 {badge}
-                      </span>
-                    ))}
-                  </div>
+                  {driver.badges?.length > 0 && (
+                    <div className="driver-badges">
+                      {driver.badges.map((badge, idx) => (
+                        <span key={idx} className="badge">
+                          🏆 {badge}
+                        </span>
+                      ))}
+                    </div>
+                  )}
 
-                  <p className="driver-about">{driver.about}</p>
+                  {driver.about && <p className="driver-about">{driver.about}</p>}
 
                   <div className="driver-info-grid">
                     <div className="info-item">
                       <span className="info-label">Languages</span>
                       <span className="info-value">
-                        {driver.languages.join(", ")}
+                        {Array.isArray(driver.languages) ? driver.languages.join(", ") : (driver.languages || 'English, Hindi, Kannada')}
                       </span>
                     </div>
-                    <div className="info-item">
-                      <span className="info-label">Specialization</span>
-                      <span className="info-value">
-                        {driver.specialization.join(", ")}
-                      </span>
-                    </div>
+                    {driver.specialization && (
+                      <div className="info-item">
+                        <span className="info-label">Specialization</span>
+                        <span className="info-value">
+                          {Array.isArray(driver.specialization) ? driver.specialization.join(", ") : driver.specialization}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="driver-guarantee">
@@ -237,6 +269,24 @@ const CarDetailModal = ({ car, driver, serviceType, onClose }) => {
                         All our drivers are verified, background-checked, and
                         trained for your safety and comfort.
                       </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {activeTab === "driver" && !driver && (
+                <div className="driver-details-tab">
+                  <div className="no-driver">
+                    <p>Driver information will be assigned upon booking.</p>
+                    <div className="driver-guarantee">
+                      <span className="guarantee-icon">🛡️</span>
+                      <div>
+                        <h5>CabMitra Guarantee</h5>
+                        <p>
+                          All our drivers are verified, background-checked, and
+                          trained for your safety and comfort.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -285,7 +335,7 @@ const CarDetailModal = ({ car, driver, serviceType, onClose }) => {
             {/* Book Now Section */}
             <div className="modal-actions">
               <a
-                href={`tel:${siteInfo.phone}`}
+                href={`tel:${siteInfo?.phone || '+919606919300'}`}
                 className="action-btn call-btn"
               >
                 📞 Call Now

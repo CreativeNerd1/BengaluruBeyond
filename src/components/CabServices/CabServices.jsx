@@ -1,8 +1,53 @@
 import { useState } from "react";
-import { cars, drivers, serviceTypes } from "../../data/cabData";
-import { siteInfo } from "../../data/siteData";
+import { useSiteData } from "../../context/SiteDataContext";
 import CarDetailModal from "./CarDetailModal";
 import "./CabServices.css";
+
+// Service types configuration (static config, not dynamic data)
+const serviceTypes = {
+  local: {
+    title: "Local Cabs",
+    slug: "local-cabs",
+    tagline: "City Rides Made Easy",
+    description: "Comfortable rides within the city for your daily commute, shopping trips, or meetings. Available in multiple car options to suit your needs.",
+    heroImage: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1200",
+    features: [
+      { icon: "⏱️", title: "Hourly Packages", desc: "Flexible 4hr, 8hr, 12hr packages" },
+      { icon: "📍", title: "Multiple Stops", desc: "Make stops anywhere in the city" },
+      { icon: "💳", title: "Easy Payments", desc: "Cash, UPI, or Card payments" },
+      { icon: "🛡️", title: "Safe Rides", desc: "Verified drivers & sanitized cars" },
+    ],
+    pricingNote: "Base fare includes first 40 km. Extra km charged as per rate.",
+  },
+  airport: {
+    title: "Airport Cabs",
+    slug: "airport-cabs",
+    tagline: "Never Miss a Flight",
+    description: "Reliable airport pickup and drop services available 24/7. Track your flight and we'll be there on time, every time.",
+    heroImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200",
+    features: [
+      { icon: "✈️", title: "Flight Tracking", desc: "We track your flight for delays" },
+      { icon: "🕐", title: "24/7 Service", desc: "Available round the clock" },
+      { icon: "🧳", title: "Meet & Greet", desc: "Driver waits with name board" },
+      { icon: "⏰", title: "Free Waiting", desc: "45 min free waiting time" },
+    ],
+    pricingNote: "Toll and parking charges extra. Night charges (11PM-5AM) +20%.",
+  },
+  outstation: {
+    title: "Outstation Cabs",
+    slug: "outstation-cabs",
+    tagline: "Journey Beyond the City",
+    description: "Explore destinations beyond Bangalore with our comfortable outstation cab services. One-way, round trip, and multi-day packages available.",
+    heroImage: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200",
+    features: [
+      { icon: "🗺️", title: "One-way & Round", desc: "Flexible trip options" },
+      { icon: "🏨", title: "Multi-day Trips", desc: "Perfect for holidays" },
+      { icon: "👨‍✈️", title: "Expert Drivers", desc: "Know all the routes" },
+      { icon: "🔄", title: "Unlimited Stops", desc: "Stop wherever you want" },
+    ],
+    pricingNote: "Toll, parking, state permit extra. Driver allowance included for overnight trips.",
+  },
+};
 
 // Car Image Carousel
 const CarCarousel = ({ images, name, onImageClick }) => {
@@ -37,43 +82,47 @@ const CarCarousel = ({ images, name, onImageClick }) => {
 // Driver Mini Card
 const DriverMiniCard = ({ driver }) => (
   <div className="driver-mini">
-    <img src={driver.photo} alt={driver.name} className="driver-photo" />
+    <img 
+      src={driver.photo || driver.imageUrl || driver.image || 'https://randomuser.me/api/portraits/men/32.jpg'} 
+      alt={driver.name} 
+      className="driver-photo" 
+    />
     <div className="driver-info">
       <span className="driver-name">{driver.name}</span>
       <div className="driver-meta">
-        <span className="driver-rating">⭐ {driver.rating}</span>
-        <span className="driver-exp">{driver.experience}</span>
+        <span className="driver-rating">⭐ {driver.rating || 4.8}</span>
+        <span className="driver-exp">{driver.experience || `${driver.experienceYears || 0}+ years`}</span>
       </div>
     </div>
-    {driver.verified && <span className="verified-badge">✓</span>}
+    {(driver.verified || driver.isVerified) && <span className="verified-badge">✓</span>}
   </div>
 );
 
 // Car Card Component
-const CarCard = ({ car, serviceType, onViewDetails }) => {
-  const pricing = car.pricing[serviceType];
-  const assignedDriver = drivers[car.id % drivers.length];
+const CarCard = ({ car, serviceType, onViewDetails, drivers, siteInfo }) => {
+  const pricing = car.pricing?.[serviceType] || { baseFare: 0, baseKm: 0, perKm: 0, oneway: 0 };
+  const assignedDriver = drivers?.[car.id % (drivers.length || 1)] || null;
 
   const getPriceDisplay = () => {
     switch (serviceType) {
       case "local":
         return (
           <>
-            <span className="price-main">₹{pricing.baseFare}</span>
-            <span className="price-sub">for {pricing.baseKm} km</span>
+            <span className="price-main">₹{pricing.baseFare || car.pricePerDay || 800}</span>
+            <span className="price-sub">for {pricing.baseKm || 40} km</span>
           </>
         );
       case "airport":
         return (
           <>
-            <span className="price-main">₹{pricing.oneway}</span>
+            <span className="price-main">₹{pricing.oneway || 1200}</span>
             <span className="price-sub">one way</span>
           </>
         );
       case "outstation":
         return (
           <>
-            <span className="price-main">₹{pricing.perKm}</span>
+            <span className="price-main">₹{pricing.perKm || car.pricePerKm || 12}</span>
             <span className="price-sub">per km</span>
           </>
         );
@@ -82,12 +131,17 @@ const CarCard = ({ car, serviceType, onViewDetails }) => {
     }
   };
 
-  const whatsappLink = `${siteInfo.socialLinks.whatsapp}?text=I%20want%20to%20book%20${encodeURIComponent(car.name)}%20for%20${encodeURIComponent(serviceTypes[serviceType].title)}`;
+  const whatsappLink = `${siteInfo.socialLinks?.whatsapp || '#'}?text=I%20want%20to%20book%20${encodeURIComponent(car.name)}%20for%20${encodeURIComponent(serviceTypes[serviceType]?.title || 'Cab Service')}`;
+
+  const carImages = car.images?.length > 0 ? car.images : 
+    (car.imageUrl ? [car.imageUrl] : ['https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800']);
+  
+  const carFeatures = car.features || [];
 
   return (
     <div className="car-card">
       <CarCarousel
-        images={car.images}
+        images={carImages}
         name={car.name}
         onImageClick={() => onViewDetails(car, assignedDriver)}
       />
@@ -99,8 +153,8 @@ const CarCard = ({ car, serviceType, onViewDetails }) => {
             <h3 className="car-name">{car.name}</h3>
           </div>
           <div className="car-rating">
-            <span className="stars">⭐ {car.rating}</span>
-            <span className="trips">{car.totalTrips} trips</span>
+            <span className="stars">⭐ {car.rating || 4.8}</span>
+            <span className="trips">{car.totalTrips || 0} trips</span>
           </div>
         </div>
 
@@ -109,37 +163,39 @@ const CarCard = ({ car, serviceType, onViewDetails }) => {
         <div className="car-specs">
           <div className="spec">
             <span className="spec-icon">👥</span>
-            <span>{car.capacity}</span>
+            <span>{car.capacity || car.seatingCapacity || '4+1'}</span>
           </div>
           <div className="spec">
             <span className="spec-icon">🧳</span>
-            <span>{car.luggage}</span>
+            <span>{car.luggage || '2 Bags'}</span>
           </div>
           <div className="spec">
             <span className="spec-icon">❄️</span>
-            <span>{car.ac ? "AC" : "Non-AC"}</span>
+            <span>{car.ac || car.hasAC ? "AC" : "Non-AC"}</span>
           </div>
           <div className="spec">
             <span className="spec-icon">⚙️</span>
-            <span>{car.transmission}</span>
+            <span>{car.transmission || 'Manual'}</span>
           </div>
         </div>
 
         <div className="car-features">
-          {car.features.slice(0, 4).map((feature, idx) => (
+          {carFeatures.slice(0, 4).map((feature, idx) => (
             <span key={idx} className="feature-tag">
               {feature}
             </span>
           ))}
-          {car.features.length > 4 && (
-            <span className="feature-more">+{car.features.length - 4}</span>
+          {carFeatures.length > 4 && (
+            <span className="feature-more">+{carFeatures.length - 4}</span>
           )}
         </div>
 
-        <div className="driver-section">
-          <span className="driver-label">Your Driver</span>
-          <DriverMiniCard driver={assignedDriver} />
-        </div>
+        {assignedDriver && (
+          <div className="driver-section">
+            <span className="driver-label">Your Driver</span>
+            <DriverMiniCard driver={assignedDriver} />
+          </div>
+        )}
 
         <div className="car-footer">
           <div className="car-price">{getPriceDisplay()}</div>
@@ -167,6 +223,7 @@ const CarCard = ({ car, serviceType, onViewDetails }) => {
 
 // Main Component
 const CabServices = ({ serviceType }) => {
+  const { cars, drivers, siteInfo, loading } = useSiteData();
   const [selectedCar, setSelectedCar] = useState(null);
   const [selectedDriver, setSelectedDriver] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -188,6 +245,20 @@ const CabServices = ({ serviceType }) => {
     setSelectedCar(null);
     setSelectedDriver(null);
   };
+
+  if (loading.cars && cars.length === 0) {
+    return (
+      <section className="cab-services-page">
+        <div className="cab-hero">
+          <div className="hero-overlay"></div>
+          <div className="hero-content">
+            <h1>{service.title}</h1>
+            <p>Loading...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="cab-services-page">
@@ -252,14 +323,20 @@ const CabServices = ({ serviceType }) => {
         </div>
 
         <div className="cars-grid">
-          {filteredCars.map((car) => (
-            <CarCard
-              key={car.id}
-              car={car}
-              serviceType={serviceType}
-              onViewDetails={handleViewDetails}
-            />
-          ))}
+          {filteredCars.length === 0 ? (
+            <p className="no-cars">No cars available in this category.</p>
+          ) : (
+            filteredCars.map((car) => (
+              <CarCard
+                key={car.id}
+                car={car}
+                serviceType={serviceType}
+                onViewDetails={handleViewDetails}
+                drivers={drivers}
+                siteInfo={siteInfo}
+              />
+            ))
+          )}
         </div>
 
         <p className="pricing-note">💡 {service.pricingNote}</p>
@@ -272,6 +349,7 @@ const CabServices = ({ serviceType }) => {
           driver={selectedDriver}
           serviceType={serviceType}
           onClose={closeModal}
+          siteInfo={siteInfo}
         />
       )}
     </section>

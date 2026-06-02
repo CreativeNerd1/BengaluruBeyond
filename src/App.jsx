@@ -9,6 +9,7 @@ import ScrollToTop, { ScrollToTopOnRoute } from "./components/ScrollToTop/Scroll
 import SEO from "./components/SEO/SEO";
 import { PageLoader } from "./components/Loading/Loading";
 import { AdminProvider, useAdmin } from "./context/AdminContext";
+import { SiteDataProvider } from "./context/SiteDataContext";
 import "./App.css";
 
 // Lazy load pages for better performance
@@ -17,7 +18,10 @@ const About = lazy(() => import("./components/About/About"));
 const TripPackages = lazy(() => import("./components/TripPackages/TripPackages"));
 const TripDetail = lazy(() => import("./components/TripDetail/TripDetail"));
 const CabServices = lazy(() => import("./components/CabServices/CabServices"));
+const PrivacyPolicy = lazy(() => import("./components/PrivacyPolicy/PrivacyPolicy"));
+const Terms = lazy(() => import("./components/Terms/Terms"));
 const NotFound = lazy(() => import("./components/NotFound/NotFound"));
+const BookingModal = lazy(() => import("./components/BookingModal/BookingModal"));
 
 // Admin lazy imports
 const AdminLogin = lazy(() => import("./admin/AdminLogin/AdminLogin"));
@@ -27,6 +31,7 @@ const AdminSiteSettings = lazy(() => import("./admin/SiteSettings/SiteSettings")
 const AdminServices = lazy(() => import("./admin/Services/Services"));
 const AdminTripPackages = lazy(() => import("./admin/TripPackages/TripPackages"));
 const AdminTestimonials = lazy(() => import("./admin/Testimonials/Testimonials"));
+const AdminInquiries = lazy(() => import("./admin/Inquiries/Inquiries"));
 const AdminCars = lazy(() => import("./admin/Cars/Cars"));
 const AdminDrivers = lazy(() => import("./admin/Drivers/Drivers"));
 const AdminNavigation = lazy(() => import("./admin/Navigation/Navigation"));
@@ -77,6 +82,7 @@ const AppLayout = () => {
             <Route path="services" element={<AdminServices />} />
             <Route path="trip-packages" element={<AdminTripPackages />} />
             <Route path="testimonials" element={<AdminTestimonials />} />
+            <Route path="inquiries" element={<AdminInquiries />} />
             <Route path="cars" element={<AdminCars />} />
             <Route path="drivers" element={<AdminDrivers />} />
             <Route path="navigation" element={<AdminNavigation />} />
@@ -100,14 +106,25 @@ const AppLayout = () => {
             <Route path="/local-cabs" element={<CabServices serviceType="local" />} />
             <Route path="/airport-cabs" element={<CabServices serviceType="airport" />} />
             <Route path="/outstation-cabs" element={<CabServices serviceType="outstation" />} />
+            {/* Alternative routes with /services/ prefix */}
+            <Route path="/services/local-cabs" element={<CabServices serviceType="local" />} />
+            <Route path="/services/airport-cabs" element={<CabServices serviceType="airport" />} />
+            <Route path="/services/airport-transfers" element={<CabServices serviceType="airport" />} />
+            <Route path="/services/outstation-cabs" element={<CabServices serviceType="outstation" />} />
+            <Route path="/services/outstation-trips" element={<CabServices serviceType="outstation" />} />
             <Route path="/packages" element={<TripPackages />} />
             <Route path="/packages/:slug" element={<TripDetail />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </main>
       <Footer />
+      <Suspense fallback={null}>
+        <BookingModal />
+      </Suspense>
       <ScrollToTop />
     </div>
   );
@@ -116,9 +133,11 @@ const AppLayout = () => {
 const App = () => {
   return (
     <Router>
-      <AdminProvider>
-        <AppLayout />
-      </AdminProvider>
+      <SiteDataProvider>
+        <AdminProvider>
+          <AppLayout />
+        </AdminProvider>
+      </SiteDataProvider>
     </Router>
   );
 };

@@ -1,7 +1,26 @@
-import { siteInfo, tripPackages, services } from "../../data/siteData";
+import { Link } from "react-router-dom";
+import { useSiteData } from "../../context/SiteDataContext";
 import "./Footer.css";
 
+// Helper function to generate service link from service data
+const getServiceLink = (service) => {
+  // If service has a custom link, use it (but make sure it's a valid route)
+  if (service.link && !service.link.startsWith('/services/')) {
+    return service.link;
+  }
+  
+  // Generate link based on service title
+  const title = (service.title || '').toLowerCase();
+  if (title.includes('local')) return '/local-cabs';
+  if (title.includes('airport')) return '/airport-cabs';
+  if (title.includes('outstation')) return '/outstation-cabs';
+  
+  // Default: use the cab services with a generic type
+  return '/local-cabs';
+};
+
 const Footer = () => {
+  const { siteInfo, tripPackages, services } = useSiteData();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -15,11 +34,11 @@ const Footer = () => {
               <span className="footer-logo-text">{siteInfo.name}</span>
             </div>
             <p className="footer-address">
-              {siteInfo.address.line1}
+              {siteInfo.address?.line1 || ''}
               <br />
-              {siteInfo.address.line2}
+              {siteInfo.address?.line2 || ''}
               <br />
-              {siteInfo.address.city}
+              {siteInfo.address?.city || ''}
             </p>
           </div>
 
@@ -27,9 +46,9 @@ const Footer = () => {
           <div className="footer-section">
             <h4 className="footer-title">Trip Packages</h4>
             <ul className="footer-links">
-              {tripPackages.map((pkg) => (
+              {tripPackages.slice(0, 6).map((pkg) => (
                 <li key={pkg.id}>
-                  <a href={pkg.link}>{pkg.name}</a>
+                  <Link to={`/packages/${pkg.id}`}>{pkg.title || pkg.name}</Link>
                 </li>
               ))}
             </ul>
@@ -41,13 +60,13 @@ const Footer = () => {
             <ul className="footer-links">
               {services.map((service) => (
                 <li key={service.id}>
-                  <a href={service.link}>{service.title}</a>
+                  <Link to={getServiceLink(service)}>{service.title}</Link>
                 </li>
               ))}
             </ul>
             <div className="footer-legal">
-              <a href="/privacy-policy">Privacy Policy</a>
-              <a href="/terms">Terms & Conditions</a>
+              <Link to="/privacy-policy">Privacy Policy</Link>
+              <Link to="/terms">Terms & Conditions</Link>
             </div>
           </div>
 
@@ -66,7 +85,7 @@ const Footer = () => {
             </div>
             <div className="footer-social">
               <a
-                href={siteInfo.socialLinks.google}
+                href={siteInfo.socialLinks?.google || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
@@ -75,7 +94,7 @@ const Footer = () => {
                 📍
               </a>
               <a
-                href={siteInfo.socialLinks.whatsapp}
+                href={siteInfo.socialLinks?.whatsapp || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link whatsapp"
@@ -84,7 +103,7 @@ const Footer = () => {
                 💬
               </a>
               <a
-                href={siteInfo.socialLinks.instagram}
+                href={siteInfo.socialLinks?.instagram || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
@@ -93,7 +112,7 @@ const Footer = () => {
                 📸
               </a>
               <a
-                href={siteInfo.socialLinks.youtube}
+                href={siteInfo.socialLinks?.youtube || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
@@ -122,7 +141,7 @@ const Footer = () => {
           📞
         </a>
         <a
-          href={siteInfo.socialLinks.whatsapp}
+          href={siteInfo.socialLinks?.whatsapp || '#'}
           target="_blank"
           rel="noopener noreferrer"
           className="floating-btn whatsapp-btn"

@@ -1,73 +1,78 @@
 // Admin Authentication Service
-// Uses localStorage for demo - replace with real auth in production
+// Uses backend JWT authentication
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5077/api';
 const AUTH_KEY = 'bengaluruBeyond_adminAuth';
-const ADMIN_KEY = 'bengaluruBeyond_adminCredentials';
+const TOKEN_KEY = 'admin_token';
 
-// Default admin credentials (in production, this would be in backend)
-const DEFAULT_ADMIN = {
-  username: 'admin',
-  password: 'admin123', // In production, use hashed passwords
-  name: 'Administrator',
-  email: 'admin@bengalurubeyond.com',
-};
-
-// Initialize admin if not exists
-const initializeAdmin = () => {
-  if (!localStorage.getItem(ADMIN_KEY)) {
-    localStorage.setItem(ADMIN_KEY, JSON.stringify(DEFAULT_ADMIN));
-  }
-};
-
-// Login
+// Login via backend API
 export const login = async (username, password) => {
-  initializeAdmin();
-  
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
-  const admin = JSON.parse(localStorage.getItem(ADMIN_KEY));
-  
-  if (admin.username === username && admin.password === password) {
-    const session = {
-      isAuthenticated: true,
-      user: {
-        username: admin.username,
-        name: admin.name,
-        email: admin.email,
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      loginTime: new Date().toISOString(),
-      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours
-    };
+      body: JSON.stringify({ username, password }),
+    });
     
-    localStorage.setItem(AUTH_KEY, JSON.stringify(session));
-    return { success: true, data: session };
+    const result = await response.json();
+    
+    if (result.success && result.data?.token) {
+      // Store JWT token securely
+      localStorage.setItem(TOKEN_KEY, result.data.token);
+      
+      const session = {
+        isAuthenticated: true,
+        user: {
+          username: result.data.username,
+          name: result.data.fullName || result.data.username,
+          role: result.data.role,
+        },
+        loginTime: new Date().toISOString(),
+        expiresAt: result.data.expiresAt,
+      };
+      
+      localStorage.setItem(AUTH_KEY, JSON.stringify(session));
+      return { success: true, data: session };
+    }
+    
+    return { success: false, error: result.message || 'Invalid credentials' };
+  } catch (error) {
+    console.error('Login error:', error);
+    return { success: false, error: 'Network error. Please try again.' };
   }
-  
-  return { success: false, error: 'Invalid username or password' };
 };
 
 // Logout
 export const logout = () => {
   localStorage.removeItem(AUTH_KEY);
+  localStorage.removeItem(TOKEN_KEY);
   return { success: true };
 };
 
 // Check if authenticated
 export const isAuthenticated = () => {
+  const token = localStorage.getItem(TOKEN_KEY);
   const session = localStorage.getItem(AUTH_KEY);
-  if (!session) return false;
   
-  const { isAuthenticated, expiresAt } = JSON.parse(session);
-  if (!isAuthenticated) return false;
+  if (!token || !session) return false;
   
-  // Check if session expired
-  if (new Date(expiresAt) < new Date()) {
-    localStorage.removeItem(AUTH_KEY);
+  try {
+    const { isAuthenticated, expiresAt } = JSON.parse(session);
+    if (!isAuthenticated) return false;
+    
+    // Check if session expired
+    if (new Date(expiresAt) < new Date()) {
+      logout();
+      return false;
+    }
+    
+    return true;
+  } catch {
+    logout();
     return false;
   }
-  
-  return true;
 };
 
 // Get current user
@@ -75,40 +80,58 @@ export const getCurrentUser = () => {
   const session = localStorage.getItem(AUTH_KEY);
   if (!session) return null;
   
-  const { user, isAuthenticated } = JSON.parse(session);
-  return isAuthenticated ? user : null;
+  try {
+    const { user, isAuthenticated } = JSON.parse(session);
+    return isAuthenticated ? user : null;
+  } catch {
+    return null;
+  }
 };
 
-// Update admin credentials
+// Get auth token for API calls
+export const getAuthToken = () => localStorage.getItem(TOKEN_KEY);
+
+// Update admin credentials via backend
 export const updateCredentials = async (currentPassword, newUsername, newPassword, name, email) => {
-  const admin = JSON.parse(localStorage.getItem(ADMIN_KEY));
-  
-  if (admin.password !== currentPassword) {
-    return { success: false, error: 'Current password is incorrect' };
+  try {
+    const token = getAuthToken();
+    if (!token) {
+      return { success: false, error: 'Not authenticated' };
+    }
+    
+    const response = await fetch(`${API_BASE_URL}/auth/change-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        currentPassword,
+        newPassword: newPassword || currentPassword,
+        newUsername,
+        name,
+        email,
+      }),
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      // Update local session
+      const session = JSON.parse(localStorage.getItem(AUTH_KEY) || '{}');
+      if (session.isAuthenticated && session.user) {
+        session.user.username = newUsername || session.user.username;
+        session.user.name = name || session.user.name;
+        localStorage.setItem(AUTH_KEY, JSON.stringify(session));
+      }
+      return { success: true };
+    }
+    
+    return { success: false, error: result.message || 'Failed to update credentials' };
+  } catch (error) {
+    console.error('Update credentials error:', error);
+    return { success: false, error: 'Network error. Please try again.' };
   }
-  
-  const updatedAdmin = {
-    ...admin,
-    username: newUsername || admin.username,
-    password: newPassword || admin.password,
-    name: name || admin.name,
-    email: email || admin.email,
-  };
-  
-  localStorage.setItem(ADMIN_KEY, JSON.stringify(updatedAdmin));
-  
-  // Update session if logged in
-  const session = JSON.parse(localStorage.getItem(AUTH_KEY) || '{}');
-  if (session.isAuthenticated) {
-    session.user = {
-      username: updatedAdmin.username,
-      name: updatedAdmin.name,
-      email: updatedAdmin.email,
-    };
-    localStorage.setItem(AUTH_KEY, JSON.stringify(session));
-  }
-  
-  return { success: true };
 };
 
 export default {
@@ -116,5 +139,6 @@ export default {
   logout,
   isAuthenticated,
   getCurrentUser,
+  getAuthToken,
   updateCredentials,
 };
