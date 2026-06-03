@@ -11,7 +11,6 @@ import { fetchServices } from '../services/api/servicesApi';
 import { fetchTestimonials } from '../services/api/testimonialsApi';
 import { fetchTripPackages } from '../services/api/tripPackagesApi';
 import { fetchCars } from '../services/api/carsApi';
-import { fetchDrivers } from '../services/api/driversApi';
 
 const SiteDataContext = createContext(null);
 
@@ -43,7 +42,6 @@ const defaultData = {
   testimonials: [],
   tripPackages: [],
   cars: [],
-  drivers: [],
 };
 
 /**
@@ -59,7 +57,6 @@ export function SiteDataProvider({ children }) {
     testimonials: null,
     tripPackages: null,
     cars: null,
-    drivers: null,
   });
   
   const [loading, setLoading] = useState({
@@ -69,7 +66,6 @@ export function SiteDataProvider({ children }) {
     testimonials: true,
     tripPackages: true,
     cars: true,
-    drivers: true,
   });
   
   const [errors, setErrors] = useState({});
@@ -164,20 +160,6 @@ export function SiteDataProvider({ children }) {
         setErrors(prev => ({ ...prev, cars: error.message }));
       }
       setLoading(prev => ({ ...prev, cars: false }));
-
-      // Fetch drivers
-      try {
-        const result = await fetchDrivers();
-        setData(prev => ({
-          ...prev,
-          drivers: result.success ? result.data : defaultData.drivers,
-        }));
-      } catch (error) {
-        console.error('Error fetching drivers:', error);
-        setData(prev => ({ ...prev, drivers: defaultData.drivers }));
-        setErrors(prev => ({ ...prev, drivers: error.message }));
-      }
-      setLoading(prev => ({ ...prev, drivers: false }));
     };
 
     fetchAllData();
@@ -214,10 +196,6 @@ export function SiteDataProvider({ children }) {
           result = await fetchCars();
           if (result.success) setData(prev => ({ ...prev, cars: result.data }));
           break;
-        case 'drivers':
-          result = await fetchDrivers();
-          if (result.success) setData(prev => ({ ...prev, drivers: result.data }));
-          break;
         default:
           console.warn(`Unknown data key: ${key}`);
       }
@@ -238,7 +216,6 @@ export function SiteDataProvider({ children }) {
       refresh('testimonials'),
       refresh('tripPackages'),
       refresh('cars'),
-      refresh('drivers'),
     ]);
   }, [refresh]);
 
@@ -263,7 +240,6 @@ export function SiteDataProvider({ children }) {
     testimonials: data.testimonials || defaultData.testimonials,
     tripPackages: data.tripPackages || defaultData.tripPackages,
     cars: data.cars || defaultData.cars,
-    drivers: data.drivers || defaultData.drivers,
     
     // Loading states
     loading,
@@ -328,11 +304,6 @@ export const useTripPackagesData = () => {
 export const useCarsData = () => {
   const { cars, loading } = useSiteData();
   return { cars, loading: loading.cars };
-};
-
-export const useDriversData = () => {
-  const { drivers, loading } = useSiteData();
-  return { drivers, loading: loading.drivers };
 };
 
 export default SiteDataContext;

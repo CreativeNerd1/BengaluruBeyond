@@ -22,7 +22,6 @@ import {
   MenuUnfoldOutlined,
   LogoutOutlined,
   GlobalOutlined,
-  TeamOutlined,
   LinkOutlined,
   LockOutlined,
   CustomerServiceOutlined,
@@ -84,21 +83,9 @@ const AdminLayout = () => {
       label: 'Inquiries',
     },
     {
-      key: 'fleet',
+      key: '/admin/cars',
       icon: <CarOutlined />,
-      label: 'Fleet Management',
-      children: [
-        {
-          key: '/admin/cars',
-          icon: <CarOutlined />,
-          label: 'Cars',
-        },
-        {
-          key: '/admin/drivers',
-          icon: <TeamOutlined />,
-          label: 'Drivers',
-        },
-      ],
+      label: 'Cars',
     },
     {
       key: '/admin/navigation',
@@ -139,7 +126,6 @@ const AdminLayout = () => {
       '/admin/trip-packages': 'Trip Packages',
       '/admin/testimonials': 'Testimonials',
       '/admin/cars': 'Cars',
-      '/admin/drivers': 'Drivers',
       '/admin/navigation': 'Navigation',
       '/admin/settings': 'Admin Settings',
     };
@@ -163,9 +149,6 @@ const AdminLayout = () => {
         location.pathname.includes('trip-packages') || 
         location.pathname.includes('testimonials')) {
       return ['content'];
-    }
-    if (location.pathname.includes('cars') || location.pathname.includes('drivers')) {
-      return ['fleet'];
     }
     return [];
   };

@@ -17,7 +17,7 @@ const serviceTypes = {
   },
 };
 
-const CarDetailModal = ({ car, driver, serviceType, onClose, siteInfo }) => {
+const CarDetailModal = ({ car, serviceType, onClose, siteInfo }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("gallery");
 
@@ -132,12 +132,6 @@ const CarDetailModal = ({ car, driver, serviceType, onClose, siteInfo }) => {
                 🚗 Car Details
               </button>
               <button
-                className={`tab ${activeTab === "driver" ? "active" : ""}`}
-                onClick={() => setActiveTab("driver")}
-              >
-                👨‍✈️ Driver Info
-              </button>
-              <button
                 className={`tab ${activeTab === "pricing" ? "active" : ""}`}
                 onClick={() => setActiveTab("pricing")}
               >
@@ -198,95 +192,6 @@ const CarDetailModal = ({ car, driver, serviceType, onClose, siteInfo }) => {
                           ✓ {feature}
                         </span>
                       ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === "driver" && driver && (
-                <div className="driver-details-tab">
-                  <div className="driver-profile">
-                    <img
-                      src={driver.photo || driver.imageUrl || driver.image || 'https://randomuser.me/api/portraits/men/32.jpg'}
-                      alt={driver.name}
-                      className="driver-photo-large"
-                    />
-                    <div className="driver-header-info">
-                      <h3>
-                        {driver.name}
-                        {(driver.verified || driver.isVerified) && (
-                          <span className="verified-icon">✓ Verified</span>
-                        )}
-                      </h3>
-                      <div className="driver-stats">
-                        <span className="stat">
-                          ⭐ {driver.rating || 4.8} Rating
-                        </span>
-                        <span className="stat">
-                          🚗 {driver.totalTrips || 0} Trips
-                        </span>
-                        <span className="stat">
-                          📅 {driver.experience || `${driver.experienceYears || 0}+ Years`}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {driver.badges?.length > 0 && (
-                    <div className="driver-badges">
-                      {driver.badges.map((badge, idx) => (
-                        <span key={idx} className="badge">
-                          🏆 {badge}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  {driver.about && <p className="driver-about">{driver.about}</p>}
-
-                  <div className="driver-info-grid">
-                    <div className="info-item">
-                      <span className="info-label">Languages</span>
-                      <span className="info-value">
-                        {Array.isArray(driver.languages) ? driver.languages.join(", ") : (driver.languages || 'English, Hindi, Kannada')}
-                      </span>
-                    </div>
-                    {driver.specialization && (
-                      <div className="info-item">
-                        <span className="info-label">Specialization</span>
-                        <span className="info-value">
-                          {Array.isArray(driver.specialization) ? driver.specialization.join(", ") : driver.specialization}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="driver-guarantee">
-                    <span className="guarantee-icon">🛡️</span>
-                    <div>
-                      <h5>CabMitra Guarantee</h5>
-                      <p>
-                        All our drivers are verified, background-checked, and
-                        trained for your safety and comfort.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-              {activeTab === "driver" && !driver && (
-                <div className="driver-details-tab">
-                  <div className="no-driver">
-                    <p>Driver information will be assigned upon booking.</p>
-                    <div className="driver-guarantee">
-                      <span className="guarantee-icon">🛡️</span>
-                      <div>
-                        <h5>CabMitra Guarantee</h5>
-                        <p>
-                          All our drivers are verified, background-checked, and
-                          trained for your safety and comfort.
-                        </p>
-                      </div>
                     </div>
                   </div>
                 </div>

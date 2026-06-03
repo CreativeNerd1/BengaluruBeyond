@@ -8,42 +8,60 @@ import { httpGet, httpPost, httpPut, httpDelete } from './apiClient';
 /**
  * Transform API car data to frontend format
  */
-const mapCarFromApi = (car) => ({
-  id: car.id,
-  name: car.name,
-  type: car.type,
-  brand: car.brand,
-  model: car.model,
-  year: car.year,
-  registrationNumber: car.registrationNumber,
-  seatingCapacity: car.seatingCapacity,
-  capacity: `${car.seatingCapacity - 1}+1`, // Format as "4+1" style
-  fuelType: car.fuelType,
-  fuel: car.fuelType,
-  transmission: car.transmission,
-  hasAC: car.hasAC,
-  ac: car.hasAC,
-  pricePerKm: car.pricePerKm,
-  pricePerDay: car.pricePerDay,
-  imageUrl: car.imageUrl,
-  images: car.imageUrl ? [car.imageUrl] : [],
-  features: car.features ? car.features.split(',').map(f => f.trim()) : [],
-  isAvailable: car.isAvailable,
-  isActive: car.isActive,
-  assignedDriverId: car.assignedDriverId,
-  assignedDriverName: car.assignedDriverName,
-  // Add computed fields for UI compatibility
-  category: car.type?.toLowerCase().replace(' ', '-') || 'sedan',
-  luggage: car.seatingCapacity > 5 ? '4 Large Bags' : '2 Large Bags',
-  rating: 4.8,
-  totalTrips: 0,
-  description: `${car.brand || ''} ${car.model || ''} - ${car.type || 'Sedan'}. Comfortable travel with ${car.seatingCapacity || 4} seating capacity.`,
-  pricing: {
-    local: { baseKm: 40, baseFare: 800, extraKmRate: car.pricePerKm || 14 },
-    airport: { oneway: 1200, roundTrip: 2000 },
-    outstation: { perKm: car.pricePerKm || 12, minKmPerDay: 300, driverAllowance: 400 },
-  },
-});
+const mapCarFromApi = (car) => {
+  // Determine category based on seating capacity
+  const getCategory = (seats) => {
+    if (seats <= 4) return '4-seater';
+    if (seats <= 5) return '5-seater';
+    if (seats <= 7) return '7-seater';
+    if (seats <= 12) return '12-seater';
+    return 'bus';
+  };
+
+  // Determine type label based on seating capacity
+  const getTypeLabel = (seats) => {
+    if (seats <= 4) return '4 Seater';
+    if (seats <= 5) return '5 Seater';
+    if (seats <= 7) return '7 Seater';
+    if (seats <= 12) return '12 Seater';
+    return 'Bus';
+  };
+
+  return {
+    id: car.id,
+    name: car.name,
+    type: car.type || getTypeLabel(car.seatingCapacity),
+    brand: car.brand,
+    model: car.model,
+    year: car.year,
+    registrationNumber: car.registrationNumber,
+    seatingCapacity: car.seatingCapacity,
+    capacity: `${car.seatingCapacity}`,
+    fuelType: car.fuelType,
+    fuel: car.fuelType,
+    transmission: car.transmission,
+    hasAC: car.hasAC,
+    ac: car.hasAC,
+    pricePerKm: car.pricePerKm,
+    pricePerDay: car.pricePerDay,
+    imageUrl: car.imageUrl,
+    images: car.imageUrl ? [car.imageUrl] : [],
+    features: car.features ? car.features.split(',').map(f => f.trim()) : [],
+    isAvailable: car.isAvailable,
+    isActive: car.isActive,
+    // Add computed fields for UI compatibility
+    category: getCategory(car.seatingCapacity),
+    luggage: car.seatingCapacity > 5 ? '4 Large Bags' : '2 Large Bags',
+    rating: 4.8,
+    totalTrips: 0,
+    description: `${car.brand || ''} ${car.model || ''} - ${getTypeLabel(car.seatingCapacity)}. Comfortable travel with ${car.seatingCapacity || 4} seating capacity.`,
+    pricing: {
+      local: { baseKm: 40, baseFare: 800, extraKmRate: car.pricePerKm || 14 },
+      airport: { oneway: 1200, roundTrip: 2000 },
+      outstation: { perKm: car.pricePerKm || 12, minKmPerDay: 300, driverAllowance: 400 },
+    },
+  };
+};
 
 const mapCarsFromApi = (cars) => cars.map(mapCarFromApi);
 
@@ -111,7 +129,6 @@ export const createCar = async (carData) => {
     features: Array.isArray(carData.features) ? carData.features.join(', ') : carData.features,
     isAvailable: carData.isAvailable ?? true,
     isActive: carData.isActive ?? true,
-    assignedDriverId: carData.assignedDriverId,
   };
   
   const result = await httpPost('/cars', payload);
@@ -154,7 +171,6 @@ export const updateCar = async (id, carData) => {
   }
   if (carData.isAvailable !== undefined) payload.isAvailable = carData.isAvailable;
   if (carData.isActive !== undefined) payload.isActive = carData.isActive;
-  if (carData.assignedDriverId !== undefined) payload.assignedDriverId = carData.assignedDriverId;
   
   const result = await httpPut(`/cars/${id}`, payload);
   

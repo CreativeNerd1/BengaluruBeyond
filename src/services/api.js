@@ -1,6 +1,6 @@
 // API Service Layer - Connects to BengaluruBeyond.API backend
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5077/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 const getAuthToken = () => localStorage.getItem('admin_token');
 
@@ -107,114 +107,6 @@ export const carsApi = {
   }),
 };
 
-// Drivers API
-export const driversApi = {
-  getAll: () => apiRequest('/drivers'),
-  getById: (id) => apiRequest(`/drivers/${id}`),
-  create: (driver) => apiRequest('/drivers', {
-    method: 'POST',
-    body: JSON.stringify(driver),
-  }),
-  update: (id, driver) => apiRequest(`/drivers/${id}`, {
-    method: 'PUT',
-    body: JSON.stringify(driver),
-  }),
-  delete: (id) => apiRequest(`/drivers/${id}`, {
-    method: 'DELETE',
-  }),
-  resendVerification: (id) => apiRequest(`/drivers/${id}/resend-verification`, {
-    method: 'POST',
-  }),
-  assignRide: (driverId, assignment) => apiRequest(`/drivers/${driverId}/assign-ride`, {
-    method: 'POST',
-    body: JSON.stringify(assignment),
-  }),
-};
-
-// Driver Auth API (for driver portal)
-export const driverAuthApi = {
-  login: async (email, password) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/driver/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      return await response.json();
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  },
-  verifyToken: async (token) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/driver/verify/${token}`);
-      return await response.json();
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  },
-  register: async (token, password, confirmPassword) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/driver/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, password, confirmPassword }),
-      });
-      return await response.json();
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  },
-  getProfile: () => driverApiRequest('/driver/profile'),
-  updateProfile: (profile) => driverApiRequest('/driver/profile', {
-    method: 'PUT',
-    body: JSON.stringify(profile),
-  }),
-  changePassword: (data) => driverApiRequest('/driver/change-password', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  }),
-  updateStatus: (status) => driverApiRequest('/driver/status', {
-    method: 'POST',
-    body: JSON.stringify(status),
-  }),
-  getDashboard: () => driverApiRequest('/driver/dashboard'),
-  getPendingCount: () => driverApiRequest('/driver/pending-count'),
-  getRide: (id) => driverApiRequest(`/driver/rides/${id}`),
-  rideAction: (id, action) => driverApiRequest(`/driver/rides/${id}/action`, {
-    method: 'POST',
-    body: JSON.stringify(action),
-  }),
-  getEarnings: () => driverApiRequest('/driver/earnings'),
-};
-
-// Helper for driver-authenticated requests
-const getDriverToken = () => localStorage.getItem('driver_token');
-
-const driverApiRequest = async (endpoint, options = {}) => {
-  const token = getDriverToken();
-  const headers = {
-    'Content-Type': 'application/json',
-    ...options.headers,
-  };
-  
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-  
-  try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      ...options,
-      headers,
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Driver API Error:', error);
-    return { success: false, error: error.message };
-  }
-};
-
 // Navigation Links API
 export const navLinksApi = {
   getAll: () => apiRequest('/navlinks'),
@@ -265,8 +157,6 @@ export default {
   tripPackagesApi,
   testimonialsApi,
   carsApi,
-  driversApi,
-  driverAuthApi,
   navLinksApi,
   inquiriesApi,
   dashboardApi,

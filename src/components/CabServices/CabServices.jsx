@@ -79,29 +79,9 @@ const CarCarousel = ({ images, name, onImageClick }) => {
   );
 };
 
-// Driver Mini Card
-const DriverMiniCard = ({ driver }) => (
-  <div className="driver-mini">
-    <img 
-      src={driver.photo || driver.imageUrl || driver.image || 'https://randomuser.me/api/portraits/men/32.jpg'} 
-      alt={driver.name} 
-      className="driver-photo" 
-    />
-    <div className="driver-info">
-      <span className="driver-name">{driver.name}</span>
-      <div className="driver-meta">
-        <span className="driver-rating">⭐ {driver.rating || 4.8}</span>
-        <span className="driver-exp">{driver.experience || `${driver.experienceYears || 0}+ years`}</span>
-      </div>
-    </div>
-    {(driver.verified || driver.isVerified) && <span className="verified-badge">✓</span>}
-  </div>
-);
-
 // Car Card Component
-const CarCard = ({ car, serviceType, onViewDetails, drivers, siteInfo }) => {
+const CarCard = ({ car, serviceType, onViewDetails, siteInfo }) => {
   const pricing = car.pricing?.[serviceType] || { baseFare: 0, baseKm: 0, perKm: 0, oneway: 0 };
-  const assignedDriver = drivers?.[car.id % (drivers.length || 1)] || null;
 
   const getPriceDisplay = () => {
     switch (serviceType) {
@@ -190,19 +170,12 @@ const CarCard = ({ car, serviceType, onViewDetails, drivers, siteInfo }) => {
           )}
         </div>
 
-        {assignedDriver && (
-          <div className="driver-section">
-            <span className="driver-label">Your Driver</span>
-            <DriverMiniCard driver={assignedDriver} />
-          </div>
-        )}
-
         <div className="car-footer">
           <div className="car-price">{getPriceDisplay()}</div>
           <div className="car-actions">
             <button
               className="btn-details"
-              onClick={() => onViewDetails(car, assignedDriver)}
+              onClick={() => onViewDetails(car)}
             >
               View Details
             </button>
@@ -223,9 +196,8 @@ const CarCard = ({ car, serviceType, onViewDetails, drivers, siteInfo }) => {
 
 // Main Component
 const CabServices = ({ serviceType }) => {
-  const { cars, drivers, siteInfo, loading } = useSiteData();
+  const { cars, siteInfo, loading } = useSiteData();
   const [selectedCar, setSelectedCar] = useState(null);
-  const [selectedDriver, setSelectedDriver] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [filter, setFilter] = useState("all");
 
@@ -234,16 +206,14 @@ const CabServices = ({ serviceType }) => {
   const filteredCars =
     filter === "all" ? cars : cars.filter((car) => car.category === filter);
 
-  const handleViewDetails = (car, driver) => {
+  const handleViewDetails = (car) => {
     setSelectedCar(car);
-    setSelectedDriver(driver);
     setModalOpen(true);
   };
 
   const closeModal = () => {
     setModalOpen(false);
     setSelectedCar(null);
-    setSelectedDriver(null);
   };
 
   if (loading.cars && cars.length === 0) {
@@ -302,22 +272,34 @@ const CabServices = ({ serviceType }) => {
               All
             </button>
             <button
-              className={`filter-tab ${filter === "sedan" ? "active" : ""}`}
-              onClick={() => setFilter("sedan")}
+              className={`filter-tab ${filter === "4-seater" ? "active" : ""}`}
+              onClick={() => setFilter("4-seater")}
             >
-              Sedans
+              4 Seater
             </button>
             <button
-              className={`filter-tab ${filter === "suv" ? "active" : ""}`}
-              onClick={() => setFilter("suv")}
+              className={`filter-tab ${filter === "5-seater" ? "active" : ""}`}
+              onClick={() => setFilter("5-seater")}
             >
-              SUVs
+              5 Seater
             </button>
             <button
-              className={`filter-tab ${filter === "tempo" ? "active" : ""}`}
-              onClick={() => setFilter("tempo")}
+              className={`filter-tab ${filter === "7-seater" ? "active" : ""}`}
+              onClick={() => setFilter("7-seater")}
             >
-              Tempo
+              7 Seater
+            </button>
+            <button
+              className={`filter-tab ${filter === "12-seater" ? "active" : ""}`}
+              onClick={() => setFilter("12-seater")}
+            >
+              12 Seater
+            </button>
+            <button
+              className={`filter-tab ${filter === "bus" ? "active" : ""}`}
+              onClick={() => setFilter("bus")}
+            >
+              Bus
             </button>
           </div>
         </div>
@@ -332,7 +314,6 @@ const CabServices = ({ serviceType }) => {
                 car={car}
                 serviceType={serviceType}
                 onViewDetails={handleViewDetails}
-                drivers={drivers}
                 siteInfo={siteInfo}
               />
             ))
@@ -346,7 +327,6 @@ const CabServices = ({ serviceType }) => {
       {modalOpen && selectedCar && (
         <CarDetailModal
           car={selectedCar}
-          driver={selectedDriver}
           serviceType={serviceType}
           onClose={closeModal}
           siteInfo={siteInfo}

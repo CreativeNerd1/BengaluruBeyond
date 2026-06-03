@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "r
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import Services from "./components/Services/Services";
+import HomeCabServices from "./components/CabServices/HomeCabServices";
+import HomeTripPackages from "./components/TripPackages/HomeTripPackages";
 import Testimonials from "./components/Testimonials/Testimonials";
 import Footer from "./components/Footer/Footer";
 import ScrollToTop, { ScrollToTopOnRoute } from "./components/ScrollToTop/ScrollToTop";
@@ -33,14 +35,8 @@ const AdminTripPackages = lazy(() => import("./admin/TripPackages/TripPackages")
 const AdminTestimonials = lazy(() => import("./admin/Testimonials/Testimonials"));
 const AdminInquiries = lazy(() => import("./admin/Inquiries/Inquiries"));
 const AdminCars = lazy(() => import("./admin/Cars/Cars"));
-const AdminDrivers = lazy(() => import("./admin/Drivers/Drivers"));
 const AdminNavigation = lazy(() => import("./admin/Navigation/Navigation"));
 const AdminSettings = lazy(() => import("./admin/Settings/Settings"));
-
-// Driver portal lazy imports
-const DriverLogin = lazy(() => import("./driver/DriverLogin/DriverLogin"));
-const DriverRegister = lazy(() => import("./driver/DriverRegister/DriverRegister"));
-const DriverDashboard = lazy(() => import("./driver/DriverDashboard/DriverDashboard"));
 
 // Protected Route for Admin
 const ProtectedRoute = ({ children }) => {
@@ -62,6 +58,8 @@ const HomePage = () => (
   <>
     <Hero />
     <Services />
+    <HomeCabServices />
+    <HomeTripPackages />
     <Testimonials />
   </>
 );
@@ -70,21 +68,6 @@ const HomePage = () => (
 const AppLayout = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
-  const isDriverRoute = location.pathname.startsWith('/driver');
-
-  // Driver Portal Routes (no header/footer)
-  if (isDriverRoute) {
-    return (
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/driver/login" element={<DriverLogin />} />
-          <Route path="/driver/register" element={<DriverRegister />} />
-          <Route path="/driver/dashboard" element={<DriverDashboard />} />
-          <Route path="/driver/*" element={<Navigate to="/driver/login" replace />} />
-        </Routes>
-      </Suspense>
-    );
-  }
 
   // Admin Routes
   if (isAdminRoute) {
@@ -105,7 +88,6 @@ const AppLayout = () => {
             <Route path="testimonials" element={<AdminTestimonials />} />
             <Route path="inquiries" element={<AdminInquiries />} />
             <Route path="cars" element={<AdminCars />} />
-            <Route path="drivers" element={<AdminDrivers />} />
             <Route path="navigation" element={<AdminNavigation />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>

@@ -224,12 +224,11 @@ const Cars = () => {
             <Col span={12}>
               <Form.Item name="type" label="Car Type" rules={[{ required: true }]}>
                 <Select placeholder="Select type">
-                  <Select.Option value="Hatchback">Hatchback</Select.Option>
-                  <Select.Option value="Sedan">Sedan</Select.Option>
-                  <Select.Option value="SUV">SUV</Select.Option>
-                  <Select.Option value="MUV">MUV</Select.Option>
-                  <Select.Option value="Luxury">Luxury</Select.Option>
-                  <Select.Option value="Tempo Traveller">Tempo Traveller</Select.Option>
+                  <Select.Option value="4 Seater">4 Seater</Select.Option>
+                  <Select.Option value="5 Seater">5 Seater</Select.Option>
+                  <Select.Option value="7 Seater">7 Seater</Select.Option>
+                  <Select.Option value="12 Seater">12 Seater</Select.Option>
+                  <Select.Option value="Bus">Bus</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -241,8 +240,16 @@ const Cars = () => {
 
           <Row gutter={16}>
             <Col span={8}>
-              <Form.Item name="seatingCapacity" label="Seats" rules={[{ required: true }]}>
-                <InputNumber min={1} max={50} style={{ width: '100%' }} />
+              <Form.Item name="seatingCapacity" label="Seating Capacity" rules={[{ required: true }]}>
+                <Select placeholder="Select capacity">
+                  <Select.Option value={4}>4 Seater</Select.Option>
+                  <Select.Option value={5}>5 Seater</Select.Option>
+                  <Select.Option value={7}>7 Seater</Select.Option>
+                  <Select.Option value={12}>12 Seater</Select.Option>
+                  <Select.Option value={20}>20 Seater (Mini Bus)</Select.Option>
+                  <Select.Option value={35}>35 Seater (Bus)</Select.Option>
+                  <Select.Option value={50}>50 Seater (Bus)</Select.Option>
+                </Select>
               </Form.Item>
             </Col>
             <Col span={8}>

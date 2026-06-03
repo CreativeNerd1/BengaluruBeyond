@@ -12,5 +12,4 @@ export * from './servicesApi';
 export * from './tripPackagesApi';
 export * from './siteInfoApi';
 export * from './carsApi';
-export * from './driversApi';
 export * from './navLinksApi';

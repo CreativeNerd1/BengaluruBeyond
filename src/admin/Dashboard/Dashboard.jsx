@@ -20,7 +20,6 @@ import {
   CarOutlined,
   CompassOutlined,
   StarOutlined,
-  TeamOutlined,
   CustomerServiceOutlined,
   PlusOutlined,
   SettingOutlined,
@@ -38,8 +37,7 @@ import {
   servicesApi, 
   tripPackagesApi, 
   testimonialsApi, 
-  carsApi, 
-  driversApi 
+  carsApi
 } from '../../services/api';
 
 const { Title, Text, Paragraph } = Typography;
@@ -63,20 +61,17 @@ const Dashboard = () => {
           setStats(dashboardStats.data);
         } else {
           // Fallback to counting from individual APIs
-          const [services, packages, testimonials, cars, drivers] = await Promise.all([
+          const [services, packages, testimonials, cars] = await Promise.all([
             servicesApi.getAll(),
             tripPackagesApi.getAll(),
             testimonialsApi.getAll(),
             carsApi.getAll(),
-            driversApi.getAll(),
           ]);
           setStats({
             totalPackages: packages.data?.length || 0,
             activePackages: packages.data?.filter(p => p.isActive)?.length || 0,
             totalCars: cars.data?.length || 0,
             availableCars: cars.data?.filter(c => c.isAvailable)?.length || 0,
-            totalDrivers: drivers.data?.length || 0,
-            availableDrivers: drivers.data?.filter(d => d.status === 'Available')?.length || 0,
             totalTestimonials: testimonials.data?.length || 0,
             averageRating: 4.8,
             totalInquiries: 0,
@@ -101,7 +96,6 @@ const Dashboard = () => {
     { title: 'Trip Packages', value: stats.totalPackages, subtitle: `${stats.activePackages} active`, icon: <CompassOutlined />, color: '#fa8c16', link: '/admin/trip-packages' },
     { title: 'Inquiries', value: stats.totalInquiries, subtitle: stats.newInquiries > 0 ? <Badge status="processing" text={`${stats.newInquiries} new`} /> : 'No new', icon: <MessageOutlined />, color: '#eb2f96', link: '/admin/inquiries' },
     { title: 'Cars', value: stats.totalCars, subtitle: `${stats.availableCars} available`, icon: <CarOutlined />, color: '#52c41a', link: '/admin/cars' },
-    { title: 'Drivers', value: stats.totalDrivers, subtitle: `${stats.availableDrivers} available`, icon: <TeamOutlined />, color: '#13c2c2', link: '/admin/drivers' },
     { title: 'Reviews', value: stats.totalTestimonials, subtitle: `★ ${stats.averageRating} avg`, icon: <StarOutlined />, color: '#722ed1', link: '/admin/testimonials' },
   ] : [];
 
@@ -290,7 +284,7 @@ const Dashboard = () => {
                       <Text strong>Manage Fleet</Text>
                       <br />
                       <Button type="link" size="small" style={{ padding: 0 }} onClick={() => navigate('/admin/cars')}>
-                        Cars & Drivers →
+                        Manage Cars →
                       </Button>
                     </div>
                   ),
