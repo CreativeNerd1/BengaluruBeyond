@@ -182,7 +182,7 @@ const AdminLayout = () => {
           <CarOutlined style={{ fontSize: 24, color: '#1890ff' }} />
           {!collapsed && (
             <Title level={5} style={{ margin: 0, marginLeft: 12, whiteSpace: 'nowrap' }}>
-              BengaluruBeyond
+              VrudhiCabs
             </Title>
           )}
         </div>

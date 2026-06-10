@@ -60,7 +60,7 @@ const AdminLogin = () => {
         <Space direction="vertical" size="large" style={{ width: '100%', textAlign: 'center' }}>
           <div>
             <CarOutlined style={{ fontSize: 48, color: '#1890ff' }} />
-            <Title level={2} style={{ margin: '16px 0 4px' }}>BengaluruBeyond</Title>
+            <Title level={2} style={{ margin: '16px 0 4px' }}>VrudhiCabs</Title>
             <Text type="secondary">Admin Panel</Text>
           </div>
 

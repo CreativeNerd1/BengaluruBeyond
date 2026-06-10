@@ -119,7 +119,7 @@ const SiteSettings = () => {
                 label="Business Name"
                 rules={[{ required: true, message: 'Please enter business name' }]}
               >
-                <Input placeholder="e.g., BengaluruBeyond" />
+                <Input placeholder="e.g., VrudhiCabs" />
               </Form.Item>
             </Col>
             <Col xs={24} md={12}>

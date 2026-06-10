@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useSiteData } from "../../context/SiteDataContext";
 import "./HomeTripPackages.css";
 
-const FALLBACK_TRIP_IMAGE = "https://picsum.photos/seed/cabmitra-trip/800/500";
+const FALLBACK_TRIP_IMAGE = "https://picsum.photos/seed/vrudhicabs-trip/800/500";
 
 const getTripImage = (trip) => {
   const candidates = [trip.imageUrl, trip.image, ...(trip.images || [])].filter(Boolean);

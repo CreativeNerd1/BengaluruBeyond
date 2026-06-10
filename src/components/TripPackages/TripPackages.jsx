@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSiteData } from "../../context/SiteDataContext";
 import "./TripPackages.css";
 
-const FALLBACK_TRIP_IMAGE = "https://picsum.photos/seed/cabmitra-trip/800/500";
+const FALLBACK_TRIP_IMAGE = "https://picsum.photos/seed/vrudhicabs-trip/800/500";
 
 const getTripImages = (trip) => {
   const candidates = [

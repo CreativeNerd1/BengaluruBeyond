@@ -4,7 +4,7 @@ import "../PrivacyPolicy/PrivacyPolicy.css"; // Reuse legal page styles
 
 const Terms = () => {
   const { siteInfo } = useSiteData();
-  const companyName = siteInfo?.name || "CabMitra";
+  const companyName = siteInfo?.name || "VrudhiCabs";
 
   return (
     <section className="legal-page">
@@ -101,7 +101,7 @@ const Terms = () => {
             </p>
             <ul>
               <li><strong>Phone:</strong> {siteInfo?.phone || "+91 9606919300"}</li>
-              <li><strong>Email:</strong> {siteInfo?.email || "info@cabmitra.com"}</li>
+              <li><strong>Email:</strong> {siteInfo?.email || "info@vrudhicabs.com"}</li>
             </ul>
           </section>
         </div>

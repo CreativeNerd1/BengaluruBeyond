@@ -1,4 +1,4 @@
-# BengaluruBeyond Deployment Guide
+# VrudhiCabs Deployment Guide
 
 This guide will help you deploy both the React frontend and .NET API backend to production.
 
@@ -23,7 +23,7 @@ This guide will help you deploy both the React frontend and .NET API backend to 
 
 ### Option A: Deploy via GitHub
 
-1. Push the `BengaluruBeyond.API` folder to a GitHub repository
+1. Push the `VrudhiCabs.API` folder to a GitHub repository
 2. In Railway, click "New Project" → "Deploy from GitHub repo"
 3. Select your repository
 4. Add environment variables (Settings → Variables):
@@ -35,12 +35,12 @@ Jwt__Key=<generate-a-strong-64-char-secret>
 AllowedOrigins__0=https://your-frontend-url.vercel.app
 ```
 
-5. Railway will auto-deploy and give you a URL like `https://bengalurubeyond-api.railway.app`
+5. Railway will auto-deploy and give you a URL like `https://vrudhicabs-api.railway.app`
 
 ### Option B: Deploy via Railway CLI
 
 ```bash
-cd BengaluruBeyond.API
+cd VrudhiCabs.API
 npm install -g @railway/cli
 railway login
 railway init
@@ -99,7 +99,7 @@ After deploying the frontend, update the backend's allowed origins:
 1. Go to Railway dashboard
 2. Select your API service
 3. Go to Variables
-4. Update `AllowedOrigins__0` to your Vercel URL (e.g., `https://bengalurubeyond.vercel.app`)
+4. Update `AllowedOrigins__0` to your Vercel URL (e.g., `https://vrudhicabs.vercel.app`)
 5. Redeploy the service
 
 ## Step 5: Verify Deployment
@@ -121,12 +121,12 @@ Choose a domain registrar:
 - **[Google Domains](https://domains.google)** - Clean interface, ~₹1,200/year
 - **[Hostinger](https://hostinger.in)** - Cheapest, ~₹499/year for .in domains
 
-**Recommended**: Search for `bengalurubeyond.com` or `bengalurubeyond.in`
+**Recommended**: Search for `vrudhicabs.com`
 
 ### Step 2: Configure DNS for Frontend (Vercel)
 
 1. Go to Vercel Dashboard → Your Project → Settings → Domains
-2. Click "Add Domain" and enter your domain (e.g., `bengalurubeyond.com`)
+2. Click "Add Domain" and enter your domain (e.g., `vrudhicabs.com`)
 3. Vercel will show required DNS records. In your domain registrar, add:
 
 | Type | Name | Value |
@@ -141,7 +141,7 @@ Choose a domain registrar:
 
 1. Go to Railway Dashboard → Your API Service → Settings → Networking
 2. Click "Generate Domain" or "Custom Domain"
-3. Add a subdomain (e.g., `api.bengalurubeyond.com`)
+3. Add a subdomain (e.g., `api.vrudhicabs.com`)
 4. Add DNS record at your registrar:
 
 | Type | Name | Value |
@@ -154,14 +154,14 @@ After setting up domains, update:
 
 **Frontend (Vercel):**
 ```
-VITE_API_URL=https://api.bengalurubeyond.com/api
-VITE_SITE_URL=https://bengalurubeyond.com
+VITE_API_URL=https://api.vrudhicabs.com/api
+VITE_SITE_URL=https://vrudhicabs.com
 ```
 
 **Backend (Railway):**
 ```
-AllowedOrigins__0=https://bengalurubeyond.com
-AllowedOrigins__1=https://www.bengalurubeyond.com
+AllowedOrigins__0=https://vrudhicabs.com
+AllowedOrigins__1=https://www.vrudhicabs.com
 ```
 
 ### SSL/HTTPS (Automatic)
@@ -177,8 +177,8 @@ AllowedOrigins__1=https://www.bengalurubeyond.com
 | `ASPNETCORE_ENVIRONMENT` | Set to `Production` | Yes |
 | `ConnectionStrings__DefaultConnection` | PostgreSQL connection string | Yes |
 | `Jwt__Key` | Secret key for JWT tokens (64+ chars) | Yes |
-| `Jwt__Issuer` | JWT issuer (default: BengaluruBeyond.API) | No |
-| `Jwt__Audience` | JWT audience (default: BengaluruBeyond.Client) | No |
+| `Jwt__Issuer` | JWT issuer (default: VrudhiCabs.API) | No |
+| `Jwt__Audience` | JWT audience (default: VrudhiCabs.Client) | No |
 | `AllowedOrigins__0` | Frontend URL for CORS | Yes |
 | `AllowedOrigins__1` | Additional allowed origin | No |
 

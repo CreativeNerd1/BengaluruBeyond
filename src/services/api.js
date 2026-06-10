@@ -1,4 +1,4 @@
-// API Service Layer - Connects to BengaluruBeyond.API backend
+// API Service Layer - Connects to the backend API
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 

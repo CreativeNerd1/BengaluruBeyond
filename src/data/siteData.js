@@ -1,12 +1,12 @@
-// Static data for CabMitra-style website
+// Static data for VrudhiCabs website
 
 export const siteInfo = {
-  name: "CabMitra",
+  name: "VrudhiCabs",
   tagline: "Where Journeys Begin",
   description:
     "Explore the vibrant city of Bengaluru with our reliable cab services, or embark on unforgettable outstation journeys with customizable trip packages",
   phone: "+91 9606919300",
-  email: "info@cabmitra.com",
+  email: "info@vrudhicabs.com",
   address: {
     line1: "No 19, (Neralu), 11th cross",
     line2: "Lakshmaiah Block, Ganganagara",
@@ -14,8 +14,8 @@ export const siteInfo = {
   },
   socialLinks: {
     whatsapp: "https://wa.me/+919606919300",
-    instagram: "https://www.instagram.com/cab_mitra/",
-    youtube: "https://www.youtube.com/@cabmitra",
+    instagram: "https://www.instagram.com/vrudhicabs/",
+    youtube: "https://www.youtube.com/@vrudhicabs",
     google: "https://maps.app.goo.gl/kYVni73EEGRutGSQ6",
   },
 };

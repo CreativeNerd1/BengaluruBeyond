@@ -142,7 +142,7 @@ const Dashboard = () => {
     <div>
       <div style={{ marginBottom: 24 }}>
         <Title level={3} style={{ marginBottom: 4 }}>Dashboard</Title>
-        <Text type="secondary">Overview of your CabMitra business</Text>
+        <Text type="secondary">Overview of your VrudhiCabs business</Text>
       </div>
 
       {/* Stats Cards */}

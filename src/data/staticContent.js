@@ -2,12 +2,12 @@
 // Edit this file to update text, links, testimonials, cars, and trip packages.
 
 export const siteInfo = {
-  name: "BengaluruBeyond",
+  name: "VrudhiCabs",
   tagline: "Explore Beyond Boundaries",
   description:
     "Reliable city rides and curated outstation experiences with verified drivers and comfortable vehicles.",
   phone: "+91 98765 43210",
-  email: "info@bengalurubeyond.com",
+  email: "info@vrudhicabs.com",
   address: {
     line1: "No 19, 11th Cross",
     line2: "Lakshmaiah Block, Ganganagar",
