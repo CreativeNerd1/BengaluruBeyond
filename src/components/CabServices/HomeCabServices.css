@@ -1,6 +1,6 @@
 .home-cab-services {
-  padding: 80px 20px;
-  background: #ffffff;
+  padding: 90px 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f6f9fd 100%);
 }
 
 .home-cab-services .container {
@@ -67,18 +67,18 @@
 }
 
 .car-card {
-  background: white;
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(14, 46, 74, 0.08);
   cursor: pointer;
   transition: all 0.3s ease;
   border: 1px solid #f0f0f0;
 }
 
 .car-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+  transform: translateY(-7px);
+  box-shadow: 0 18px 38px rgba(10, 35, 56, 0.15);
 }
 
 .car-image {
@@ -103,7 +103,7 @@
   top: 12px;
   left: 12px;
   padding: 5px 12px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(11, 35, 53, 0.78);
   color: white;
   font-size: 0.8rem;
   border-radius: 15px;
@@ -116,7 +116,7 @@
 
 .car-name {
   font-size: 1.15rem;
-  color: #1a1a2e;
+  color: #133452;
   margin-bottom: 12px;
   font-weight: 600;
 }
@@ -133,8 +133,8 @@
   align-items: center;
   gap: 4px;
   font-size: 0.8rem;
-  color: #666;
-  background: #f5f5f5;
+  color: #4f6070;
+  background: #eef5fb;
   padding: 4px 10px;
   border-radius: 12px;
 }
@@ -182,7 +182,7 @@
 
 .car-modal {
   background: white;
-  border-radius: 20px;
+  border-radius: 24px;
   max-width: 500px;
   width: 100%;
   max-height: 90vh;
@@ -247,7 +247,7 @@
 
 .modal-content h2 {
   font-size: 1.5rem;
-  color: #1a1a2e;
+  color: #12324f;
   margin-bottom: 20px;
 }
 
@@ -259,7 +259,7 @@
 }
 
 .modal-feature {
-  background: #f8f9fa;
+  background: #f2f7fc;
   padding: 12px;
   border-radius: 10px;
 }
@@ -324,7 +324,7 @@
   display: block;
   width: 100%;
   padding: 15px;
-  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  background: linear-gradient(135deg, #13b6a7 0%, #0d7f73 100%);
   color: white;
   text-align: center;
   text-decoration: none;
@@ -336,7 +336,7 @@
 
 .book-now-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 8px 24px rgba(13, 125, 112, 0.4);
 }
 
 /* Responsive */

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSiteData } from "../../context/SiteDataContext";
-import { inquiriesApi } from "../../services/api";
 import "./Contact.css";
 
 const Contact = () => {
@@ -30,30 +29,20 @@ const Contact = () => {
     setError("");
 
     try {
-      const result = await inquiriesApi.create({
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email || null,
-        message: formData.message || null,
-        source: "Contact",
-      });
+      const whatsappMsg = `New inquiry from ${formData.name}%0APhone: ${formData.phone}%0AEmail: ${formData.email}%0AMessage: ${formData.message}`;
+      const whatsappUrl = `${siteInfo.socialLinks?.whatsapp || 'https://wa.me/919876543210'}?text=${whatsappMsg}`;
+      window.open(whatsappUrl, '_blank');
 
-      if (result.success) {
-        setSubmitted(true);
-        // Reset form after submission
-        setFormData({
-          name: "",
-          phone: "",
-          email: "",
-          message: "",
-        });
-        // Reset success message after 5 seconds
-        setTimeout(() => setSubmitted(false), 5000);
-      } else {
-        setError(result.error || "Failed to submit. Please try again.");
-      }
-    } catch (err) {
-      setError("Network error. Please try again later.");
+      setSubmitted(true);
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        message: "",
+      });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch {
+      setError("Unable to open WhatsApp. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

@@ -3,6 +3,18 @@ import { Link } from "react-router-dom";
 import { useSiteData } from "../../context/SiteDataContext";
 import "./TripPackages.css";
 
+const FALLBACK_TRIP_IMAGE = "https://picsum.photos/seed/cabmitra-trip/800/500";
+
+const getTripImages = (trip) => {
+  const candidates = [
+    ...(Array.isArray(trip.images) ? trip.images : []),
+    trip.imageUrl,
+    trip.image,
+  ].filter(Boolean);
+
+  return candidates.length > 0 ? candidates : [FALLBACK_TRIP_IMAGE];
+};
+
 // Image Carousel Component
 const ImageCarousel = ({ images, name }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -50,7 +62,14 @@ const ImageCarousel = ({ images, name }) => {
       >
         {images.map((image, index) => (
           <div key={index} className="carousel-slide">
-            <img src={image} alt={`${name} - ${index + 1}`} />
+            <img
+              src={image}
+              alt={`${name} - ${index + 1}`}
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = FALLBACK_TRIP_IMAGE;
+              }}
+            />
           </div>
         ))}
       </div>
@@ -79,13 +98,8 @@ const ImageCarousel = ({ images, name }) => {
 
 // Trip Card Component
 const TripCard = ({ trip }) => {
-  // Handle both old format (trip.packages) and new API format (trip.price)
-  const price = trip.packages 
-    ? Math.min(...trip.packages.map((pkg) => pkg.price))
-    : trip.price;
-  
-  // Handle both formats: images array or single imageUrl
-  const images = trip.images || (trip.imageUrl ? [trip.imageUrl] : ['/placeholder-trip.jpg']);
+  // Handle both formats: images array and single image fields
+  const images = getTripImages(trip);
   
   // Handle title/name field
   const name = trip.name || trip.title;
@@ -104,7 +118,6 @@ const TripCard = ({ trip }) => {
           <span className="trip-packages-count">
             {trip.duration}
           </span>
-          <span className="trip-price">₹{price?.toLocaleString()}</span>
         </div>
         <Link to={`/packages/${trip.id}`} className="trip-explore-btn">
           View Details →

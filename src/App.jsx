@@ -10,7 +10,6 @@ import Footer from "./components/Footer/Footer";
 import ScrollToTop, { ScrollToTopOnRoute } from "./components/ScrollToTop/ScrollToTop";
 import SEO from "./components/SEO/SEO";
 import { PageLoader } from "./components/Loading/Loading";
-import { AdminProvider, useAdmin } from "./context/AdminContext";
 import { SiteDataProvider } from "./context/SiteDataContext";
 import "./App.css";
 
@@ -24,34 +23,6 @@ const PrivacyPolicy = lazy(() => import("./components/PrivacyPolicy/PrivacyPolic
 const Terms = lazy(() => import("./components/Terms/Terms"));
 const NotFound = lazy(() => import("./components/NotFound/NotFound"));
 const BookingModal = lazy(() => import("./components/BookingModal/BookingModal"));
-
-// Admin lazy imports
-const AdminLogin = lazy(() => import("./admin/AdminLogin/AdminLogin"));
-const AdminLayout = lazy(() => import("./admin/AdminLayout/AdminLayout"));
-const AdminDashboard = lazy(() => import("./admin/Dashboard/Dashboard"));
-const AdminSiteSettings = lazy(() => import("./admin/SiteSettings/SiteSettings"));
-const AdminServices = lazy(() => import("./admin/Services/Services"));
-const AdminTripPackages = lazy(() => import("./admin/TripPackages/TripPackages"));
-const AdminTestimonials = lazy(() => import("./admin/Testimonials/Testimonials"));
-const AdminInquiries = lazy(() => import("./admin/Inquiries/Inquiries"));
-const AdminCars = lazy(() => import("./admin/Cars/Cars"));
-const AdminNavigation = lazy(() => import("./admin/Navigation/Navigation"));
-const AdminSettings = lazy(() => import("./admin/Settings/Settings"));
-
-// Protected Route for Admin
-const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useAdmin();
-  
-  if (loading) {
-    return <PageLoader />;
-  }
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/admin/login" replace />;
-  }
-  
-  return children;
-};
 
 // Home Page Component
 const HomePage = () => (
@@ -67,34 +38,6 @@ const HomePage = () => (
 // Layout wrapper to conditionally show header/footer
 const AppLayout = () => {
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
-
-  // Admin Routes
-  if (isAdminRoute) {
-    return (
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
-          }>
-            <Route index element={<Navigate to="/admin/dashboard" replace />} />
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="site-settings" element={<AdminSiteSettings />} />
-            <Route path="services" element={<AdminServices />} />
-            <Route path="trip-packages" element={<AdminTripPackages />} />
-            <Route path="testimonials" element={<AdminTestimonials />} />
-            <Route path="inquiries" element={<AdminInquiries />} />
-            <Route path="cars" element={<AdminCars />} />
-            <Route path="navigation" element={<AdminNavigation />} />
-            <Route path="settings" element={<AdminSettings />} />
-          </Route>
-        </Routes>
-      </Suspense>
-    );
-  }
 
   return (
     <div className="app">
@@ -120,6 +63,7 @@ const AppLayout = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/admin/*" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
@@ -137,9 +81,7 @@ const App = () => {
   return (
     <Router>
       <SiteDataProvider>
-        <AdminProvider>
-          <AppLayout />
-        </AdminProvider>
+        <AppLayout />
       </SiteDataProvider>
     </Router>
   );

@@ -23,7 +23,6 @@ const PrivacyPolicy = () => {
             <ul>
               <li><strong>Personal Information:</strong> Name, phone number, email address when you make a booking or inquiry</li>
               <li><strong>Trip Information:</strong> Pickup and drop locations, travel dates, and preferences</li>
-              <li><strong>Payment Information:</strong> Processed securely through our payment partners</li>
               <li><strong>Device Information:</strong> Browser type, IP address for service improvement</li>
             </ul>
           </section>
@@ -47,7 +46,6 @@ const PrivacyPolicy = () => {
             </p>
             <ul>
               <li><strong>Drivers:</strong> Necessary contact details to complete your trip</li>
-              <li><strong>Payment Processors:</strong> To process payments securely</li>
               <li><strong>Legal Requirements:</strong> If required by law or legal process</li>
             </ul>
           </section>

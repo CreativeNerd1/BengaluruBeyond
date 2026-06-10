@@ -34,18 +34,7 @@ const Terms = () => {
           </section>
 
           <section>
-            <h2>3. Pricing & Payment</h2>
-            <ul>
-              <li>Prices are inclusive of base fare, driver allowance, and toll charges as mentioned</li>
-              <li>Additional charges may apply for extra kilometers, waiting time, or night driving</li>
-              <li>Parking fees at tourist spots are to be paid by the customer</li>
-              <li>Payment can be made via cash, UPI, or online transfer</li>
-              <li>For outstation trips, advance payment may be required</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>4. Cancellation Policy</h2>
+            <h2>3. Cancellation Policy</h2>
             <ul>
               <li>Free cancellation up to 24 hours before trip</li>
               <li>50% charge for cancellation within 24 hours</li>
@@ -55,7 +44,7 @@ const Terms = () => {
           </section>
 
           <section>
-            <h2>5. Passenger Responsibilities</h2>
+            <h2>4. Passenger Responsibilities</h2>
             <ul>
               <li>Be ready at the pickup location on time</li>
               <li>Maintain cleanliness in the vehicle</li>
@@ -66,7 +55,7 @@ const Terms = () => {
           </section>
 
           <section>
-            <h2>6. Driver & Vehicle</h2>
+            <h2>5. Driver & Vehicle</h2>
             <ul>
               <li>All drivers are verified and experienced professionals</li>
               <li>Vehicles are well-maintained and cleaned before each trip</li>
@@ -76,7 +65,7 @@ const Terms = () => {
           </section>
 
           <section>
-            <h2>7. Outstation Trip Terms</h2>
+            <h2>6. Outstation Trip Terms</h2>
             <ul>
               <li>One day is counted as 24 hours from pickup time</li>
               <li>Minimum 250 km per day is charged for outstation trips</li>
@@ -86,7 +75,7 @@ const Terms = () => {
           </section>
 
           <section>
-            <h2>8. Limitation of Liability</h2>
+            <h2>7. Limitation of Liability</h2>
             <p>
               {companyName} strives to provide safe and reliable service. However, we are not liable for:
             </p>
@@ -98,7 +87,7 @@ const Terms = () => {
           </section>
 
           <section>
-            <h2>9. Disputes</h2>
+            <h2>8. Disputes</h2>
             <p>
               Any disputes shall be subject to the jurisdiction of Bengaluru courts. 
               We encourage customers to contact us first for amicable resolution.
@@ -106,7 +95,7 @@ const Terms = () => {
           </section>
 
           <section>
-            <h2>10. Contact Us</h2>
+            <h2>9. Contact Us</h2>
             <p>
               For any questions or concerns regarding these terms, please contact us:
             </p>

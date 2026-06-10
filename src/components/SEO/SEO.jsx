@@ -14,7 +14,7 @@ const pageTitles = {
 const pageDescriptions = {
   "/": "Book reliable cabs in Bangalore with CabMitra. Local cabs, airport transfers, outstation trips & curated travel packages.",
   "/about": "Learn about CabMitra - Bangalore's trusted cab service since 2014. 10+ years of experience with 50,000+ happy customers.",
-  "/local-cabs": "Book affordable local cabs in Bangalore for shopping, commute, or city tours. Starting from ₹800 for 40 km.",
+  "/local-cabs": "Book reliable local cabs in Bangalore for shopping, commute, and city tours.",
   "/airport-cabs": "Reliable airport pickup and drop services in Bangalore. 24/7 availability, flight tracking, and punctual drivers.",
   "/outstation-cabs": "Plan your outstation trip from Bangalore with CabMitra. Comfortable cars for Mysore, Ooty, Coorg, and more.",
   "/packages": "Explore curated trip packages from Bangalore to Mysore, Ooty, Coorg, Kodaikanal, and Wayanad.",

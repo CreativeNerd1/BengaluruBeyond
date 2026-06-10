@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSiteData } from "../../context/SiteDataContext";
-import { inquiriesApi } from "../../services/api";
 import "./BookingForm.css";
 
 const BookingForm = ({ 
@@ -98,20 +97,6 @@ const BookingForm = ({
     setError("");
 
     try {
-      // Save inquiry to database
-      const selectedTripData = tripPackages.find(t => t.id === parseInt(formData.selectedTrip));
-      const selectedCarData = cars.find(c => c.id === parseInt(formData.selectedCar));
-      
-      await inquiriesApi.create({
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email || null,
-        message: `Trip Type: ${getTripTypeLabel(formData.tripType)}\nPickup: ${formData.pickupLocation}\nDrop: ${formData.dropLocation || 'N/A'}\nDate: ${formData.pickupDate} ${formData.pickupTime || ''}\nReturn: ${formData.returnDate || 'N/A'}\nPassengers: ${formData.passengers}\nCar: ${selectedCarData?.name || 'Any'}\nNotes: ${formData.additionalRequests || 'None'}`,
-        source: formData.tripType === 'outstation' && selectedTripData ? "TripPackage" : "CabService",
-        referenceId: selectedTripData?.id?.toString() || formData.tripType,
-        referenceName: selectedTripData?.title || getTripTypeLabel(formData.tripType),
-      });
-
       // Open WhatsApp with formatted message
       const whatsappUrl = `${siteInfo.socialLinks?.whatsapp || 'https://wa.me/919606919300'}?text=${formatWhatsAppMessage()}`;
       window.open(whatsappUrl, '_blank');
@@ -126,11 +111,7 @@ const BookingForm = ({
       
     } catch (err) {
       console.error('Booking error:', err);
-      setError("Failed to submit. Please try WhatsApp directly.");
-      
-      // Still try to open WhatsApp even if API fails
-      const whatsappUrl = `${siteInfo.socialLinks?.whatsapp || 'https://wa.me/919606919300'}?text=${formatWhatsAppMessage()}`;
-      window.open(whatsappUrl, '_blank');
+      setError("Unable to open WhatsApp. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

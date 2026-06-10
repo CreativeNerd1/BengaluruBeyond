@@ -2,6 +2,13 @@ import { Link } from "react-router-dom";
 import { useSiteData } from "../../context/SiteDataContext";
 import "./HomeTripPackages.css";
 
+const FALLBACK_TRIP_IMAGE = "https://picsum.photos/seed/cabmitra-trip/800/500";
+
+const getTripImage = (trip) => {
+  const candidates = [trip.imageUrl, trip.image, ...(trip.images || [])].filter(Boolean);
+  return candidates[0] || FALLBACK_TRIP_IMAGE;
+};
+
 const HomeTripPackages = () => {
   const { tripPackages, loading } = useSiteData();
 
@@ -44,9 +51,13 @@ const HomeTripPackages = () => {
             >
               <div className="package-image">
                 <img 
-                  src={trip.imageUrl || '/placeholder-trip.jpg'} 
+                  src={getTripImage(trip)}
                   alt={trip.title || trip.name}
                   loading="lazy"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = FALLBACK_TRIP_IMAGE;
+                  }}
                 />
                 <div className="package-overlay">
                   <span className="view-text">View Details</span>
@@ -58,9 +69,6 @@ const HomeTripPackages = () => {
                 <div className="package-meta">
                   <span className="package-duration">
                     {trip.duration} {trip.durationType || 'Days'}
-                  </span>
-                  <span className="package-price">
-                    ₹{trip.price?.toLocaleString()}
                   </span>
                 </div>
               </div>

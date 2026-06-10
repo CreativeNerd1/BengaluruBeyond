@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSiteData } from "../../context/SiteDataContext";
-import { inquiriesApi } from "../../services/api";
 import BookingForm from "../BookingForm/BookingForm";
 import "./TripDetail.css";
 
@@ -163,10 +162,6 @@ const PackageCard = ({ pkg, tripName, siteInfo }) => {
             <span className="tag duration">{pkg.duration}</span>
           </div>
         </div>
-        <div className="package-price">
-          <span className="currency">₹</span>
-          <span className="amount">{pkg.price.toLocaleString()}</span>
-        </div>
       </div>
 
       <div className={`package-itinerary ${expanded ? "expanded" : ""}`}>
@@ -204,7 +199,7 @@ const PackageCard = ({ pkg, tripName, siteInfo }) => {
 };
 
 // Contact Form Component
-const ContactForm = ({ tripName, tripSlug }) => {
+const ContactForm = ({ tripName, siteInfo }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -221,30 +216,18 @@ const ContactForm = ({ tripName, tripSlug }) => {
     setError("");
 
     try {
-      const result = await inquiriesApi.create({
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email || null,
-        message: formData.message || null,
-        source: "TripPackage",
-        referenceId: tripSlug,
-        referenceName: tripName,
+      const whatsappUrl = `${siteInfo?.socialLinks?.whatsapp || '#'}?text=${encodeURIComponent(formData.message || `I'm interested in ${tripName} trip packages.`)}`;
+      window.open(whatsappUrl, '_blank');
+      setSubmitted(true);
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        message: `I'm interested in ${tripName} trip packages.`,
       });
-
-      if (result.success) {
-        setSubmitted(true);
-        setFormData({
-          name: "",
-          phone: "",
-          email: "",
-          message: `I'm interested in ${tripName} trip packages.`,
-        });
-        setTimeout(() => setSubmitted(false), 5000);
-      } else {
-        setError(result.error || "Failed to submit. Please try again.");
-      }
-    } catch (err) {
-      setError("Network error. Please try again later.");
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch {
+      setError("Unable to open WhatsApp. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -392,10 +375,6 @@ const TripDetail = () => {
                 <span className="info-value">{trip.duration}</span>
               </div>
               <div className="info-item">
-                <span className="info-label">💰 Price</span>
-                <span className="info-value">₹{trip.price?.toLocaleString()} {trip.priceType}</span>
-              </div>
-              <div className="info-item">
                 <span className="info-label">👥 Max Group</span>
                 <span className="info-value">{trip.maxGroupSize} people</span>
               </div>
@@ -450,7 +429,7 @@ const TripDetail = () => {
             {tripImages.length > 0 && (
               <ImageGallery images={tripImages} name={tripName} />
             )}
-            <ContactForm tripName={tripName} tripSlug={slug} />
+            <ContactForm tripName={tripName} siteInfo={siteInfo} />
           </div>
         </div>
       </div>

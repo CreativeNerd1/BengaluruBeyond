@@ -28,10 +28,10 @@ const About = () => {
     },
     {
       id: 4,
-      icon: "💰",
-      title: "Competitive Pricing",
+      icon: "🧩",
+      title: "Flexible Travel Plans",
       description:
-        "We believe that quality travel experiences shouldn't break the bank. Our competitive pricing ensures that you get the best value for your money.",
+        "From quick city rides to weekend getaways, our services adapt to your schedule and travel goals.",
     },
     {
       id: 5,

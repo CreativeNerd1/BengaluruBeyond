@@ -14,10 +14,9 @@ const serviceTypes = {
     features: [
       { icon: "⏱️", title: "Hourly Packages", desc: "Flexible 4hr, 8hr, 12hr packages" },
       { icon: "📍", title: "Multiple Stops", desc: "Make stops anywhere in the city" },
-      { icon: "💳", title: "Easy Payments", desc: "Cash, UPI, or Card payments" },
+      { icon: "🧭", title: "Flexible Routes", desc: "Plan pickups and stops your way" },
       { icon: "🛡️", title: "Safe Rides", desc: "Verified drivers & sanitized cars" },
     ],
-    pricingNote: "Base fare includes first 40 km. Extra km charged as per rate.",
   },
   airport: {
     title: "Airport Cabs",
@@ -31,7 +30,6 @@ const serviceTypes = {
       { icon: "🧳", title: "Meet & Greet", desc: "Driver waits with name board" },
       { icon: "⏰", title: "Free Waiting", desc: "45 min free waiting time" },
     ],
-    pricingNote: "Toll and parking charges extra. Night charges (11PM-5AM) +20%.",
   },
   outstation: {
     title: "Outstation Cabs",
@@ -45,7 +43,6 @@ const serviceTypes = {
       { icon: "👨‍✈️", title: "Expert Drivers", desc: "Know all the routes" },
       { icon: "🔄", title: "Unlimited Stops", desc: "Stop wherever you want" },
     ],
-    pricingNote: "Toll, parking, state permit extra. Driver allowance included for overnight trips.",
   },
 };
 
@@ -81,36 +78,6 @@ const CarCarousel = ({ images, name, onImageClick }) => {
 
 // Car Card Component
 const CarCard = ({ car, serviceType, onViewDetails, siteInfo }) => {
-  const pricing = car.pricing?.[serviceType] || { baseFare: 0, baseKm: 0, perKm: 0, oneway: 0 };
-
-  const getPriceDisplay = () => {
-    switch (serviceType) {
-      case "local":
-        return (
-          <>
-            <span className="price-main">₹{pricing.baseFare || car.pricePerDay || 800}</span>
-            <span className="price-sub">for {pricing.baseKm || 40} km</span>
-          </>
-        );
-      case "airport":
-        return (
-          <>
-            <span className="price-main">₹{pricing.oneway || 1200}</span>
-            <span className="price-sub">one way</span>
-          </>
-        );
-      case "outstation":
-        return (
-          <>
-            <span className="price-main">₹{pricing.perKm || car.pricePerKm || 12}</span>
-            <span className="price-sub">per km</span>
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
   const whatsappLink = `${siteInfo.socialLinks?.whatsapp || '#'}?text=I%20want%20to%20book%20${encodeURIComponent(car.name)}%20for%20${encodeURIComponent(serviceTypes[serviceType]?.title || 'Cab Service')}`;
 
   const carImages = car.images?.length > 0 ? car.images : 
@@ -123,7 +90,7 @@ const CarCard = ({ car, serviceType, onViewDetails, siteInfo }) => {
       <CarCarousel
         images={carImages}
         name={car.name}
-        onImageClick={() => onViewDetails(car, assignedDriver)}
+        onImageClick={() => onViewDetails(car)}
       />
 
       <div className="car-content">
@@ -171,7 +138,6 @@ const CarCard = ({ car, serviceType, onViewDetails, siteInfo }) => {
         </div>
 
         <div className="car-footer">
-          <div className="car-price">{getPriceDisplay()}</div>
           <div className="car-actions">
             <button
               className="btn-details"
@@ -295,12 +261,6 @@ const CabServices = ({ serviceType }) => {
             >
               12 Seater
             </button>
-            <button
-              className={`filter-tab ${filter === "bus" ? "active" : ""}`}
-              onClick={() => setFilter("bus")}
-            >
-              Bus
-            </button>
           </div>
         </div>
 
@@ -320,7 +280,6 @@ const CabServices = ({ serviceType }) => {
           )}
         </div>
 
-        <p className="pricing-note">💡 {service.pricingNote}</p>
       </div>
 
       {/* Car Detail Modal */}

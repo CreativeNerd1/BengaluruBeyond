@@ -3,34 +3,14 @@ import "./CarDetailModal.css";
 
 // Service types configuration
 const serviceTypes = {
-  local: {
-    title: "Local Cabs",
-    pricingNote: "Base fare includes first 40 km. Extra km charged as per rate.",
-  },
-  airport: {
-    title: "Airport Cabs",
-    pricingNote: "Toll and parking charges extra. Night charges (11PM-5AM) +20%.",
-  },
-  outstation: {
-    title: "Outstation Cabs",
-    pricingNote: "Toll, parking, state permit extra. Driver allowance included for overnight trips.",
-  },
+  local: { title: "Local Cabs" },
+  airport: { title: "Airport Cabs" },
+  outstation: { title: "Outstation Cabs" },
 };
 
 const CarDetailModal = ({ car, serviceType, onClose, siteInfo }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("gallery");
-
-  const pricing = car.pricing?.[serviceType] || {
-    baseFare: car.pricePerDay || 800,
-    baseKm: 40,
-    extraKmRate: car.pricePerKm || 14,
-    oneway: 1200,
-    roundTrip: 2000,
-    perKm: car.pricePerKm || 12,
-    minKmPerDay: 300,
-    driverAllowance: 400,
-  };
   const service = serviceTypes[serviceType] || serviceTypes.local;
 
   const whatsappLink = `${siteInfo?.socialLinks?.whatsapp || '#'}?text=I%20want%20to%20book%20${encodeURIComponent(car.name)}%20for%20${encodeURIComponent(service.title)}`;
@@ -46,32 +26,6 @@ const CarDetailModal = ({ car, serviceType, onClose, siteInfo }) => {
     }
   };
 
-  const getPricingDetails = () => {
-    switch (serviceType) {
-      case "local":
-        return [
-          { label: "Base Fare", value: `₹${pricing.baseFare}`, sub: `(includes ${pricing.baseKm} km)` },
-          { label: "Extra Km Rate", value: `₹${pricing.extraKmRate}/km`, sub: "" },
-          { label: "Waiting Charges", value: "₹5/min", sub: "(after 5 min)" },
-        ];
-      case "airport":
-        return [
-          { label: "One Way", value: `₹${pricing.oneway}`, sub: "" },
-          { label: "Round Trip", value: `₹${pricing.roundTrip}`, sub: "" },
-          { label: "Night Charges", value: "+20%", sub: "(11PM - 5AM)" },
-          { label: "Free Waiting", value: "45 mins", sub: "" },
-        ];
-      case "outstation":
-        return [
-          { label: "Per Km Rate", value: `₹${pricing.perKm}`, sub: "" },
-          { label: "Min Km/Day", value: `${pricing.minKmPerDay} km`, sub: "" },
-          { label: "Driver Allowance", value: `₹${pricing.driverAllowance}/day`, sub: "" },
-          { label: "Toll/Parking", value: "Extra", sub: "(as applicable)" },
-        ];
-      default:
-        return [];
-    }
-  };
 
   return (
     <div className="modal-backdrop" onClick={handleBackdropClick}>
@@ -130,12 +84,6 @@ const CarDetailModal = ({ car, serviceType, onClose, siteInfo }) => {
                 onClick={() => setActiveTab("gallery")}
               >
                 🚗 Car Details
-              </button>
-              <button
-                className={`tab ${activeTab === "pricing" ? "active" : ""}`}
-                onClick={() => setActiveTab("pricing")}
-              >
-                💰 Pricing
               </button>
             </div>
 
@@ -197,44 +145,6 @@ const CarDetailModal = ({ car, serviceType, onClose, siteInfo }) => {
                 </div>
               )}
 
-              {activeTab === "pricing" && (
-                <div className="pricing-details-tab">
-                  <h3>{service.title} Pricing</h3>
-                  <p className="pricing-subtitle">
-                    For {car.name} ({car.type})
-                  </p>
-
-                  <div className="pricing-table">
-                    {getPricingDetails().map((item, idx) => (
-                      <div key={idx} className="pricing-row">
-                        <span className="pricing-label">{item.label}</span>
-                        <div className="pricing-value">
-                          <span className="value">{item.value}</span>
-                          {item.sub && (
-                            <span className="sub">{item.sub}</span>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="pricing-notes">
-                    <h5>📌 Important Notes</h5>
-                    <ul>
-                      <li>{service.pricingNote}</li>
-                      <li>GST applicable on all fares</li>
-                      <li>Prices may vary during peak season</li>
-                    </ul>
-                  </div>
-
-                  <div className="pricing-highlight">
-                    <span className="highlight-label">Best Value</span>
-                    <span className="highlight-text">
-                      Book round trip for better rates!
-                    </span>
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Book Now Section */}

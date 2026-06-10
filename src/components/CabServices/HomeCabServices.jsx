@@ -89,10 +89,6 @@ const HomeCabServices = () => {
                     </span>
                   )}
                 </div>
-                <div className="car-pricing">
-                  <span className="price">₹{car.pricePerKm}/km</span>
-                  <span className="daily-rate">₹{car.pricePerDay?.toLocaleString()}/day</span>
-                </div>
               </div>
             </div>
           ))}
@@ -134,16 +130,6 @@ const HomeCabServices = () => {
                   <p>{selectedCar.features}</p>
                 </div>
               )}
-              <div className="modal-pricing">
-                <div className="price-item">
-                  <span className="price-label">Per Kilometer</span>
-                  <span className="price-value">₹{selectedCar.pricePerKm}</span>
-                </div>
-                <div className="price-item">
-                  <span className="price-label">Per Day</span>
-                  <span className="price-value">₹{selectedCar.pricePerDay?.toLocaleString()}</span>
-                </div>
-              </div>
               <a 
                 href={`https://wa.me/+919606919300?text=I%20would%20like%20to%20book%20${encodeURIComponent(selectedCar.name)}`}
                 target="_blank"

@@ -3,17 +3,19 @@
   top: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(135deg, #2c5364 0%, #203a43 50%, #0f2027 100%);
-  padding: 1rem 2rem;
+  background: rgba(9, 31, 48, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.95rem 2rem;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
   transition: all 0.3s ease;
+  backdrop-filter: blur(14px);
 }
 
 .header-scrolled {
-  padding: 0.75rem 2rem;
-  background: rgba(15, 32, 39, 0.98);
-  backdrop-filter: blur(10px);
+  padding: 0.65rem 2rem;
+  background: rgba(7, 25, 39, 0.94);
+  backdrop-filter: blur(16px);
 }
 
 .header-container {
@@ -50,7 +52,7 @@
 }
 
 .logo-text {
-  background: linear-gradient(90deg, #fff, #4fd1c5);
+  background: linear-gradient(90deg, #ffffff, #8af5ef 60%, #39c7c9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -97,7 +99,7 @@
 
 .nav-link:hover,
 .nav-link.active {
-  color: #4fd1c5;
+  color: #7cefe8;
 }
 
 .nav-link::after {
@@ -107,7 +109,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #4fd1c5, #38b2ac);
+  background: linear-gradient(90deg, #8ef7f1, #38d1d3);
   transition: width 0.3s ease;
 }
 
@@ -138,7 +140,7 @@
   transform: translateX(-50%) translateY(10px);
   background: white;
   border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 18px 45px rgba(10, 35, 56, 0.2);
   min-width: 200px;
   padding: 0.75rem 0;
   opacity: 0;
@@ -178,8 +180,8 @@
 }
 
 .dropdown-link:hover {
-  background: linear-gradient(90deg, #e6fffa, #f7fafc);
-  color: #2c5364;
+  background: linear-gradient(90deg, #dff6f6, #eef8ff);
+  color: #17395a;
   padding-left: 1.5rem;
 }
 
@@ -188,7 +190,7 @@
 }
 
 .header-cta {
-  background: linear-gradient(135deg, #4fd1c5, #38b2ac);
+  background: linear-gradient(135deg, #18b9bd, #0b7f82);
   color: white;
   padding: 0.6rem 1.5rem;
   border-radius: 25px;
@@ -202,7 +204,7 @@
 
 .header-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(79, 209, 197, 0.4);
+  box-shadow: 0 10px 24px rgba(10, 129, 133, 0.45);
 }
 
 .cta-icon {

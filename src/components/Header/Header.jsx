@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSiteData } from "../../context/SiteDataContext";
 import "./Header.css";
 
@@ -9,6 +9,7 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Transform API nav links to component format
   const navLinks = apiNavLinks.map(link => ({
@@ -39,6 +40,56 @@ const Header = () => {
   const handleLinkClick = () => {
     setMenuOpen(false);
     setActiveDropdown(null);
+  };
+
+  const handleHashLinkClick = (path) => {
+    const hash = path.includes("#") ? path.slice(path.indexOf("#") + 1) : "";
+    handleLinkClick();
+
+    if (!hash) {
+      navigate(path || "/");
+      return;
+    }
+
+    if (location.pathname !== "/") {
+      navigate(`/#${hash}`);
+      setTimeout(() => {
+        const target = document.getElementById(hash);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+
+        const routeFallback = {
+          about: "/about",
+          contact: "/contact",
+          privacy: "/privacy-policy",
+          terms: "/terms",
+        };
+
+        if (routeFallback[hash]) {
+          navigate(routeFallback[hash]);
+        }
+      }, 120);
+      return;
+    }
+
+    const target = document.getElementById(hash);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
+    const routeFallback = {
+      about: "/about",
+      contact: "/contact",
+      privacy: "/privacy-policy",
+      terms: "/terms",
+    };
+
+    if (routeFallback[hash]) {
+      navigate(routeFallback[hash]);
+    }
   };
 
   const toggleDropdown = (name) => {
@@ -97,13 +148,23 @@ const Header = () => {
                     </ul>
                   </>
                 ) : (
-                  <Link
-                    to={link.path}
-                    className={`nav-link ${location.pathname === link.path ? "active" : ""}`}
-                    onClick={handleLinkClick}
-                  >
-                    {link.name}
-                  </Link>
+                  link.path?.includes("#") ? (
+                    <button
+                      type="button"
+                      className="nav-link"
+                      onClick={() => handleHashLinkClick(link.path)}
+                    >
+                      {link.name}
+                    </button>
+                  ) : (
+                    <Link
+                      to={link.path}
+                      className={`nav-link ${location.pathname === link.path ? "active" : ""}`}
+                      onClick={handleLinkClick}
+                    >
+                      {link.name}
+                    </Link>
+                  )
                 )}
               </li>
             ))}

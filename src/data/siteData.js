@@ -116,6 +116,42 @@ export const testimonials = [
       "Journey from Bangalore to Bandipur and Coorg was exceptional. Safe driving, professional service. Will book again!",
     avatar: "RR",
   },
+  {
+    id: 7,
+    name: "Meghana V.",
+    date: "2024-08-28",
+    rating: 5,
+    review:
+      "Airport pickup was right on time even with a delayed flight. Very polite driver and smooth ride home.",
+    avatar: "MV",
+  },
+  {
+    id: 8,
+    name: "Arjun P.",
+    date: "2024-08-27",
+    rating: 5,
+    review:
+      "Used their service for a 3-day Coorg trip with family. Car was clean, driver was patient, and pricing was transparent.",
+    avatar: "AP",
+  },
+  {
+    id: 9,
+    name: "Nisha D.",
+    date: "2024-08-25",
+    rating: 5,
+    review:
+      "Booked for an early morning drop to the railway station. Reached before time and the support team was very responsive.",
+    avatar: "ND",
+  },
+  {
+    id: 10,
+    name: "Vikram G.",
+    date: "2024-08-24",
+    rating: 5,
+    review:
+      "Great outstation experience to Chikmagalur. Safe driving in ghat roads and helpful recommendations for stops.",
+    avatar: "VG",
+  },
 ];
 
 export const googleRating = {
