@@ -108,13 +108,13 @@ const Contact = () => {
             <h2>Send Us a Message</h2>
 
             {submitted && (
-              <div className="success-message">
+              <div className="success-message" role="alert" aria-live="polite">
                 ✅ Thank you! Your message has been sent successfully. We will contact you shortly.
               </div>
             )}
 
             {error && (
-              <div className="error-message">
+              <div className="error-message" role="alert">
                 ❌ {error}
               </div>
             )}

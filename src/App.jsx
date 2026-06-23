@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import Services from "./components/Services/Services";
@@ -37,8 +37,6 @@ const HomePage = () => (
 
 // Layout wrapper to conditionally show header/footer
 const AppLayout = () => {
-  const location = useLocation();
-
   return (
     <div className="app">
       <SEO />

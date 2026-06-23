@@ -53,9 +53,9 @@ const About = () => {
       <div className="about-content">
         {/* Established Section */}
         <div className="established-section">
-          <h2>Established in 2014</h2>
+          <h2>Established in 2020</h2>
           <div className="established-badge">
-            <span className="years">10+</span>
+            <span className="years">6+</span>
             <span className="label">Years of Excellence</span>
           </div>
         </div>
@@ -114,7 +114,7 @@ const About = () => {
           <div className="founder-card">
             <div className="founder-avatar">MH</div>
             <div className="founder-info">
-              <h3>Manu H. S</h3>
+              <h3>Naveen Kumar N</h3>
               <p>Founder & CEO</p>
             </div>
           </div>

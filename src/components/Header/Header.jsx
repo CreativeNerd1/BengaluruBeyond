@@ -97,7 +97,11 @@ const Header = () => {
   };
 
   return (
-    <header className={`header ${scrolled ? "header-scrolled" : ""}`}>
+    <>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <header className={`header ${scrolled ? "header-scrolled" : ""}`} role="banner">
       <div className="header-container">
         <Link to="/" className="logo" onClick={handleLinkClick}>
           <span className="logo-icon">🚖</span>
@@ -113,8 +117,8 @@ const Header = () => {
           <span className={`hamburger ${menuOpen ? "open" : ""}`}></span>
         </button>
 
-        <nav className={`nav ${menuOpen ? "nav-open" : ""}`}>
-          <ul className="nav-list">
+        <nav className={`nav ${menuOpen ? "nav-open" : ""}`} aria-label="Main navigation">
+          <ul className="nav-list" role="menubar">
             {navLinks.map((link) => (
               <li 
                 key={link.name} 
@@ -176,6 +180,7 @@ const Header = () => {
         </nav>
       </div>
     </header>
+    </>
   );
 };
 

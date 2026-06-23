@@ -83,8 +83,8 @@ const PrivacyPolicy = () => {
               If you have questions about this Privacy Policy, please contact us:
             </p>
             <ul>
-              <li><strong>Phone:</strong> {siteInfo?.phone || "+91 9606919300"}</li>
-              <li><strong>Email:</strong> {siteInfo?.email || "info@vrudhicabs.com"}</li>
+              <li><strong>Phone:</strong> {siteInfo?.phone || "+91 63662 44686"}</li>
+              <li><strong>Email:</strong> {siteInfo?.email || "vrudhicars@gmail.com"}</li>
             </ul>
           </section>
 

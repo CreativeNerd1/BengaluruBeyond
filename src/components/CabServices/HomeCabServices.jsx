@@ -43,12 +43,14 @@ const HomeCabServices = () => {
         </div>
 
         {/* Category Tabs */}
-        <div className="category-tabs">
+        <div className="category-tabs" role="tablist" aria-label="Vehicle categories">
           {categories.map(category => (
             <button
               key={category}
               className={`category-tab ${selectedCategory === category ? 'active' : ''}`}
               onClick={() => setSelectedCategory(category)}
+              role="tab"
+              aria-selected={selectedCategory === category}
             >
               {category === 'all' ? 'All Vehicles' : category}
             </button>
@@ -62,6 +64,10 @@ const HomeCabServices = () => {
               key={car.id} 
               className="car-card"
               onClick={() => setSelectedCar(car)}
+              onKeyDown={(e) => e.key === 'Enter' && setSelectedCar(car)}
+              tabIndex={0}
+              role="button"
+              aria-label={`View details for ${car.name}`}
             >
               <div className="car-image">
                 <img 
@@ -97,9 +103,9 @@ const HomeCabServices = () => {
 
       {/* Car Detail Modal */}
       {selectedCar && (
-        <div className="car-modal-overlay" onClick={() => setSelectedCar(null)}>
+        <div className="car-modal-overlay" onClick={() => setSelectedCar(null)} role="dialog" aria-modal="true" aria-label={`${selectedCar.name} details`}>
           <div className="car-modal" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedCar(null)}>×</button>
+            <button className="modal-close" onClick={() => setSelectedCar(null)} aria-label="Close modal">×</button>
             <div className="modal-image">
               <img src={selectedCar.imageUrl || '/placeholder-car.jpg'} alt={selectedCar.name} />
             </div>
@@ -131,7 +137,7 @@ const HomeCabServices = () => {
                 </div>
               )}
               <a 
-                href={`https://wa.me/+919606919300?text=I%20would%20like%20to%20book%20${encodeURIComponent(selectedCar.name)}`}
+                href={`https://wa.me/+916366244686?text=I%20would%20like%20to%20book%20${encodeURIComponent(selectedCar.name)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="book-now-btn"

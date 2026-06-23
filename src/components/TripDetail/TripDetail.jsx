@@ -9,14 +9,15 @@ const ImageGallery = ({ images, name }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
-    <div className="detail-gallery">
+    <div className="detail-gallery" aria-label={`${name} photo gallery`}>
       <div className="gallery-main">
-        <img src={images[currentIndex]} alt={`${name} - ${currentIndex + 1}`} />
+        <img src={images[currentIndex]} alt={`${name} - Photo ${currentIndex + 1} of ${images.length}`} />
         <button
           className="gallery-nav prev"
           onClick={() =>
             setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
           }
+          aria-label="Previous image"
         >
           ‹
         </button>
@@ -25,6 +26,7 @@ const ImageGallery = ({ images, name }) => {
           onClick={() =>
             setCurrentIndex((prev) => (prev + 1) % images.length)
           }
+          aria-label="Next image"
         >
           ›
         </button>
@@ -35,8 +37,10 @@ const ImageGallery = ({ images, name }) => {
             key={index}
             className={`thumb ${index === currentIndex ? "active" : ""}`}
             onClick={() => setCurrentIndex(index)}
+            aria-label={`View photo ${index + 1}`}
+            aria-selected={index === currentIndex}
           >
-            <img src={image} alt={`Thumbnail ${index + 1}`} />
+            <img src={image} alt={`${name} thumbnail ${index + 1}`} loading="lazy" />
           </button>
         ))}
       </div>
@@ -45,7 +49,7 @@ const ImageGallery = ({ images, name }) => {
 };
 
 // Places to Visit Carousel
-const PlacesCarousel = ({ places, destination }) => {
+const PlacesCarousel = ({ places, destination, placeImages }) => {
   const carouselRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -56,11 +60,13 @@ const PlacesCarousel = ({ places, destination }) => {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchQuery)}`;
   };
 
-  // Generate a consistent image based on place name using picsum.photos
-  // This creates unique but consistent images for each place
-  const getPlaceImage = (place, index) => {
-    // Use a hash of the place name to get a consistent seed
-    const seed = place.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) + index;
+  // Get the place image from the trip's placeImages map or fallback
+  const getPlaceImage = (place) => {
+    if (placeImages && placeImages[place]) {
+      return placeImages[place];
+    }
+    // Fallback: use a consistent placeholder
+    const seed = place.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return `https://picsum.photos/seed/${seed}/400/300`;
   };
 
@@ -119,7 +125,7 @@ const PlacesCarousel = ({ places, destination }) => {
               className="place-card"
             >
               <div className="place-image">
-                <img src={getPlaceImage(place, index)} alt={place} />
+                <img src={getPlaceImage(place)} alt={place} loading="lazy" />
                 <div className="place-overlay">
                   <span className="maps-icon">📍</span>
                   <span className="view-text">View on Maps</span>
@@ -237,12 +243,12 @@ const ContactForm = ({ tripName, siteInfo }) => {
     <div className="detail-contact-form">
       <h3>📞 Contact Us</h3>
       {submitted && (
-        <div className="form-success">
+        <div className="form-success" role="alert" aria-live="polite">
           ✅ Thank you! We will contact you shortly.
         </div>
       )}
       {error && (
-        <div className="form-error">
+        <div className="form-error" role="alert">
           ❌ {error}
         </div>
       )}
@@ -254,6 +260,8 @@ const ContactForm = ({ tripName, siteInfo }) => {
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           required
           disabled={isSubmitting}
+          aria-label="Your name"
+          autoComplete="name"
         />
         <input
           type="tel"
@@ -262,6 +270,8 @@ const ContactForm = ({ tripName, siteInfo }) => {
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
           required
           disabled={isSubmitting}
+          aria-label="Phone number"
+          autoComplete="tel"
         />
         <input
           type="email"
@@ -269,6 +279,8 @@ const ContactForm = ({ tripName, siteInfo }) => {
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           disabled={isSubmitting}
+          aria-label="Email address"
+          autoComplete="email"
         />
         <textarea
           placeholder="Message"
@@ -278,9 +290,10 @@ const ContactForm = ({ tripName, siteInfo }) => {
             setFormData({ ...formData, message: e.target.value })
           }
           disabled={isSubmitting}
+          aria-label="Your message"
         ></textarea>
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Sending..." : "Submit"}
+          {isSubmitting ? "Sending..." : "Send via WhatsApp"}
         </button>
       </form>
     </div>
@@ -352,94 +365,94 @@ const TripDetail = () => {
           <Link to="/packages" className="back-link">
             ← All Packages
           </Link>
-          <h1>{tripName?.toUpperCase()} TRIP</h1>
-          <p>{trip.tagline || trip.destination}</p>
+          <h1>{tripName}</h1>
+          <p className="hero-tagline">{trip.tagline || trip.destination}</p>
+          <div className="hero-meta">
+            <span className="hero-badge">📍 {trip.destination}</span>
+            <span className="hero-badge">⏱️ {trip.duration}</span>
+            <span className="hero-badge">👥 Up to {trip.maxGroupSize} people</span>
+          </div>
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main Content - Single column layout */}
       <div className="trip-detail-content">
-        <div className="content-grid">
-          {/* Left Column - Trip Info */}
-          <div className="packages-section">
-            <h2>{tripName}</h2>
-            <p className="trip-description">{trip.description}</p>
-            
-            <div className="trip-info-grid">
-              <div className="info-item">
-                <span className="info-label">📍 Destination</span>
-                <span className="info-value">{trip.destination}</span>
-              </div>
-              <div className="info-item">
-                <span className="info-label">⏱️ Duration</span>
-                <span className="info-value">{trip.duration}</span>
-              </div>
-              <div className="info-item">
-                <span className="info-label">👥 Max Group</span>
-                <span className="info-value">{trip.maxGroupSize} people</span>
-              </div>
-            </div>
-
-            {/* Book This Trip Button */}
-            <button 
-              className="book-trip-btn"
-              onClick={() => setShowBooking(true)}
-            >
-              <span>🚖</span> Book This Trip
-            </button>
-
-            {/* Places to Visit Carousel */}
-            {tripHighlights.length > 0 && (
-              <PlacesCarousel places={tripHighlights} destination={trip.destination} />
-            )}
-
-            {tripInclusions.length > 0 && (
-              <div className="trip-section">
-                <h3>✅ Inclusions</h3>
-                <ul className="inclusion-list">
-                  {tripInclusions.map((inc, i) => <li key={i}>{inc}</li>)}
-                </ul>
-              </div>
-            )}
-
-            {tripExclusions.length > 0 && (
-              <div className="trip-section">
-                <h3>❌ Exclusions</h3>
-                <ul className="exclusion-list">
-                  {tripExclusions.map((exc, i) => <li key={i}>{exc}</li>)}
-                </ul>
-              </div>
-            )}
-
-            {/* Legacy packages support */}
-            {trip.packages && trip.packages.length > 0 && (
-              <>
-                <h2>Available Packages</h2>
-                <div className="packages-list">
-                  {trip.packages.map((pkg) => (
-                    <PackageCard key={pkg.id} pkg={pkg} tripName={tripName} siteInfo={siteInfo} />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-
-          {/* Right Column - Gallery & Contact */}
-          <div className="sidebar">
-            {tripImages.length > 0 && (
-              <ImageGallery images={tripImages} name={tripName} />
-            )}
-            <ContactForm tripName={tripName} siteInfo={siteInfo} />
-          </div>
+        {/* Trip Description & Quick Info */}
+        <div className="trip-overview">
+          <p className="trip-description">{trip.description}</p>
+          
+          {/* Book This Trip Button */}
+          <button 
+            className="book-trip-btn"
+            onClick={() => setShowBooking(true)}
+          >
+            <span>🚖</span> Book This Trip
+          </button>
         </div>
+
+        {/* Image Gallery - Full width */}
+        {tripImages.length > 0 && (
+          <div className="gallery-section">
+            <ImageGallery images={tripImages} name={tripName} />
+          </div>
+        )}
+
+        {/* Places to Visit Carousel */}
+        {tripHighlights.length > 0 && (
+          <PlacesCarousel places={tripHighlights} destination={trip.destination} placeImages={trip.placeImages} />
+        )}
+
+        {/* Google Maps Embed */}
+        {trip.mapEmbedUrl && (
+          <div className="trip-map-section">
+            <h3>📍 Location on Map</h3>
+            <div className="map-embed-container">
+              <iframe
+                src={trip.mapEmbedUrl}
+                width="100%"
+                height="400"
+                style={{ border: 0, borderRadius: '12px' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={`Map of ${trip.destination}`}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Inclusions & Exclusions - side by side */}
+        <div className="trip-details-grid">
+          {tripInclusions.length > 0 && (
+            <div className="trip-section">
+              <h3>✅ Inclusions</h3>
+              <ul className="inclusion-list">
+                {tripInclusions.map((inc, i) => <li key={i}>{inc}</li>)}
+              </ul>
+            </div>
+          )}
+
+          {tripExclusions.length > 0 && (
+            <div className="trip-section">
+              <h3>❌ Exclusions</h3>
+              <ul className="exclusion-list">
+                {tripExclusions.map((exc, i) => <li key={i}>{exc}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Contact Form - Full width */}
+        <ContactForm tripName={tripName} siteInfo={siteInfo} />
       </div>
 
       {/* Booking Modal */}
       {showBooking && (
-        <>
+        <div role="dialog" aria-modal="true" aria-label="Book this trip">
           <div 
             className="booking-modal-overlay" 
             onClick={() => setShowBooking(false)}
+            aria-hidden="true"
           />
           <BookingForm 
             isModal={true} 
@@ -447,7 +460,7 @@ const TripDetail = () => {
             preSelectedService="outstation"
             onClose={() => setShowBooking(false)} 
           />
-        </>
+        </div>
       )}
     </section>
   );

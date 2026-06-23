@@ -356,6 +356,9 @@
   .category-tab {
     padding: 8px 18px;
     font-size: 0.85rem;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
   }
 
   .cars-grid {
@@ -365,5 +368,102 @@
 
   .modal-features {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-cab-services {
+    padding: 50px 12px;
+  }
+
+  .home-cab-services .section-title {
+    font-size: 1.6rem;
+  }
+
+  .home-cab-services .section-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .category-tabs {
+    gap: 6px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .category-tab {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .cars-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .car-image {
+    height: 160px;
+  }
+
+  .car-content {
+    padding: 15px;
+  }
+
+  .car-name {
+    font-size: 1.05rem;
+  }
+
+  .car-modal {
+    border-radius: 20px 20px 0 0;
+    max-height: 85vh;
+  }
+
+  .modal-image {
+    height: 200px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.25rem;
+  }
+
+  .modal-pricing {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .book-now-btn {
+    padding: 14px;
+    font-size: 0.95rem;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 320px) {
+  .home-cab-services {
+    padding: 40px 10px;
+  }
+
+  .home-cab-services .section-title {
+    font-size: 1.4rem;
+  }
+
+  .car-image {
+    height: 140px;
+  }
+
+  .car-content {
+    padding: 12px;
+  }
+
+  .modal-content {
+    padding: 15px;
   }
 }

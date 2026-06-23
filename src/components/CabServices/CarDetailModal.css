@@ -596,15 +596,18 @@
 @media (max-width: 480px) {
   .modal-backdrop {
     padding: 0.5rem;
+    align-items: flex-end;
   }
 
   .modal-container {
-    border-radius: 16px;
+    border-radius: 20px 20px 0 0;
+    max-height: 92vh;
   }
 
   .tab {
     padding: 0.75rem 0.5rem;
     font-size: 0.85rem;
+    min-height: 44px;
   }
 
   .tab-content {
@@ -613,5 +616,54 @@
 
   .modal-actions {
     flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .modal-actions a,
+  .modal-actions button {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-close {
+    width: 36px;
+    height: 36px;
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .gallery-thumbs {
+    gap: 4px;
+  }
+
+  .gallery-thumb {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 320px) {
+  .modal-backdrop {
+    padding: 0;
+  }
+
+  .modal-container {
+    border-radius: 16px 16px 0 0;
+    max-height: 95vh;
+  }
+
+  .tab {
+    padding: 0.6rem 0.4rem;
+    font-size: 0.8rem;
+  }
+
+  .tab-content {
+    padding: 0.75rem;
+  }
+
+  .modal-gallery {
+    max-height: 250px;
+    padding: 1rem;
   }
 }

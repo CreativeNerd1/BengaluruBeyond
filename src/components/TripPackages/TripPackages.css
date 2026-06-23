@@ -261,3 +261,86 @@
     font-size: 1.2rem;
   }
 }
+
+@media (max-width: 480px) {
+  .trip-packages-page {
+    padding-top: 60px;
+  }
+
+  .trip-packages-hero {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .trip-packages-hero h1 {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .trip-packages-hero p {
+    font-size: 1rem;
+  }
+
+  .trip-packages-content {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .carousel {
+    height: 200px;
+  }
+
+  .trip-card-content {
+    padding: 1.25rem;
+  }
+
+  .trip-name {
+    font-size: 1.25rem;
+  }
+
+  .trip-description {
+    font-size: 0.9rem;
+  }
+
+  .trip-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .trip-explore-btn {
+    padding: 0.8rem 1.25rem;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+@media (max-width: 320px) {
+  .trip-packages-hero h1 {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+
+  .trip-card-content {
+    padding: 1rem;
+  }
+
+  .trip-name {
+    font-size: 1.15rem;
+  }
+
+  .carousel {
+    height: 180px;
+  }
+}

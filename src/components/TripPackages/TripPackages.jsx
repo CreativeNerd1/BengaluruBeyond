@@ -75,20 +75,23 @@ const ImageCarousel = ({ images, name }) => {
       </div>
 
       {/* Navigation Arrows */}
-      <button className="carousel-btn prev" onClick={prevSlide}>
+      <button className="carousel-btn prev" onClick={prevSlide} aria-label="Previous slide">
         ‹
       </button>
-      <button className="carousel-btn next" onClick={nextSlide}>
+      <button className="carousel-btn next" onClick={nextSlide} aria-label="Next slide">
         ›
       </button>
 
       {/* Dots Indicator */}
-      <div className="carousel-dots">
+      <div className="carousel-dots" role="tablist" aria-label="Slide navigation">
         {images.map((_, index) => (
           <button
             key={index}
             className={`dot ${index === currentIndex ? "active" : ""}`}
             onClick={() => setCurrentIndex(index)}
+            aria-label={`Go to slide ${index + 1}`}
+            aria-selected={index === currentIndex}
+            role="tab"
           />
         ))}
       </div>

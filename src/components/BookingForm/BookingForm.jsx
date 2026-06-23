@@ -98,7 +98,7 @@ const BookingForm = ({
 
     try {
       // Open WhatsApp with formatted message
-      const whatsappUrl = `${siteInfo.socialLinks?.whatsapp || 'https://wa.me/919606919300'}?text=${formatWhatsAppMessage()}`;
+      const whatsappUrl = `${siteInfo.socialLinks?.whatsapp || 'https://wa.me/916366244686'}?text=${formatWhatsAppMessage()}`;
       window.open(whatsappUrl, '_blank');
       
       setSubmitted(true);
@@ -125,57 +125,63 @@ const BookingForm = ({
       {isModal && (
         <div className="booking-form-header">
           <h2>📝 Book Your Ride</h2>
-          <button className="close-btn" onClick={onClose}>×</button>
+          <button className="close-btn" onClick={onClose} aria-label="Close booking form">×</button>
         </div>
       )}
       
       {!isModal && <h2 className="booking-form-title">📝 Book Your Ride</h2>}
       
       {submitted ? (
-        <div className="booking-success">
-          <div className="success-icon">✅</div>
+        <div className="booking-success" role="alert" aria-live="polite">
+          <div className="success-icon" aria-hidden="true">✅</div>
           <h3>Booking Request Sent!</h3>
           <p>We've opened WhatsApp with your booking details. Our team will confirm shortly.</p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="booking-form">
-          {error && <div className="form-error">❌ {error}</div>}
+        <form onSubmit={handleSubmit} className="booking-form" noValidate>
+          {error && <div className="form-error" role="alert">❌ {error}</div>}
           
           {/* Personal Details */}
           <div className="form-section">
             <h4>👤 Your Details</h4>
             <div className="form-row">
               <div className="form-group">
-                <label>Name *</label>
+                <label htmlFor="booking-name">Name *</label>
                 <input
+                  id="booking-name"
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Your full name"
                   required
+                  autoComplete="name"
                 />
               </div>
               <div className="form-group">
-                <label>Phone *</label>
+                <label htmlFor="booking-phone">Phone *</label>
                 <input
+                  id="booking-phone"
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="+91 98765 43210"
+                  placeholder="+91 63662 44686"
                   required
+                  autoComplete="tel"
                 />
               </div>
             </div>
             <div className="form-group">
-              <label>Email (Optional)</label>
+              <label htmlFor="booking-email">Email (Optional)</label>
               <input
+                id="booking-email"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="your@email.com"
+                autoComplete="email"
               />
             </div>
           </div>
@@ -183,29 +189,32 @@ const BookingForm = ({
           {/* Trip Type Selection */}
           <div className="form-section">
             <h4>🚗 Trip Type</h4>
-            <div className="trip-type-selector">
+            <div className="trip-type-selector" role="group" aria-label="Select trip type">
               <button
                 type="button"
                 className={`trip-type-btn ${formData.tripType === 'local' ? 'active' : ''}`}
                 onClick={() => setFormData(prev => ({ ...prev, tripType: 'local', selectedTrip: '' }))}
+                aria-pressed={formData.tripType === 'local'}
               >
-                <span className="icon">🚕</span>
+                <span className="icon" aria-hidden="true">🚕</span>
                 <span>Local</span>
               </button>
               <button
                 type="button"
                 className={`trip-type-btn ${formData.tripType === 'airport' ? 'active' : ''}`}
                 onClick={() => setFormData(prev => ({ ...prev, tripType: 'airport', selectedTrip: '' }))}
+                aria-pressed={formData.tripType === 'airport'}
               >
-                <span className="icon">✈️</span>
+                <span className="icon" aria-hidden="true">✈️</span>
                 <span>Airport</span>
               </button>
               <button
                 type="button"
                 className={`trip-type-btn ${formData.tripType === 'outstation' ? 'active' : ''}`}
                 onClick={() => setFormData(prev => ({ ...prev, tripType: 'outstation' }))}
+                aria-pressed={formData.tripType === 'outstation'}
               >
-                <span className="icon">🗺️</span>
+                <span className="icon" aria-hidden="true">🗺️</span>
                 <span>Outstation</span>
               </button>
             </div>
@@ -217,9 +226,11 @@ const BookingForm = ({
               <h4>📍 Select Package (Optional)</h4>
               <select
                 name="selectedTrip"
+                id="booking-trip"
                 value={formData.selectedTrip}
                 onChange={handleChange}
                 className="form-select"
+                aria-label="Select trip package"
               >
                 <option value="">-- Custom Trip --</option>
                 {tripPackages.map(trip => (
@@ -235,19 +246,22 @@ const BookingForm = ({
           <div className="form-section">
             <h4>📍 Travel Details</h4>
             <div className="form-group">
-              <label>Pickup Location *</label>
+              <label htmlFor="booking-pickup">Pickup Location *</label>
               <input
+                id="booking-pickup"
                 type="text"
                 name="pickupLocation"
                 value={formData.pickupLocation}
                 onChange={handleChange}
                 placeholder={formData.tripType === 'airport' ? "e.g., Koramangala, Bangalore" : "Enter pickup address"}
                 required
+                autoComplete="street-address"
               />
             </div>
             <div className="form-group">
-              <label>{formData.tripType === 'local' ? 'Drop Location (Optional)' : 'Drop Location *'}</label>
+              <label htmlFor="booking-drop">{formData.tripType === 'local' ? 'Drop Location (Optional)' : 'Drop Location *'}</label>
               <input
+                id="booking-drop"
                 type="text"
                 name="dropLocation"
                 value={formData.dropLocation}
@@ -258,8 +272,9 @@ const BookingForm = ({
             </div>
             <div className="form-row">
               <div className="form-group">
-                <label>Pickup Date *</label>
+                <label htmlFor="booking-date">Pickup Date *</label>
                 <input
+                  id="booking-date"
                   type="date"
                   name="pickupDate"
                   value={formData.pickupDate}
@@ -269,8 +284,9 @@ const BookingForm = ({
                 />
               </div>
               <div className="form-group">
-                <label>Pickup Time</label>
+                <label htmlFor="booking-time">Pickup Time</label>
                 <input
+                  id="booking-time"
                   type="time"
                   name="pickupTime"
                   value={formData.pickupTime}
@@ -280,8 +296,9 @@ const BookingForm = ({
             </div>
             {formData.tripType === 'outstation' && (
               <div className="form-group">
-                <label>Return Date (for round trip)</label>
+                <label htmlFor="booking-return">Return Date (for round trip)</label>
                 <input
+                  id="booking-return"
                   type="date"
                   name="returnDate"
                   value={formData.returnDate}
@@ -291,8 +308,9 @@ const BookingForm = ({
               </div>
             )}
             <div className="form-group">
-              <label>Number of Passengers *</label>
+              <label htmlFor="booking-passengers">Number of Passengers *</label>
               <select
+                id="booking-passengers"
                 name="passengers"
                 value={formData.passengers}
                 onChange={handleChange}
@@ -316,9 +334,11 @@ const BookingForm = ({
               <h4>🚙 Car Preference (Optional)</h4>
               <select
                 name="selectedCar"
+                id="booking-car"
                 value={formData.selectedCar}
                 onChange={handleChange}
                 className="form-select"
+                aria-label="Select preferred car"
               >
                 <option value="">-- Any Available Car --</option>
                 {cars.map(car => (
@@ -335,10 +355,12 @@ const BookingForm = ({
             <h4>💬 Additional Requests</h4>
             <textarea
               name="additionalRequests"
+              id="booking-requests"
               value={formData.additionalRequests}
               onChange={handleChange}
               placeholder="Any special requests? (Child seat, specific pickup instructions, etc.)"
               rows="3"
+              aria-label="Additional requests"
             />
           </div>
 

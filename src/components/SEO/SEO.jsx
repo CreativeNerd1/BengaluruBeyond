@@ -1,24 +1,38 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
+const BASE_URL = "https://vrudhicabs.com";
+
 const pageTitles = {
-  "/": "VrudhiCabs - Reliable Cab Booking Service in Bangalore",
-  "/about": "About Us | VrudhiCabs - Trusted Since 2014",
-  "/local-cabs": "Local Cabs in Bangalore | VrudhiCabs",
-  "/airport-cabs": "Airport Cabs & Taxi Service | VrudhiCabs Bangalore",
-  "/outstation-cabs": "Outstation Cabs from Bangalore | VrudhiCabs",
-  "/packages": "Trip Packages - Mysore, Ooty, Coorg & More | VrudhiCabs",
-  "/contact": "Contact VrudhiCabs | Book a Cab Now",
+  "/": "Vrudhi Cars - Reliable Cab Booking Service in Bangalore | Local, Airport & Outstation",
+  "/about": "About Vrudhi Cars | Bangalore's Trusted Cab & Travel Service Since 2019",
+  "/local-cabs": "Local Cabs in Bangalore | Affordable City Rides | Vrudhi Cars",
+  "/airport-cabs": "Airport Taxi Bangalore | 24/7 Pickup & Drop | Vrudhi Cars",
+  "/outstation-cabs": "Outstation Cabs from Bangalore | Mysore, Ooty, Coorg Trips | Vrudhi Cars",
+  "/packages": "Trip Packages from Bangalore - Mysore, Ooty, Coorg, Wayanad, Tirupati | Vrudhi Cars",
+  "/contact": "Contact Vrudhi Cars | Book a Cab in Bangalore | +91 63662 44686",
+  "/privacy-policy": "Privacy Policy | Vrudhi Cars",
+  "/terms": "Terms & Conditions | Vrudhi Cars",
 };
 
 const pageDescriptions = {
-  "/": "Book reliable cabs in Bangalore with VrudhiCabs. Local cabs, airport transfers, outstation trips & curated travel packages.",
-  "/about": "Learn about VrudhiCabs - Bangalore's trusted cab service since 2014. 10+ years of experience with 50,000+ happy customers.",
-  "/local-cabs": "Book reliable local cabs in Bangalore for shopping, commute, and city tours.",
-  "/airport-cabs": "Reliable airport pickup and drop services in Bangalore. 24/7 availability, flight tracking, and punctual drivers.",
-  "/outstation-cabs": "Plan your outstation trip from Bangalore with VrudhiCabs. Comfortable cars for Mysore, Ooty, Coorg, and more.",
-  "/packages": "Explore curated trip packages from Bangalore to Mysore, Ooty, Coorg, Kodaikanal, and Wayanad.",
-  "/contact": "Contact VrudhiCabs for cab bookings. Call +91 9606919300 or WhatsApp us.",
+  "/": "Book reliable cabs in Bangalore with Vrudhi Cars. Local city rides, airport transfers, outstation trips & curated travel packages to Mysore, Ooty, Coorg. Call +91 63662 44686.",
+  "/about": "Vrudhi Cars is Bangalore's trusted cab service since 2019. Professional drivers, clean vehicles, and 24/7 support for local, airport, and outstation travel.",
+  "/local-cabs": "Book affordable local cabs in Bangalore for daily commute, shopping, hospital visits, and city tours. Well-maintained sedans and SUVs available 24/7.",
+  "/airport-cabs": "Reliable airport pickup and drop services at Kempegowda International Airport, Bangalore. Flight tracking, on-time guarantee, and comfortable vehicles.",
+  "/outstation-cabs": "Plan outstation trips from Bangalore with experienced drivers. Sedan & Innova available for Mysore (₹4,500), Ooty (₹9,500), Coorg (₹7,500), and more.",
+  "/packages": "Explore curated trip packages from Bangalore. Mysore 1-day, Ooty 2-day, Coorg 2-day, Wayanad 2-day, and Tirupati 2-day packages with driver and vehicle included.",
+  "/contact": "Contact Vrudhi Cars for cab bookings in Bangalore. Phone: +91 63662 44686. WhatsApp available. Office: Ganganagar, Bengaluru - 560024.",
+  "/privacy-policy": "Privacy policy for Vrudhi Cars cab booking service in Bangalore.",
+  "/terms": "Terms and conditions for using Vrudhi Cars cab services in Bangalore.",
+};
+
+const tripPageMeta = {
+  "1": { title: "Mysore Heritage Trip Package | 1-Day Sedan & Innova | Vrudhi Cars", description: "Book Mysore day trip from Bangalore. Visit Srirangapatna, Chamundi Temple, Mysore Palace & Brindavan Gardens. Sedan ₹4,500, Innova ₹7,000. Call +91 63662 44686." },
+  "2": { title: "Coorg / Madikeri Trip Package | 2-Day Nature Tour | Vrudhi Cars", description: "Explore Coorg from Bangalore - 2 days covering Golden Temple, Abbey Falls, Dubare Elephant Camp, Raja's Seat & more. Sedan ₹7,500, Innova ₹11,000." },
+  "3": { title: "Ooty & Coonoor Trip Package | 2-Day Hill Station Tour | Vrudhi Cars", description: "Ooty & Coonoor 2-day trip from Bangalore. Doddabetta Peak, Rose Garden, Tea Factory, Dolphin's Nose & more. Sedan ₹9,500, Innova ₹13,500." },
+  "4": { title: "Wayanad Trip Package | 2-Day Kerala Adventure | Vrudhi Cars", description: "Wayanad 2-day trip from Bangalore. Chembra Peak, Glass Bridge, Waterfalls, Edakkal Caves & Pookode Lake. Sedan ₹8,500, Innova ₹12,500." },
+  "5": { title: "Tirupati Trip Package | 2-Day Pilgrimage Tour | Vrudhi Cars", description: "Tirupati temple trip from Bangalore. 2 days covering Kanipakam, Sri Vari Mettu, Padmavathi Temple & more. Sedan ₹8,000, Innova ₹12,000." },
 };
 
 const SEO = () => {
@@ -27,27 +41,31 @@ const SEO = () => {
   useEffect(() => {
     const path = location.pathname;
     
-    // Handle dynamic routes
     let title = pageTitles[path];
     let description = pageDescriptions[path];
     
     // Handle package detail pages
     if (path.startsWith("/packages/")) {
-      const slug = path.split("/packages/")[1];
-      const formattedName = slug
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
-      title = `${formattedName} Trip Package | VrudhiCabs`;
-      description = `Book your ${formattedName} trip package with VrudhiCabs. Includes accommodation, sightseeing, and comfortable travel.`;
+      const id = path.split("/packages/")[1];
+      if (tripPageMeta[id]) {
+        title = tripPageMeta[id].title;
+        description = tripPageMeta[id].description;
+      } else {
+        const formattedName = id
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
+        title = `${formattedName} Trip Package | Vrudhi Cars Bangalore`;
+        description = `Book your ${formattedName} trip package from Bangalore with Vrudhi Cars. Comfortable vehicles and experienced drivers.`;
+      }
     }
 
     // Default fallback
     if (!title) {
-      title = "VrudhiCabs - Reliable Cab Booking Service";
+      title = "Vrudhi Cars - Reliable Cab Booking Service in Bangalore";
     }
     if (!description) {
-      description = "Book reliable cabs in Bangalore with VrudhiCabs.";
+      description = "Book reliable cabs in Bangalore with Vrudhi Cars. Local, airport, and outstation trips.";
     }
 
     // Update document title
@@ -59,17 +77,30 @@ const SEO = () => {
       metaDescription.setAttribute("content", description);
     }
 
+    // Update/create canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", `${BASE_URL}${path}`);
+
     // Update Open Graph tags
     const ogTitle = document.querySelector('meta[property="og:title"]');
     const ogDescription = document.querySelector('meta[property="og:description"]');
+    const ogUrl = document.querySelector('meta[property="og:url"]');
     if (ogTitle) ogTitle.setAttribute("content", title);
     if (ogDescription) ogDescription.setAttribute("content", description);
+    if (ogUrl) ogUrl.setAttribute("content", `${BASE_URL}${path}`);
 
     // Update Twitter tags
     const twitterTitle = document.querySelector('meta[property="twitter:title"]');
     const twitterDescription = document.querySelector('meta[property="twitter:description"]');
+    const twitterUrl = document.querySelector('meta[property="twitter:url"]');
     if (twitterTitle) twitterTitle.setAttribute("content", title);
     if (twitterDescription) twitterDescription.setAttribute("content", description);
+    if (twitterUrl) twitterUrl.setAttribute("content", `${BASE_URL}${path}`);
 
   }, [location]);
 

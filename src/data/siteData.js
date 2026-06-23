@@ -1,19 +1,19 @@
 // Static data for VrudhiCabs website
 
 export const siteInfo = {
-  name: "VrudhiCabs",
+  name: "Vrudhi Cars",
   tagline: "Where Journeys Begin",
   description:
     "Explore the vibrant city of Bengaluru with our reliable cab services, or embark on unforgettable outstation journeys with customizable trip packages",
-  phone: "+91 9606919300",
-  email: "info@vrudhicabs.com",
+  phone: "+91 63662 44686",
+  email: "vrudhicars@gmail.com",
   address: {
     line1: "No 19, (Neralu), 11th cross",
     line2: "Lakshmaiah Block, Ganganagara",
     city: "Bengaluru - 560024",
   },
   socialLinks: {
-    whatsapp: "https://wa.me/+919606919300",
+    whatsapp: "https://wa.me/+916366244686",
     instagram: "https://www.instagram.com/vrudhicabs/",
     youtube: "https://www.youtube.com/@vrudhicabs",
     google: "https://maps.app.goo.gl/kYVni73EEGRutGSQ6",
@@ -52,13 +52,11 @@ export const services = [
 ];
 
 export const tripPackages = [
-  { id: 1, name: "Mysore & Ooty", link: "/mysore-ooty" },
-  { id: 2, name: "Mysore", link: "/mysore" },
-  { id: 3, name: "Kodaikanal", link: "/kodaikanal" },
-  { id: 4, name: "Coorg, Wayanad & Ooty", link: "/coorg-wayanad-ooty" },
-  { id: 5, name: "Coorg", link: "/coorg" },
-  { id: 6, name: "Ooty", link: "/ooty" },
-  { id: 7, name: "Chikmagalur", link: "/chikmagalur" },
+  { id: 1, name: "Mysore Heritage", link: "/mysore-heritage" },
+  { id: 2, name: "Coorg / Madikeri", link: "/coorg" },
+  { id: 3, name: "Ooty & Coonoor", link: "/ooty-coonoor" },
+  { id: 4, name: "Wayanad", link: "/wayanad" },
+  { id: 5, name: "Tirupati", link: "/tirupati" },
 ];
 
 export const testimonials = [
@@ -149,7 +147,7 @@ export const testimonials = [
     date: "2024-08-24",
     rating: 5,
     review:
-      "Great outstation experience to Chikmagalur. Safe driving in ghat roads and helpful recommendations for stops.",
+      "Great outstation experience to Coorg. Safe driving in ghat roads and helpful recommendations for stops.",
     avatar: "VG",
   },
 ];

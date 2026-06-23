@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./CarDetailModal.css";
 
 // Service types configuration
@@ -20,6 +20,19 @@ const CarDetailModal = ({ car, serviceType, onClose, siteInfo }) => {
   
   const carFeatures = car.features || [];
 
+  // Close on Escape and prevent body scroll
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -28,10 +41,10 @@ const CarDetailModal = ({ car, serviceType, onClose, siteInfo }) => {
 
 
   return (
-    <div className="modal-backdrop" onClick={handleBackdropClick}>
+    <div className="modal-backdrop" onClick={handleBackdropClick} role="dialog" aria-modal="true" aria-label={`${car.name} details`}>
       <div className="modal-container">
         {/* Close Button */}
-        <button className="modal-close" onClick={onClose}>
+        <button className="modal-close" onClick={onClose} aria-label="Close modal">
           ✕
         </button>
 
@@ -47,6 +60,7 @@ const CarDetailModal = ({ car, serviceType, onClose, siteInfo }) => {
                     (prev) => (prev - 1 + carImages.length) % carImages.length
                   )
                 }
+                aria-label="Previous image"
               >
                 ‹
               </button>
@@ -55,6 +69,7 @@ const CarDetailModal = ({ car, serviceType, onClose, siteInfo }) => {
                 onClick={() =>
                   setCurrentImageIndex((prev) => (prev + 1) % carImages.length)
                 }
+                aria-label="Next image"
               >
                 ›
               </button>
@@ -150,7 +165,7 @@ const CarDetailModal = ({ car, serviceType, onClose, siteInfo }) => {
             {/* Book Now Section */}
             <div className="modal-actions">
               <a
-                href={`tel:${siteInfo?.phone || '+919606919300'}`}
+                href={`tel:${siteInfo?.phone || '+916366244686'}`}
                 className="action-btn call-btn"
               >
                 📞 Call Now

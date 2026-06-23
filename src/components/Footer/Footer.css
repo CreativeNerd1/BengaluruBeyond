@@ -179,6 +179,7 @@
 
 .phone-btn {
   left: 2rem;
+  left: max(2rem, env(safe-area-inset-left));
   position: fixed;
   background: linear-gradient(135deg, #f97316, #ea580c);
   color: white;
@@ -186,6 +187,7 @@
 
 .whatsapp-btn {
   right: 2rem;
+  right: max(2rem, env(safe-area-inset-right));
   position: fixed;
   background: linear-gradient(135deg, #14b8a6, #0d9488);
   color: white;
@@ -208,9 +210,90 @@
 
   .phone-btn {
     left: 1rem;
+    bottom: 2rem;
   }
 
   .whatsapp-btn {
     right: 1rem;
+    bottom: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 2.5rem 1rem 1rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .footer-logo-text {
+    font-size: 1.25rem;
+  }
+
+  .footer-title {
+    font-size: 1rem;
+  }
+
+  .footer-address {
+    font-size: 0.9rem;
+  }
+
+  .footer-links a {
+    font-size: 0.9rem;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .footer-social {
+    gap: 0.75rem;
+  }
+
+  .social-link {
+    width: 44px;
+    height: 44px;
+  }
+
+  .floating-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+  }
+
+  .phone-btn {
+    left: 0.75rem;
+    bottom: 1.5rem;
+  }
+
+  .whatsapp-btn {
+    right: 0.75rem;
+    bottom: 1.5rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .footer {
+    padding: 2rem 0.75rem 1rem;
+  }
+
+  .footer-logo-text {
+    font-size: 1.15rem;
+  }
+
+  .footer-address {
+    font-size: 0.85rem;
+  }
+
+  .floating-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
   }
 }

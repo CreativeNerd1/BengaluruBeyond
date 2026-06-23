@@ -203,6 +203,38 @@ a:focus-visible {
   color: white;
 }
 
+/* Ensure touch targets are at least 44px for accessibility */
+@media (pointer: coarse) {
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+  }
+}
+
+/* Global responsive typography */
+@media (max-width: 480px) {
+  .section-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 320px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+  }
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 10px;
