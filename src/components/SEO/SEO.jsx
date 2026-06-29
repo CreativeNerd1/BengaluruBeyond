@@ -1,38 +1,38 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const BASE_URL = "https://vrudhicabs.com";
+const BASE_URL = "https://vrudhicabs.in";
 
 const pageTitles = {
-  "/": "Vrudhi Cars - Reliable Cab Booking Service in Bangalore | Local, Airport & Outstation",
-  "/about": "About Vrudhi Cars | Bangalore's Trusted Cab & Travel Service Since 2019",
-  "/local-cabs": "Local Cabs in Bangalore | Affordable City Rides | Vrudhi Cars",
-  "/airport-cabs": "Airport Taxi Bangalore | 24/7 Pickup & Drop | Vrudhi Cars",
-  "/outstation-cabs": "Outstation Cabs from Bangalore | Mysore, Ooty, Coorg Trips | Vrudhi Cars",
-  "/packages": "Trip Packages from Bangalore - Mysore, Ooty, Coorg, Wayanad, Tirupati | Vrudhi Cars",
-  "/contact": "Contact Vrudhi Cars | Book a Cab in Bangalore | +91 63662 44686",
-  "/privacy-policy": "Privacy Policy | Vrudhi Cars",
-  "/terms": "Terms & Conditions | Vrudhi Cars",
+  "/": "Vrudhi Cabs - Reliable Cab Booking Service in Bangalore | Local, Airport & Outstation",
+  "/about": "About Vrudhi Cabs | Bangalore's Trusted Cab & Travel Service Since 2019",
+  "/local-cabs": "Local Cabs in Bangalore | Affordable City Rides | Vrudhi Cabs",
+  "/airport-cabs": "Airport Taxi Bangalore | 24/7 Pickup & Drop | Vrudhi Cabs",
+  "/outstation-cabs": "Outstation Cabs from Bangalore | Mysore, Ooty, Coorg Trips | Vrudhi Cabs",
+  "/packages": "Trip Packages from Bangalore - Mysore, Ooty, Coorg, Wayanad, Tirupati | Vrudhi Cabs",
+  "/contact": "Contact Vrudhi Cabs | Book a Cab in Bangalore | +91 63662 44686",
+  "/privacy-policy": "Privacy Policy | Vrudhi Cabs",
+  "/terms": "Terms & Conditions | Vrudhi Cabs",
 };
 
 const pageDescriptions = {
-  "/": "Book reliable cabs in Bangalore with Vrudhi Cars. Local city rides, airport transfers, outstation trips & curated travel packages to Mysore, Ooty, Coorg. Call +91 63662 44686.",
-  "/about": "Vrudhi Cars is Bangalore's trusted cab service since 2019. Professional drivers, clean vehicles, and 24/7 support for local, airport, and outstation travel.",
+  "/": "Book reliable cabs in Bangalore with Vrudhi Cabs. Local city rides, airport transfers, outstation trips & curated travel packages to Mysore, Ooty, Coorg. Call +91 63662 44686.",
+  "/about": "Vrudhi Cabs is Bangalore's trusted cab service since 2019. Professional drivers, clean vehicles, and 24/7 support for local, airport, and outstation travel.",
   "/local-cabs": "Book affordable local cabs in Bangalore for daily commute, shopping, hospital visits, and city tours. Well-maintained sedans and SUVs available 24/7.",
   "/airport-cabs": "Reliable airport pickup and drop services at Kempegowda International Airport, Bangalore. Flight tracking, on-time guarantee, and comfortable vehicles.",
   "/outstation-cabs": "Plan outstation trips from Bangalore with experienced drivers. Sedan & Innova available for Mysore (₹4,500), Ooty (₹9,500), Coorg (₹7,500), and more.",
   "/packages": "Explore curated trip packages from Bangalore. Mysore 1-day, Ooty 2-day, Coorg 2-day, Wayanad 2-day, and Tirupati 2-day packages with driver and vehicle included.",
-  "/contact": "Contact Vrudhi Cars for cab bookings in Bangalore. Phone: +91 63662 44686. WhatsApp available. Office: Ganganagar, Bengaluru - 560024.",
-  "/privacy-policy": "Privacy policy for Vrudhi Cars cab booking service in Bangalore.",
-  "/terms": "Terms and conditions for using Vrudhi Cars cab services in Bangalore.",
+  "/contact": "Contact Vrudhi Cabs for cab bookings in Bangalore. Phone: +91 63662 44686. WhatsApp available. Office: Mittiganahalli, Srinivasa Nagar Road, Bangalore - 562149.",
+  "/privacy-policy": "Privacy policy for Vrudhi Cabs cab booking service in Bangalore.",
+  "/terms": "Terms and conditions for using Vrudhi Cabs cab services in Bangalore.",
 };
 
 const tripPageMeta = {
-  "1": { title: "Mysore Heritage Trip Package | 1-Day Sedan & Innova | Vrudhi Cars", description: "Book Mysore day trip from Bangalore. Visit Srirangapatna, Chamundi Temple, Mysore Palace & Brindavan Gardens. Sedan ₹4,500, Innova ₹7,000. Call +91 63662 44686." },
-  "2": { title: "Coorg / Madikeri Trip Package | 2-Day Nature Tour | Vrudhi Cars", description: "Explore Coorg from Bangalore - 2 days covering Golden Temple, Abbey Falls, Dubare Elephant Camp, Raja's Seat & more. Sedan ₹7,500, Innova ₹11,000." },
-  "3": { title: "Ooty & Coonoor Trip Package | 2-Day Hill Station Tour | Vrudhi Cars", description: "Ooty & Coonoor 2-day trip from Bangalore. Doddabetta Peak, Rose Garden, Tea Factory, Dolphin's Nose & more. Sedan ₹9,500, Innova ₹13,500." },
-  "4": { title: "Wayanad Trip Package | 2-Day Kerala Adventure | Vrudhi Cars", description: "Wayanad 2-day trip from Bangalore. Chembra Peak, Glass Bridge, Waterfalls, Edakkal Caves & Pookode Lake. Sedan ₹8,500, Innova ₹12,500." },
-  "5": { title: "Tirupati Trip Package | 2-Day Pilgrimage Tour | Vrudhi Cars", description: "Tirupati temple trip from Bangalore. 2 days covering Kanipakam, Sri Vari Mettu, Padmavathi Temple & more. Sedan ₹8,000, Innova ₹12,000." },
+  "1": { title: "Mysore Heritage Trip Package | 1-Day Sedan & Innova | Vrudhi Cabs", description: "Book Mysore day trip from Bangalore. Visit Srirangapatna, Chamundi Temple, Mysore Palace & Brindavan Gardens. Sedan ₹4,500, Innova ₹7,000. Call +91 63662 44686." },
+  "2": { title: "Coorg / Madikeri Trip Package | 2-Day Nature Tour | Vrudhi Cabs", description: "Explore Coorg from Bangalore - 2 days covering Golden Temple, Abbey Falls, Dubare Elephant Camp, Raja's Seat & more. Sedan ₹7,500, Innova ₹11,000." },
+  "3": { title: "Ooty & Coonoor Trip Package | 2-Day Hill Station Tour | Vrudhi Cabs", description: "Ooty & Coonoor 2-day trip from Bangalore. Doddabetta Peak, Rose Garden, Tea Factory, Dolphin's Nose & more. Sedan ₹9,500, Innova ₹13,500." },
+  "4": { title: "Wayanad Trip Package | 2-Day Kerala Adventure | Vrudhi Cabs", description: "Wayanad 2-day trip from Bangalore. Chembra Peak, Glass Bridge, Waterfalls, Edakkal Caves & Pookode Lake. Sedan ₹8,500, Innova ₹12,500." },
+  "5": { title: "Tirupati Trip Package | 2-Day Pilgrimage Tour | Vrudhi Cabs", description: "Tirupati temple trip from Bangalore. 2 days covering Kanipakam, Sri Vari Mettu, Padmavathi Temple & more. Sedan ₹8,000, Innova ₹12,000." },
 };
 
 const SEO = () => {
@@ -55,17 +55,17 @@ const SEO = () => {
           .split("-")
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(" ");
-        title = `${formattedName} Trip Package | Vrudhi Cars Bangalore`;
-        description = `Book your ${formattedName} trip package from Bangalore with Vrudhi Cars. Comfortable vehicles and experienced drivers.`;
+        title = `${formattedName} Trip Package | Vrudhi Cabs Bangalore`;
+        description = `Book your ${formattedName} trip package from Bangalore with Vrudhi Cabs. Comfortable vehicles and experienced drivers.`;
       }
     }
 
     // Default fallback
     if (!title) {
-      title = "Vrudhi Cars - Reliable Cab Booking Service in Bangalore";
+      title = "Vrudhi Cabs - Reliable Cab Booking Service in Bangalore";
     }
     if (!description) {
-      description = "Book reliable cabs in Bangalore with Vrudhi Cars. Local, airport, and outstation trips.";
+      description = "Book reliable cabs in Bangalore with Vrudhi Cabs. Local, airport, and outstation trips.";
     }
 
     // Update document title

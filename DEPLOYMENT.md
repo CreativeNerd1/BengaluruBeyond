@@ -121,12 +121,12 @@ Choose a domain registrar:
 - **[Google Domains](https://domains.google)** - Clean interface, ~₹1,200/year
 - **[Hostinger](https://hostinger.in)** - Cheapest, ~₹499/year for .in domains
 
-**Recommended**: Search for `vrudhicabs.com`
+**Recommended**: Search for `vrudhicabs.in`
 
 ### Step 2: Configure DNS for Frontend (Vercel)
 
 1. Go to Vercel Dashboard → Your Project → Settings → Domains
-2. Click "Add Domain" and enter your domain (e.g., `vrudhicabs.com`)
+2. Click "Add Domain" and enter your domain (e.g., `vrudhicabs.in`)
 3. Vercel will show required DNS records. In your domain registrar, add:
 
 | Type | Name | Value |
@@ -141,7 +141,7 @@ Choose a domain registrar:
 
 1. Go to Railway Dashboard → Your API Service → Settings → Networking
 2. Click "Generate Domain" or "Custom Domain"
-3. Add a subdomain (e.g., `api.vrudhicabs.com`)
+3. Add a subdomain (e.g., `api.vrudhicabs.in`)
 4. Add DNS record at your registrar:
 
 | Type | Name | Value |
@@ -154,14 +154,14 @@ After setting up domains, update:
 
 **Frontend (Vercel):**
 ```
-VITE_API_URL=https://api.vrudhicabs.com/api
-VITE_SITE_URL=https://vrudhicabs.com
+VITE_API_URL=https://api.vrudhicabs.in/api
+VITE_SITE_URL=https://vrudhicabs.in
 ```
 
 **Backend (Railway):**
 ```
-AllowedOrigins__0=https://vrudhicabs.com
-AllowedOrigins__1=https://www.vrudhicabs.com
+AllowedOrigins__0=https://vrudhicabs.in
+AllowedOrigins__1=https://www.vrudhicabs.in
 ```
 
 ### SSL/HTTPS (Automatic)

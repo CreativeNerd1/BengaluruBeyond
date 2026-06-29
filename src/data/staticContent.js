@@ -1,15 +1,15 @@
 // Central static content for the public website.
 // Edit this file to update text, links, testimonials, cars, and trip packages.
 
-import marutiSwiftDzireImg from "../assets/cars/maruti-swift-dzire.jpeg";
-import marutiCiazImg from "../assets/cars/maruti-ciaz.jpeg";
+import marutiSwiftDzireImg from "../assets/cars/maruthiswiftdzire.webp";
+import marutiCiazImg from "../assets/cars/maruthiciaz.jpeg";
 import hyundaiXcentImg from "../assets/cars/hyundai-xcent.jpeg";
-import tataTiagoImg from "../assets/cars/tata-tiago.jpeg";
-import toyotaEtiosImg from "../assets/cars/toyota-etios.jpeg";
-import marutiErtigaImg from "../assets/cars/maruti-ertiga.jpeg";
-import toyotaInnovaImg from "../assets/cars/toyota-innova.jpeg";
+import tataTiagoImg from "../assets/cars/tigor.avif";
+import toyotaEtiosImg from "../assets/cars/etios.jpeg";
+import marutiErtigaImg from "../assets/cars/maruthiertiga.jpg";
+import toyotaInnovaImg from "../assets/cars/toyotoinnova.avif";
 import toyotaInnovaCrystaImg from "../assets/cars/toyota-innova-crysta.jpeg";
-import toyotaInnovaHycrossImg from "../assets/cars/toyota-innova-hycross.jpeg";
+import toyotaInnovaHycrossImg from "../assets/cars/innovohycross.avif";
 import tempoTravellerImg from "../assets/cars/tempo-traveller.jpeg";
 
 // Trip images - Mysore
@@ -58,16 +58,16 @@ import govindarajaImg from "../assets/trips/tirupathi/Govindaraja Temple.jpeg";
 import aleluMangapuramImg from "../assets/trips/tirupathi/Alamelu Mangapuram.jpeg";
 
 export const siteInfo = {
-  name: "Vrudhi Cars",
+  name: "Vrudhi Cabs",
   tagline: "Explore Beyond Boundaries",
   description:
     "Reliable city rides and curated outstation experiences with verified drivers and comfortable vehicles.",
   phone: "+91 63662 44686",
-  email: "vrudhicars@gmail.com",
+  email: "Vrudhicabs@gmail.com",
   address: {
-    line1: "No 19, 11th Cross",
-    line2: "Lakshmaiah Block, Ganganagar",
-    city: "Bengaluru - 560024",
+    line1: "No 17, Parents Paradise, Mittiganahalli",
+    line2: "Srinivasa Nagar Road",
+    city: "Bangalore - 562149",
   },
   socialLinks: {
     whatsapp: "https://wa.me/916366244686",
@@ -123,16 +123,16 @@ export const services = [
 ];
 
 export const testimonials = [
-  { id: 1, name: "Pawan S.", date: "2024-09-03", rating: 5, review: "Excellent service. Driver was professional and the car was clean.", avatar: "PS" },
-  { id: 2, name: "Suyog T.", date: "2024-09-02", rating: 5, review: "Great support for our Ooty trip. Smooth experience throughout.", avatar: "ST" },
-  { id: 3, name: "Abhinav K.", date: "2024-09-02", rating: 5, review: "Wonderful ride quality and timely pickup. Highly recommended.", avatar: "AK" },
-  { id: 4, name: "Jayarama H.", date: "2024-09-01", rating: 5, review: "Mysore trip was very comfortable and stress-free.", avatar: "JH" },
-  { id: 5, name: "Karan J.", date: "2024-08-30", rating: 5, review: "Family trip was managed well. Driver was courteous and helpful.", avatar: "KJ" },
-  { id: 6, name: "Rohan R.", date: "2024-08-30", rating: 5, review: "Safe driving and excellent coordination from start to finish.", avatar: "RR" },
-  { id: 7, name: "Meghana V.", date: "2024-08-28", rating: 5, review: "Airport pickup was punctual despite flight delay.", avatar: "MV" },
-  { id: 8, name: "Arjun P.", date: "2024-08-27", rating: 5, review: "Perfect for a 3-day family trip. Clean vehicle and polite driver.", avatar: "AP" },
-  { id: 9, name: "Nisha D.", date: "2024-08-25", rating: 5, review: "Quick response and smooth early-morning station transfer.", avatar: "ND" },
-  { id: 10, name: "Vikram G.", date: "2024-08-24", rating: 5, review: "Great outstation experience and good route planning.", avatar: "VG" },
+  { id: 1, name: "Pawan S.", date: "2026-06-28", rating: 5, review: "Excellent service. Driver was professional and the car was clean.", avatar: "PS" },
+  { id: 2, name: "Suyog T.", date: "2026-06-25", rating: 5, review: "Great support for our Ooty trip. Smooth experience throughout.", avatar: "ST" },
+  { id: 3, name: "Abhinav K.", date: "2026-06-22", rating: 5, review: "Wonderful ride quality and timely pickup. Highly recommended.", avatar: "AK" },
+  { id: 4, name: "Jayarama H.", date: "2026-06-18", rating: 5, review: "Mysore trip was very comfortable and stress-free.", avatar: "JH" },
+  { id: 5, name: "Karan J.", date: "2026-06-15", rating: 5, review: "Family trip was managed well. Driver was courteous and helpful.", avatar: "KJ" },
+  { id: 6, name: "Rohan R.", date: "2026-06-12", rating: 5, review: "Safe driving and excellent coordination from start to finish.", avatar: "RR" },
+  { id: 7, name: "Meghana V.", date: "2026-06-08", rating: 5, review: "Airport pickup was punctual despite flight delay.", avatar: "MV" },
+  { id: 8, name: "Arjun P.", date: "2026-05-30", rating: 5, review: "Perfect for a 3-day family trip. Clean vehicle and polite driver.", avatar: "AP" },
+  { id: 9, name: "Nisha D.", date: "2026-05-25", rating: 5, review: "Quick response and smooth early-morning station transfer.", avatar: "ND" },
+  { id: 10, name: "Vikram G.", date: "2026-05-20", rating: 5, review: "Great outstation experience and good route planning.", avatar: "VG" },
 ];
 
 export const cars = [

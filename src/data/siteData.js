@@ -1,16 +1,16 @@
 // Static data for VrudhiCabs website
 
 export const siteInfo = {
-  name: "Vrudhi Cars",
+  name: "Vrudhi Cabs",
   tagline: "Where Journeys Begin",
   description:
     "Explore the vibrant city of Bengaluru with our reliable cab services, or embark on unforgettable outstation journeys with customizable trip packages",
   phone: "+91 63662 44686",
-  email: "vrudhicars@gmail.com",
+  email: "Vrudhicabs@gmail.com",
   address: {
-    line1: "No 19, (Neralu), 11th cross",
-    line2: "Lakshmaiah Block, Ganganagara",
-    city: "Bengaluru - 560024",
+    line1: "No 17, Parents Paradise, Mittiganahalli",
+    line2: "Srinivasa Nagar Road",
+    city: "Bangalore - 562149",
   },
   socialLinks: {
     whatsapp: "https://wa.me/+916366244686",

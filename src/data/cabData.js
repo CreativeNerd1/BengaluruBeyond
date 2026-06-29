@@ -1,14 +1,14 @@
 // Cab Services Data - Cars and Pricing
 
-import marutiSwiftDzireImg from "../assets/cars/maruti-swift-dzire.jpeg";
-import marutiCiazImg from "../assets/cars/maruti-ciaz.jpeg";
+import marutiSwiftDzireImg from "../assets/cars/maruthiswiftdzire.webp";
+import marutiCiazImg from "../assets/cars/maruthiciaz.jpeg";
 import hyundaiXcentImg from "../assets/cars/hyundai-xcent.jpeg";
-import tataTiagoImg from "../assets/cars/tata-tiago.jpeg";
-import toyotaEtiosImg from "../assets/cars/toyota-etios.jpeg";
-import marutiErtigaImg from "../assets/cars/maruti-ertiga.jpeg";
-import toyotaInnovaImg from "../assets/cars/toyota-innova.jpeg";
+import tataTiagoImg from "../assets/cars/tigor.avif";
+import toyotaEtiosImg from "../assets/cars/etios.jpeg";
+import marutiErtigaImg from "../assets/cars/maruthiertiga.jpg";
+import toyotaInnovaImg from "../assets/cars/toyotoinnova.avif";
 import toyotaInnovaCrystaImg from "../assets/cars/toyota-innova-crysta.jpeg";
-import toyotaInnovaHycrossImg from "../assets/cars/toyota-innova-hycross.jpeg";
+import toyotaInnovaHycrossImg from "../assets/cars/innovohycross.avif";
 import tempoTravellerImg from "../assets/cars/tempo-traveller.jpeg";
 
 export const cars = [

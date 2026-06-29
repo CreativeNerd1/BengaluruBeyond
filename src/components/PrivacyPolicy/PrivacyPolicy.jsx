@@ -84,7 +84,7 @@ const PrivacyPolicy = () => {
             </p>
             <ul>
               <li><strong>Phone:</strong> {siteInfo?.phone || "+91 63662 44686"}</li>
-              <li><strong>Email:</strong> {siteInfo?.email || "vrudhicars@gmail.com"}</li>
+              <li><strong>Email:</strong> {siteInfo?.email || "Vrudhicabs@gmail.com"}</li>
             </ul>
           </section>
 

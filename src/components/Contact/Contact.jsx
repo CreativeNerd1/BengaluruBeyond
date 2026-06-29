@@ -97,7 +97,7 @@ const Contact = () => {
                 {siteInfo.address?.city}
                 <br />
                 <span className="landmark">
-                  Landmark: Reva Independent PU College (Ganganagar)
+                  Landmark: Parents Paradise, Mittiganahalli
                 </span>
               </address>
             </div>
@@ -186,7 +186,7 @@ const Contact = () => {
         {/* Google Map */}
         <div className="map-container">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.8185147850974!2d77.57469731482222!3d12.983618990845168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sGanganagar%2C%20Bengaluru%2C%20Karnataka%20560024!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.0!2d77.6344!3d13.0975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae19b1c3f9c0ed%3A0x0!2sMittiganahalli%2C%20Bangalore%2C%20Karnataka%20562149!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin"
             width="100%"
             height="400"
             style={{ border: 0 }}
