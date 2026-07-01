@@ -30,7 +30,7 @@ const Contact = () => {
 
     try {
       const whatsappMsg = `New inquiry from ${formData.name}%0APhone: ${formData.phone}%0AEmail: ${formData.email}%0AMessage: ${formData.message}`;
-      const whatsappUrl = `${siteInfo.socialLinks?.whatsapp || 'https://wa.me/919876543210'}?text=${whatsappMsg}`;
+      const whatsappUrl = `${siteInfo.socialLinks?.whatsapp || 'https://wa.me/916366244686'}?text=${whatsappMsg}`;
       window.open(whatsappUrl, '_blank');
 
       setSubmitted(true);

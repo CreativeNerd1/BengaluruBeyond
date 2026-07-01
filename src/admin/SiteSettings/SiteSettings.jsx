@@ -135,7 +135,7 @@ const SiteSettings = () => {
                 label="Phone Number"
                 rules={[{ required: true, message: 'Please enter phone number' }]}
               >
-                <Input prefix={<PhoneOutlined />} placeholder="+91 9876543210" />
+                <Input prefix={<PhoneOutlined />} placeholder="+91 6366244686" />
               </Form.Item>
             </Col>
             <Col xs={24} md={12}>
@@ -192,7 +192,7 @@ const SiteSettings = () => {
               <Form.Item name="whatsapp" label="WhatsApp">
                 <Input 
                   prefix={<WhatsAppOutlined style={{ color: '#25D366' }} />} 
-                  placeholder="https://wa.me/919876543210" 
+                  placeholder="https://wa.me/916366244686" 
                 />
               </Form.Item>
             </Col>
