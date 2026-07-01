@@ -22,9 +22,9 @@ const Services = () => {
     <section className="services" id="services">
       <div className="services-container">
         <div className="section-header">
-          <h2 className="section-title">Our Services</h2>
+          <h2 className="section-title">Our Cab Services in Bangalore</h2>
           <p className="section-subtitle">
-            Choose from our wide range of cab services tailored to your needs
+            Choose from our wide range of cab and taxi services in Bangalore – local cabs, airport transfers, and outstation trips
           </p>
         </div>
         <div className="services-grid">

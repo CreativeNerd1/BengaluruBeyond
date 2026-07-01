@@ -9,12 +9,21 @@ const Hero = () => {
     <section className="hero">
       <div className="hero-overlay"></div>
       <div className="hero-content">
-        <p className="hero-subtitle">{siteInfo.tagline}</p>
+        <p className="hero-subtitle">Best Cab Service in Bangalore</p>
         <h1 className="hero-title">
-          Your Trusted Travel Companion{" "}
+          Book Affordable & Reliable Cabs in Bangalore –{" "}
           <span className="highlight">{siteInfo.name}!</span>
         </h1>
-        <p className="hero-description">{siteInfo.description}</p>
+        <p className="hero-description">
+          Bangalore's most trusted taxi service for local cabs, airport pickup & drop, outstation trips to Mysore, Coorg, Ooty & more. 
+          24/7 online cab booking with safe, verified drivers at affordable rates.
+        </p>
+        <div className="hero-trust-badges">
+          <span className="trust-badge">✅ 24/7 Available</span>
+          <span className="trust-badge">⭐ 4.8 Rated</span>
+          <span className="trust-badge">🛡️ Safe & Verified</span>
+          <span className="trust-badge">💰 Affordable Rates</span>
+        </div>
         <div className="hero-buttons">
           <a
             href={whatsappBooking}

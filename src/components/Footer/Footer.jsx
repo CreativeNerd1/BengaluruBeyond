@@ -124,9 +124,15 @@ const Footer = () => {
           </div>
         </div>
 
+        <div className="footer-seo-content">
+          <p>
+            <strong>{siteInfo.name}</strong> – Bangalore's best and most affordable cab service. We provide reliable <strong>local cabs</strong>, <strong>airport taxi</strong> at Kempegowda International Airport, and <strong>outstation cabs</strong> to popular destinations including Mysore, Coorg, Ooty, Wayanad & Tirupati. Available <strong>24/7</strong> with verified drivers, online booking, and competitive rates. Trusted by thousands of happy customers as the <strong>best cab service in Bangalore</strong>.
+          </p>
+        </div>
+
         <div className="footer-bottom">
           <p>
-            &copy; {currentYear} {siteInfo.name} | All Rights Reserved
+            &copy; {currentYear} {siteInfo.name} | Best Cab Service in Bangalore | All Rights Reserved
           </p>
         </div>
       </div>

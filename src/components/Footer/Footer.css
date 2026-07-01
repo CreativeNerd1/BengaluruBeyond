@@ -138,6 +138,25 @@
   transform: translateY(-3px);
 }
 
+.footer-seo-content {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.5rem 0;
+  margin-bottom: 0.5rem;
+}
+
+.footer-seo-content p {
+  color: #8a9bb5;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.footer-seo-content strong {
+  color: #a0b4cc;
+}
+
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 1.5rem;

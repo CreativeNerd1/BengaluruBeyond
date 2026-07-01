@@ -46,14 +46,14 @@ const About = () => {
     <section className="about-page">
       {/* About Hero Banner */}
       <div className="about-hero">
-        <h1>About</h1>
+        <h1>About Vrudhi Cabs – Bangalore's Trusted Cab Service</h1>
       </div>
 
       {/* About Content */}
       <div className="about-content">
         {/* Established Section */}
         <div className="established-section">
-          <h2>Established in 2020</h2>
+          <h2>Best Cab Service in Bangalore Since 2020</h2>
           <div className="established-badge">
             <span className="years">6+</span>
             <span className="label">Years of Excellence</span>
@@ -63,20 +63,21 @@ const About = () => {
         {/* Welcome Section */}
         <div className="welcome-section">
           <p className="welcome-text">
-            Welcome to our car rental and trip package services! We understand
-            that planning a trip can be both exciting and overwhelming, and
-            we're here to make your travel experience seamless and memorable.
-            Let us share a bit about who we are and why we are the right choice
-            for your travel needs.
+            Welcome to Vrudhi Cabs – Bangalore's most reliable and affordable cab service! 
+            Whether you need a <strong>local cab in Bangalore</strong> for daily commute, an <strong>airport taxi</strong> for 
+            Kempegowda International Airport pickup or drop, or an <strong>outstation cab</strong> for trips to 
+            Mysore, Coorg, Ooty, Wayanad, or Tirupati – we're here to make your travel experience 
+            seamless, safe, and comfortable. As a <strong>trusted taxi service in Bangalore</strong>, we've 
+            been serving thousands of happy customers with <strong>24-hour cab service</strong> since 2020.
           </p>
         </div>
 
         {/* Our Expertise Section */}
         <div className="expertise-section">
-          <h2>Our Expertise</h2>
+          <h2>Our Expertise – Why We're the Best Cab Service in Bangalore</h2>
           <p>
-            With years of experience in the travel industry, we have honed our
-            skills to provide you with top-notch car rental and trip packages.
+            With over 6 years of experience as a leading <strong>cab service in Bangalore</strong>, we have 
+            perfected our services to provide top-notch local cabs, airport transfers, and outstation trips. 
             Whether you're planning a family vacation, a romantic getaway, or a
             business trip, we have the expertise to tailor our services to your
             specific needs. Our team is passionate about travel and dedicated to

@@ -83,9 +83,30 @@
   color: rgba(255, 255, 255, 0.84);
   font-size: clamp(1rem, 2.2vw, 1.22rem);
   line-height: 1.72;
-  margin: 0 auto 2.4rem;
+  margin: 0 auto 1.5rem;
   max-width: 780px;
   animation: fadeInUp 0.6s ease 0.4s both;
+}
+
+.hero-trust-badges {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.6s ease 0.5s both;
+}
+
+.trust-badge {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
 }
 
 .hero-buttons {

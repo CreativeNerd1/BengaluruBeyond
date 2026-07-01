@@ -1,5 +1,14 @@
 User-agent: *
 Allow: /
+Allow: /local-cabs
+Allow: /airport-cabs
+Allow: /outstation-cabs
+Allow: /packages
+Allow: /about
+Allow: /contact
 Disallow: /admin/
+
+User-agent: Googlebot
+Allow: /
 
 Sitemap: https://www.vrudhicabs.in/sitemap.xml

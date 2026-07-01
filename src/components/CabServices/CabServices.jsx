@@ -6,42 +6,42 @@ import "./CabServices.css";
 // Service types configuration (static config, not dynamic data)
 const serviceTypes = {
   local: {
-    title: "Local Cabs",
+    title: "Local Cabs in Bangalore",
     slug: "local-cabs",
-    tagline: "City Rides Made Easy",
-    description: "Comfortable rides within the city for your daily commute, shopping trips, or meetings. Available in multiple car options to suit your needs.",
+    tagline: "Best Local Cab Service in Bangalore",
+    description: "Book affordable local cabs in Bangalore for daily commute, shopping, hospital visits, city tours, or any intra-city travel. Available 24/7 with hourly and full day cab packages. Trusted by thousands as the best local taxi service in Bangalore.",
     heroImage: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1200",
     features: [
-      { icon: "⏱️", title: "Hourly Packages", desc: "Flexible 4hr, 8hr, 12hr packages" },
-      { icon: "📍", title: "Multiple Stops", desc: "Make stops anywhere in the city" },
-      { icon: "🧭", title: "Flexible Routes", desc: "Plan pickups and stops your way" },
-      { icon: "🛡️", title: "Safe Rides", desc: "Verified drivers & sanitized cars" },
+      { icon: "⏱️", title: "Hourly & Full Day Packages", desc: "Flexible 4hr, 8hr, 12hr cab packages in Bangalore" },
+      { icon: "📍", title: "Multiple Stops", desc: "Make unlimited stops anywhere in Bangalore city" },
+      { icon: "🧭", title: "Flexible Routes", desc: "Plan pickups and stops your way across Bangalore" },
+      { icon: "🛡️", title: "Safe & Reliable Rides", desc: "Verified drivers & sanitized cabs for safe travel" },
     ],
   },
   airport: {
-    title: "Airport Cabs",
+    title: "Airport Taxi Bangalore",
     slug: "airport-cabs",
-    tagline: "Never Miss a Flight",
-    description: "Reliable airport pickup and drop services available 24/7. Track your flight and we'll be there on time, every time.",
+    tagline: "Best Airport Cab Service – Kempegowda International Airport",
+    description: "Book reliable and affordable airport taxi in Bangalore for pickup and drop at Kempegowda International Airport (KIA). 24/7 airport cab service with flight tracking, 45 minutes free waiting, and on-time guarantee. The most trusted airport transfer service in Bangalore.",
     heroImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200",
     features: [
-      { icon: "✈️", title: "Flight Tracking", desc: "We track your flight for delays" },
-      { icon: "🕐", title: "24/7 Service", desc: "Available round the clock" },
-      { icon: "🧳", title: "Meet & Greet", desc: "Driver waits with name board" },
-      { icon: "⏰", title: "Free Waiting", desc: "45 min free waiting time" },
+      { icon: "✈️", title: "Flight Tracking", desc: "We track your flight for delays & early arrivals" },
+      { icon: "🕐", title: "24/7 Airport Service", desc: "Available round the clock for all flights" },
+      { icon: "🧳", title: "Meet & Greet", desc: "Driver waits with name board at arrival gate" },
+      { icon: "⏰", title: "45 Min Free Waiting", desc: "No extra charges for airport pickup delays" },
     ],
   },
   outstation: {
-    title: "Outstation Cabs",
+    title: "Outstation Cabs from Bangalore",
     slug: "outstation-cabs",
-    tagline: "Journey Beyond the City",
-    description: "Explore destinations beyond Bangalore with our comfortable outstation cab services. One-way, round trip, and multi-day packages available.",
+    tagline: "Best Outstation Cab Service from Bangalore",
+    description: "Book affordable outstation cabs from Bangalore to Mysore, Coorg, Ooty, Wayanad, Tirupati & more. One-way cabs, round trips, and multi-day packages with experienced drivers. Sedan and Innova available. The most reliable outstation taxi service in Bangalore.",
     heroImage: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200",
     features: [
-      { icon: "🗺️", title: "One-way & Round", desc: "Flexible trip options" },
-      { icon: "🏨", title: "Multi-day Trips", desc: "Perfect for holidays" },
-      { icon: "👨‍✈️", title: "Expert Drivers", desc: "Know all the routes" },
-      { icon: "🔄", title: "Unlimited Stops", desc: "Stop wherever you want" },
+      { icon: "🗺️", title: "One-way & Round Trip", desc: "Flexible one way cab and round trip options" },
+      { icon: "🏨", title: "Multi-day Trips", desc: "Perfect for weekend getaways & holidays" },
+      { icon: "👨‍✈️", title: "Expert Drivers", desc: "Know all outstation routes from Bangalore" },
+      { icon: "🔄", title: "Unlimited Stops", desc: "Stop at any sightseeing point on the way" },
     ],
   },
 };
@@ -280,6 +280,46 @@ const CabServices = ({ serviceType }) => {
           )}
         </div>
 
+      </div>
+
+      {/* SEO Content Section */}
+      <div className="seo-content-section">
+        {serviceType === "local" && (
+          <div className="seo-content">
+            <h2>Why Vrudhi Cabs is the Best Local Cab Service in Bangalore</h2>
+            <p>
+              Looking for an <strong>affordable local cab in Bangalore</strong>? Vrudhi Cabs offers the most reliable and budget-friendly 
+              <strong> city cab service</strong> with hourly and full-day packages. Whether you need a cab for shopping, hospital visits, 
+              office commute, or city sightseeing, our well-maintained sedans, Innovas, and SUVs are available <strong>24 hours</strong>. 
+              We are rated as one of the <strong>best cab services near me</strong> by hundreds of happy customers in Bangalore. 
+              Book your <strong>local taxi in Bangalore</strong> online or call us for instant booking.
+            </p>
+          </div>
+        )}
+        {serviceType === "airport" && (
+          <div className="seo-content">
+            <h2>Best Airport Taxi Service in Bangalore – Kempegowda Airport</h2>
+            <p>
+              Need an <strong>airport taxi in Bangalore</strong>? Vrudhi Cabs provides the most reliable <strong>airport pickup and drop service</strong> at 
+              Kempegowda International Airport (KIA). Our <strong>Bangalore airport cab</strong> service includes real-time flight tracking, 
+              45 minutes free waiting, and a meet-and-greet by your driver. Whether it's an early morning flight or a late-night arrival, 
+              our <strong>24/7 airport transfer service</strong> ensures you never miss a ride. Book the <strong>cheapest airport cab in Bangalore</strong> with Vrudhi Cabs.
+            </p>
+          </div>
+        )}
+        {serviceType === "outstation" && (
+          <div className="seo-content">
+            <h2>Best Outstation Cabs from Bangalore – One Way & Round Trip</h2>
+            <p>
+              Planning a trip outside Bangalore? Book the best <strong>outstation cabs from Bangalore</strong> with Vrudhi Cabs. 
+              We offer <strong>one way cabs</strong> and round-trip options to popular destinations: <strong>Bangalore to Mysore cab</strong> (₹4,500), 
+              <strong> Bangalore to Coorg cab</strong> (₹7,500), <strong>Bangalore to Ooty taxi</strong> (₹9,500), 
+              <strong> Bangalore to Wayanad cab</strong> (₹8,500), and <strong>Bangalore to Tirupati cab</strong> (₹8,000). 
+              Our experienced drivers know all the routes and ensure a comfortable, safe journey. 
+              The most <strong>affordable and trusted outstation taxi service in Bangalore</strong>.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Car Detail Modal */}
